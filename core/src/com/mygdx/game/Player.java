@@ -10,7 +10,7 @@ public class Player extends PhysicsObject{
     double fuel;
     int score;
     boolean isHooked;
-    //Asteroid hookedAsteroid;
+    Asteroid hookedAsteroid;
     String name;
     String playerName;
 
