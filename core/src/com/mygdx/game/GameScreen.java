@@ -14,12 +14,15 @@ public class GameScreen implements Screen {
     private Texture dropImage;
     private Texture bucketImage;
 
+
     public GameScreen(final Galaxilize game){
         this.game = game;
 
         // Create camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,800);
+
+        p = new Player(200,200,0,0,0,0);
     }
 
     public void render(float delta) {
@@ -29,7 +32,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.titleFont.draw(game.batch, "You Win", 0,800,800,1,false);
+
 
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
 

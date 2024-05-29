@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 abstract public class PhysicsObject {
 
@@ -30,9 +31,8 @@ abstract public class PhysicsObject {
         radius = 1;
     }
 
-    public PhysicsObject(double posX, double posY, double velX, double velY, double accX, double accY, double mass, double radius) {
-        this.accX = accX;
-        this.accY = accY;
+    public PhysicsObject(double posX, double posY, double velX, double velY, double mass, double radius) {
+        this();
         this.velX = velX;
         nextVelX = velX;
         this.velY = velY;
@@ -43,7 +43,7 @@ abstract public class PhysicsObject {
         this.radius = radius;
     }
 
-    abstract public void draw(Galaxilize game);
+    abstract public void draw(SpriteBatch game);
 
     public void updatePos(){
         // If a collision happened before this update, these values will be different
