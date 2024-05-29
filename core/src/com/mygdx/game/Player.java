@@ -13,6 +13,16 @@ public class Player extends PhysicsObject{
     //Asteroid hookedAsteroid;
     String name;
     String playerName;
+
+    /**
+     * Partially filled constructor for the Player class
+     * @param posX The X position of the player
+     * @param posY The Y position of the player
+     * @param velX The X velocity of the player
+     * @param velY The Y velocity of the player
+     * @param mass The mass of the player
+     * @param radius The radius of the player's collisions
+     */
     public Player(double posX, double posY, double velX, double velY, double mass, double radius){
         super(posX,posY,velX,velY,mass,radius);
         health = 100;
@@ -20,9 +30,21 @@ public class Player extends PhysicsObject{
         score = 0;
         isHooked = false;
         //hookedAsteroid = null;
-        name = "The Skeld";
-        playerName = "John Doe";
+        name = "";
+        playerName = "";
     }
+
+    /**
+     * A fully filled constructor for the Player class
+     * @param posX The X position of the player
+     * @param posY The Y position of the player
+     * @param velX The X velocity of the player
+     * @param velY The Y velocity of the player
+     * @param mass The mass of the player
+     * @param radius The radius of the player's collisions
+     * @param health The health of the player
+     * @param fuel The fuel of the player
+     */
     public Player(double posX, double posY, double velX, double velY, double mass, double radius, int health, double fuel){
         this(posX,posY,velX,velY, mass, radius);
         this.health = health;
