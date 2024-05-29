@@ -145,4 +145,13 @@ public class Player extends PhysicsObject{
         String returnString = "";
         super.toString()
     }*/
+    public void updateHook(){
+        if(isHooked) {
+            double dist =
+            double angle = Math.atan((hookedAsteroid.getPosY() - posY)/(hookedAsteroid.getPosX() - posX));
+            angle += Math.PI/2;
+            double tanVel = velX*Math.cos(angle) + velY*Math.sin(angle);
+            double forceCent = (tanVel*tanVel)/
+        }
+    }
 }
