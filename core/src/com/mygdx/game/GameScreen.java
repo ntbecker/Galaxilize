@@ -3,19 +3,22 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
 
-    final Galaxilize game;
+    private final Galaxilize game;
+    private OrthographicCamera camera;
 
-    OrthographicCamera camera;
+    private Texture dropImage;
+    private Texture bucketImage;
 
     public GameScreen(final Galaxilize game){
         this.game = game;
 
+        // Create camera
         camera = new OrthographicCamera();
-
         camera.setToOrtho(false,800,800);
     }
 
@@ -27,6 +30,9 @@ public class GameScreen implements Screen {
 
         game.batch.begin();
         game.titleFont.draw(game.batch, "You Win", 0,800,800,1,false);
+
+        // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
+
         game.batch.end();
     }
 
