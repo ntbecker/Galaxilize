@@ -25,7 +25,41 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "GALAXILZE", 100,100);
+        game.titleFont.draw(game.batch, "GALAXILZE", 0,800,800,1,false);
+        game.titleFont.draw(game.batch, "Click to start!", 0,750,800,1,false);
+        game.batch.end();
+    }
+
+
+    // These methods must be implemented as part of the Screen interface
+    // libGDX tutorial shows that best practice is to leave them blank like so
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 
