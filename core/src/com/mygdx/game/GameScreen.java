@@ -5,13 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class MainMenuScreen implements Screen {
+public class GameScreen implements Screen {
 
     final Galaxilize game;
 
     OrthographicCamera camera;
 
-    public MainMenuScreen(final Galaxilize game){
+    public GameScreen(final Galaxilize game){
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -26,14 +26,8 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.titleFont.draw(game.batch, "GALAXILZE", 0,800,800,1,false);
-        game.subTitleFont.draw(game.batch, "Click to start!", 0,650,800,1,false);
+        game.titleFont.draw(game.batch, "You Win", 0,800,800,1,false);
         game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
     }
 
 

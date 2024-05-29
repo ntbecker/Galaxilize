@@ -10,12 +10,16 @@ public class Galaxilize extends Game {
 	public SpriteBatch batch;
 	public Texture img;
 	public BitmapFont titleFont;
-	
+	public BitmapFont subTitleFont;
+
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		titleFont = new BitmapFont();
+		subTitleFont = new BitmapFont();
 		titleFont.getData().setScale(10);
+		subTitleFont.getData().setScale(5);
 		this.setScreen(new MainMenuScreen(this));
 	}
 
