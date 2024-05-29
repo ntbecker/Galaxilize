@@ -13,11 +13,17 @@ abstract public class PhysicsObject {
     protected double mass;
     protected double radius;
 
+    // Temporary velocity for collision functions, If these have a different value when update is called, velX and Y are set to these values
+    protected double nextVelX;
+    protected double nextVelY;
+
     public PhysicsObject() {
         accX = 0;
         accY = 0;
         velX = 0;
+        nextVelX = 0;
         velY = 0;
+        nextVelY = 0;
         posX = 0;
         posY = 0;
         mass = 1;
@@ -28,7 +34,9 @@ abstract public class PhysicsObject {
         this.accX = accX;
         this.accY = accY;
         this.velX = velX;
+        nextVelX = velX;
         this.velY = velY;
+        nextVelY = velY;
         this.posX = posX;
         this.posY = posY;
         this.mass = mass;
@@ -36,6 +44,48 @@ abstract public class PhysicsObject {
     }
 
     abstract public void draw(Galaxilize game);
+
+    public void updatePos(){
+        // If a collision happened before this update, these values will be different
+        if(nextVelX != velX){
+            velX = nextVelX;
+            nextVelX = velX;
+        }
+        if(nextVelY != velY){
+            velY = nextVelY;
+            nextVelY = velY;
+        }
+
+        velX += accX;
+        velY += accY;
+
+        posX += velX;
+        posY += velY;
+    }
+
+    public void checkCollision(PhysicsObject other){
+        if(isColliding(other)){
+            // Call these here so that we don't repeat method calls in the next two formulas
+            double otherMass = other.getMass();
+            double otherVelX = other.getVelX();
+            double otherVelY = other.getVelY();
+
+            // Variable to simplify formula
+            double massSum = mass + otherMass;
+
+            // Velocity is changed next update
+            nextVelX = ((mass - otherMass)/massSum)*velX + ((2*otherMass)/massSum)*otherVelX;
+            nextVelY = ((mass - otherMass)/massSum)*velY + ((2*otherMass)/massSum)*otherVelY;
+        }
+    }
+
+    protected boolean isColliding(PhysicsObject other){
+        double distSquared = Math.pow((other.getPosX()-posX),2.0) + Math.pow((other.getPosY()-posY),2.0);
+        double radiiSquared = Math.pow((other.getRadius()+radius),2.0);
+
+        // If the objects are closer than the length of the two radii, return true because they are colliding
+        return distSquared < radiiSquared;
+    }
 
     /**
      * Accessor for Acceleration in the X direction
