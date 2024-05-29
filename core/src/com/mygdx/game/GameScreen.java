@@ -14,6 +14,9 @@ public class GameScreen implements Screen {
     private Texture dropImage;
     private Texture bucketImage;
     private Player p;
+    private Player otherP;
+
+
 
     public GameScreen(final Galaxilize game){
         this.game = game;
@@ -23,6 +26,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false,800,800);
 
         p = new Player(200,200,0,0,3,10);
+        otherP = new Player(300,209,-1,0,40,10);
     }
 
     public void render(float delta) {
@@ -33,9 +37,12 @@ public class GameScreen implements Screen {
 
         game.batch.begin();
 
-        p.
+        p.checkCollision(otherP);
+        otherP.checkCollision(p);
         p.updatePos();
+        otherP.updatePos();
         p.draw(game.batch);
+        otherP.draw(game.batch);
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
 
         game.batch.end();
