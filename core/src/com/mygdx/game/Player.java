@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends PhysicsObject{
-    private static Texture playerTexture = new Texture("circleRadius10.jpg");
+    private static Texture playerTexture = new Texture("circleRadius10.png");
 
     int health;
     double fuel;
@@ -110,13 +110,13 @@ public class Player extends PhysicsObject{
      * Returns the asteroid that the player is hooked onto.
      * @return the asteroid that the player is hooked onto.
      */
-    public Asteroid getHookedAsteroid() { return(hookedAsteroid); }
+    //public Asteroid getHookedAsteroid() { return(hookedAsteroid); }
 
     /**
      * Sets what asteroid the player is hooked onto to the input object.
      * @param hookedAsteroid the asteroid that the player is hooked onto.
      */
-    public void setHookedAsteroid(Asteroid hookedAsteroid){ this.hookedAsteroid = hookedAsteroid; }
+    //public void setHookedAsteroid(Asteroid hookedAsteroid){ this.hookedAsteroid = hookedAsteroid; }
 
     /**
      * Returns a string holding the name of the ship.
