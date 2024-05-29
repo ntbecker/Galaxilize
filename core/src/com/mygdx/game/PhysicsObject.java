@@ -78,7 +78,7 @@ abstract public class PhysicsObject {
             //vel: 3.141592653589793
 
             // Angle of the normal of the collision
-            double normalAngle = Math.atan2(posY-other.getPosY(),posX-other.getPosX());
+            double normalAngle = Math.atan2(other.getPosY()-posY,other.getPosX()-posX);
             System.out.println("norm: " + normalAngle);
 
             nextVelX = ((mass - otherMass)/massSum)*velX + ((2*otherMass)/massSum)*otherVelX;
@@ -93,8 +93,8 @@ abstract public class PhysicsObject {
 
             // Adjust the velocity along the angle and revert relative motion
             // Velocity is changed next update
-            nextVelX = vel*Math.cos(normalAngle+velAngle) ;
-            nextVelY = vel*Math.sin(normalAngle+velAngle) ;
+            nextVelX = vel*Math.cos(velAngle+normalAngle) ;
+            nextVelY = vel*Math.sin(velAngle+normalAngle) ;
         }
     }
 
