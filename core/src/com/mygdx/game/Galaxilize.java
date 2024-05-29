@@ -1,28 +1,43 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Galaxilize extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+public class Galaxilize extends Game {
+	public SpriteBatch batch;
+	public Texture img;
+	public BitmapFont titleFont;
+	public BitmapFont subTitleFont;
+
+	/**
+	 * Runs when the application is started, instantiates SpriteBatch and fonts
+	 */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		titleFont = new BitmapFont();
+		subTitleFont = new BitmapFont();
+		titleFont.getData().setScale(10);
+		subTitleFont.getData().setScale(5);
 		img = new Texture("badlogic.jpg");
+		// Sets the screen to the Main Menu
+		this.setScreen(new MainMenuScreen(this));
 	}
 
+	/**
+	 * Renders the game
+	 */
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		// Calls the render method in the Game class, renders whichever screen is active
+		super.render();
 	}
-	
+
+	/**
+	 * Disposes the batch and loaded textures
+	 */
 	@Override
 	public void dispose () {
 		batch.dispose();
