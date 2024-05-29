@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false,800,800);
 
         p = new Player(200,200,0,0,3,10);
-        otherP = new Player(300,209,-1,0,40,10);
+        otherP = new Player(300,209,-1,0,30,10);
     }
 
     public void render(float delta) {

@@ -49,12 +49,12 @@ abstract public class PhysicsObject {
         // If a collision happened before this update, these values will be different
         if(nextVelX != velX){
             velX = nextVelX;
-            nextVelX = velX;
         }
         if(nextVelY != velY){
             velY = nextVelY;
-            nextVelY = velY;
         }
+        nextVelX = velX;
+        nextVelY = velY;
 
         velX += accX;
         velY += accY;
@@ -73,9 +73,28 @@ abstract public class PhysicsObject {
             // Variable to simplify formula
             double massSum = mass + otherMass;
 
-            // Velocity is changed next update
+            // Issue: normal goes into negatives, adding/subtracting angles doesn't make sense, fix it
+            //norm: -2.654693421778524
+            //vel: 3.141592653589793
+
+            // Angle of the normal of the collision
+            double normalAngle = Math.atan2(posY-other.getPosY(),posX-other.getPosX());
+            System.out.println("norm: " + normalAngle);
+
             nextVelX = ((mass - otherMass)/massSum)*velX + ((2*otherMass)/massSum)*otherVelX;
             nextVelY = ((mass - otherMass)/massSum)*velY + ((2*otherMass)/massSum)*otherVelY;
+
+            // Angle that this is travelling in
+            double velAngle = Math.atan2(nextVelY,nextVelX);
+            System.out.println("vel: "+ velAngle);
+
+            // Total magnitude of the velocity
+            double vel = Math.sqrt(Math.pow(nextVelX,2.0) + Math.pow(nextVelY,2.0));
+
+            // Adjust the velocity along the angle and revert relative motion
+            // Velocity is changed next update
+            nextVelX = vel*Math.cos(normalAngle+velAngle) ;
+            nextVelY = vel*Math.sin(normalAngle+velAngle) ;
         }
     }
 
