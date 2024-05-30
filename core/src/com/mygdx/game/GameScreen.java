@@ -59,12 +59,6 @@ public class GameScreen implements Screen {
 
         game.batch.end();
 
-        if(p.getIsHooked()){
-            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            game.shapeRenderer.line((float)p.getPosX(),(float)p.getPosY(),(float)a.getPosX(),(float)a.getPosY());
-            game.shapeRenderer.end();
-        }
-
         if (Gdx.input.isTouched()) {
             int changeX = (Gdx.input.getX()-400)/100;
             // Input uses y-down coords, so it needs to be inverted
