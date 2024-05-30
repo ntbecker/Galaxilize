@@ -56,7 +56,7 @@ public class Player extends PhysicsObject{
      * @param s The open spritebatch to draw to
      */
     public void draw(SpriteBatch s){
-        s.draw(playerTexture, (float) (posX-radius/2.0), (float) (posY-radius/2.0));
+        s.draw(playerTexture, (float) (posX-radius), (float) (posY-radius));
     }
     /**
      * Returns the current health of the player.
