@@ -110,13 +110,13 @@ public class Player extends PhysicsObject{
      * Returns the asteroid that the player is hooked onto.
      * @return the asteroid that the player is hooked onto.
      */
-    //public Asteroid getHookedAsteroid() { return(hookedAsteroid); }
+    public Asteroid getHookedAsteroid() { return(hookedAsteroid); }
 
     /**
      * Sets what asteroid the player is hooked onto to the input object.
      * @param hookedAsteroid the asteroid that the player is hooked onto.
      */
-    //public void setHookedAsteroid(Asteroid hookedAsteroid){ this.hookedAsteroid = hookedAsteroid; }
+    public void setHookedAsteroid(Asteroid hookedAsteroid){ this.hookedAsteroid = hookedAsteroid; }
 
     /**
      * Returns a string holding the name of the ship.
@@ -147,11 +147,14 @@ public class Player extends PhysicsObject{
     }*/
     public void updateHook(){
         if(isHooked) {
-            double dist =
+            double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX()-posX,2) + Math.pow(hookedAsteroid.getPosY()-posY,2));
             double angle = Math.atan((hookedAsteroid.getPosY() - posY)/(hookedAsteroid.getPosX() - posX));
-            angle += Math.PI/2;
-            double tanVel = velX*Math.cos(angle) + velY*Math.sin(angle);
-            double forceCent = (tanVel*tanVel)/
+            double tanVel = velX*Math.cos(angle + Math.PI/2) + velY*Math.sin(angle+Math.PI/2);
+            double forceCent =((tanVel*tanVel*mass)/dist);
+            System.out.println("Before " +velX);
+            nextVelX += Math.cos(forceCent);
+            System.out.println("After " + velX);
+            nextVelY += Math.sin(forceCent);
         }
     }
 }
