@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -146,6 +148,27 @@ public class Player extends PhysicsObject{
         super.toString()
     }*/
 
+    public void updatePos(){
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            accX = -0.2;
+        }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            accX = 0.2;
+        }else{
+            accX = 0;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.S)){
+            accY = -0.2;
+        }else if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            accY = 0.2;
+        }else{
+            accY = 0;
+        }
+
+
+        super.updatePos();
+    }
+
     /**
      * Updates the physics for the grappling hook.
      */
@@ -183,7 +206,7 @@ public class Player extends PhysicsObject{
             }else {
                 // Angle pointing towards Asteroid
                 double angle = Math.atan2(hookedAsteroid.getPosY() - posY, hookedAsteroid.getPosX() - posX);
-                double forceCent = 0.05;
+                double forceCent = 0.1;
                 double thisAccelCent = forceCent / mass;
                 double asteroidAccelCent = forceCent / hookedAsteroid.getMass();
 
