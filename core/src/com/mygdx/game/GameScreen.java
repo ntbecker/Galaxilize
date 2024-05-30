@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
 
         p = new Player(200,200,0,1,1,10);
         p.setIsHooked(true);
-        a = new Asteroid(300,220,0,0,1,10);
+        a = new Asteroid(300,220,0,0,100,10);
         p.setHookedAsteroid(a);
     }
 
