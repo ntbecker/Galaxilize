@@ -49,12 +49,12 @@ abstract public class PhysicsObject {
         // If a collision happened before this update, these values will be different
         if(nextVelX != velX){
             velX = nextVelX;
-            nextVelX = velX;
         }
         if(nextVelY != velY){
             velY = nextVelY;
-            nextVelY = velY;
         }
+        nextVelX = velX;
+        nextVelY = velY;
 
         velX += accX;
         velY += accY;
@@ -70,12 +70,23 @@ abstract public class PhysicsObject {
             double otherVelX = other.getVelX();
             double otherVelY = other.getVelY();
 
-            // Variable to simplify formula
-            double massSum = mass + otherMass;
+            // Magnitude of this object's velocity
+            double vel = Math.sqrt(velX*velX + velY*velY);
+            // Magnitude of the other object's velocity
+            double otherVel = Math.sqrt(otherVelX*otherVelX + otherVelY*otherVelY);
 
-            // Velocity is changed next update
-            nextVelX = ((mass - otherMass)/massSum)*velX + ((2*otherMass)/massSum)*otherVelX;
-            nextVelY = ((mass - otherMass)/massSum)*velY + ((2*otherMass)/massSum)*otherVelY;
+
+            // Angle which points towards the other object
+            double contactAngle = Math.atan2(other.getPosY()-posY,other.getPosX()-posX);
+            // Angle of motion of this object
+            double velAngle = Math.atan2(velY,velX);
+            // Angle of motion of the other object
+            double otherVelAngle = Math.atan2(otherVelY,otherVelX);
+
+            // Two-dimensional collision with two moving objects formula
+            // Velocity is changed next update, hence nextVel variables
+            nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
+            nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
         }
     }
 
