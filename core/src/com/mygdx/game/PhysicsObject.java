@@ -225,4 +225,26 @@ abstract public class PhysicsObject {
     public void setRadius(double radius) {
         this.radius = radius;
     }
+
+    /**
+     * Accessor for the next horizontal velocity of the object.
+     * @return the next horizontal velocity of the object.
+     */
+    public double getNextVelX(){ return(nextVelX); }
+
+    /**
+     * Mutator for the next horizontal velocity of the object.
+     * @param nextVelX the next horizontal velocity of the object.
+     */
+    public void setNextVelX(double nextVelX){ this.nextVelX = nextVelX; }
+    /**
+     * Accessor for the next vertical velocity of the object.
+     * @return the next vertical velocity of the object.
+     */
+    public double getNextVelY(){ return(nextVelY); }
+    /**
+     * Mutator for the next horizontal velocity of the object.
+     * @param nextVelY the next horizontal velocity of the object.
+     */
+    public void setNextVelY(double nextVelY){ this.nextVelY = nextVelY; }
 }
