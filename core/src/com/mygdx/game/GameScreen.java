@@ -12,7 +12,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
 
     private Player p;
-    private Player otherP;
+    private Asteroid a;
     private Texture background;
 
     private int camX;
@@ -30,8 +30,10 @@ public class GameScreen implements Screen {
         background = new Texture("background.png");
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        p = new Player(200,200,0,0,3,10);
-        otherP = new Player(300,209,-1,0,30,10);
+        p = new Player(200,200,0,1,1,10);
+        p.setIsHooked(true);
+        a = new Asteroid(300,220,0,0,1,10);
+        p.setHookedAsteroid(a);
     }
 
     public void render(float delta) {
@@ -45,12 +47,13 @@ public class GameScreen implements Screen {
         game.batch.draw(background,camX,camY,camX,-camY,800,800);
 
         // Player objects for testing
-        p.checkCollision(otherP);
-        otherP.checkCollision(p);
+        p.checkCollision(a);
+        a.checkCollision(p);
+        p.updateHook();
         p.updatePos();
-        otherP.updatePos();
+        a.updatePos();
         p.draw(game.batch);
-        otherP.draw(game.batch);
+        a.draw(game.batch);
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
 
         game.batch.end();
