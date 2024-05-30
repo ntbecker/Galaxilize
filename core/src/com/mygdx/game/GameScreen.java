@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
     private final Galaxilize game;
     private OrthographicCamera camera;
 
-    private Player p;
+    private Player player;
     private Asteroid a;
     private Texture background;
 
@@ -37,11 +37,12 @@ public class GameScreen implements Screen {
 
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
-        p = new Player(200,200,0,1,1,10);
-        p.setIsHooked(true);
-        physicsObjectsList.add(p);
-        physicsObjectsList.add(new Asteroid(300,220,0,0,100,10));
-        p.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
+        player = new Player(200,200,0,1,1,10);
+        player.setIsHooked(true);
+        physicsObjectsList.add(player);
+        physicsObjectsList.add(new Asteroid(300,220,1,0,1,10));
+        physicsObjectsList.add(new Asteroid(300,280,-2,-1,1,10));
+        player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
     }
 
     public void render(float delta) {
@@ -70,7 +71,7 @@ public class GameScreen implements Screen {
                 }
             }
         }
-        p.updateHook();
+        player.updateHook();
         for(int i = 0; i < physicsObjectsList.size(); i++){
             physicsObjectsList.get(i).updatePos();
             physicsObjectsList.get(i).draw(game.batch);
