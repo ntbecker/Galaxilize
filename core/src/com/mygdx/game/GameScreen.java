@@ -11,12 +11,12 @@ public class GameScreen implements Screen {
     private final Galaxilize game;
     private OrthographicCamera camera;
 
-    private Texture dropImage;
-    private Texture bucketImage;
     private Player p;
     private Player otherP;
+    private Texture background;
 
-
+    private int camX;
+    private int camY;
 
     public GameScreen(final Galaxilize game){
         this.game = game;
@@ -24,6 +24,11 @@ public class GameScreen implements Screen {
         // Create camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,800);
+        camX = 0;
+        camY = 0;
+
+        background = new Texture("background.png");
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         p = new Player(200,200,0,0,3,10);
         otherP = new Player(300,209,-1,0,30,10);
@@ -36,7 +41,10 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        // Background (800 by 800 scrolling texture always drawn to the camera)
+        game.batch.draw(background,camX,camY,camX,-camY,800,800);
 
+        // Player objects for testing
         p.checkCollision(otherP);
         otherP.checkCollision(p);
         p.updatePos();
@@ -46,6 +54,16 @@ public class GameScreen implements Screen {
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
 
         game.batch.end();
+
+        if (Gdx.input.isTouched()) {
+            int changeX = (Gdx.input.getX()-400)/100;
+            // Input uses y-down coords, so it needs to be inverted
+            int changeY = (Gdx.input.getY()-400)/-100;
+
+            camera.translate((float)(changeX),(float)(changeY));
+            camX += changeX;
+            camY += changeY;
+        }
     }
 
 
