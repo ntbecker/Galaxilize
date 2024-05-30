@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
@@ -57,6 +58,12 @@ public class GameScreen implements Screen {
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
 
         game.batch.end();
+
+        if(p.getIsHooked()){
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            game.shapeRenderer.line((float)p.getPosX(),(float)p.getPosY(),(float)a.getPosX(),(float)a.getPosY());
+            game.shapeRenderer.end();
+        }
 
         if (Gdx.input.isTouched()) {
             int changeX = (Gdx.input.getX()-400)/100;
