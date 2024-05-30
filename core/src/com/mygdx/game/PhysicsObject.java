@@ -14,21 +14,26 @@ abstract public class PhysicsObject {
     protected double mass;
     protected double radius;
 
-    // Temporary velocity for collision functions, If these have a different value when update is called, velX and Y are set to these values
+    // Temporary velocity for collision functions. If hasCollided is true, then vel = nextVel
     protected double nextVelX;
     protected double nextVelY;
+    protected boolean hasCollided;
+
 
     public PhysicsObject() {
         accX = 0;
         accY = 0;
         velX = 0;
-        nextVelX = 0;
         velY = 0;
-        nextVelY = 0;
         posX = 0;
         posY = 0;
         mass = 1;
         radius = 1;
+
+        // Assume no collisions are happening when the object is created
+        hasCollided = false;
+        nextVelX = 0;
+        nextVelY = 0;
     }
 
     public PhysicsObject(double posX, double posY, double velX, double velY, double mass, double radius) {
@@ -46,15 +51,22 @@ abstract public class PhysicsObject {
     abstract public void draw(SpriteBatch game);
 
     public void updatePos(){
-        // If a collision happened before this update, these values will be different
-        if(nextVelX != velX){
+        // This code is bad and gross, if I have replaced it and forget to delete this, do it
+//        // If a collision happened before this update, these values will be different
+//        if(nextVelX != velX){
+//            velX = nextVelX;
+//        }
+//        if(nextVelY != velY){
+//            velY = nextVelY;
+//        }
+//        nextVelX = velX;
+//        nextVelY = velY;
+        // If this object has collided, nextVel is the new velocity
+        if(hasCollided){
             velX = nextVelX;
-        }
-        if(nextVelY != velY){
             velY = nextVelY;
+            hasCollided = false;
         }
-        nextVelX = velX;
-        nextVelY = velY;
 
         velX += accX;
         velY += accY;
@@ -91,9 +103,15 @@ abstract public class PhysicsObject {
             // Move once to avoid colliding next frame
             posX += nextVelX;
             posY += nextVelY;
+            hasCollided = true;
         }
     }
 
+    /**
+     * Checks if two objects are colliding
+     * @param other The other object
+     * @return True if the objects are overlapping
+     */
     protected boolean isColliding(PhysicsObject other){
         double distSquared = Math.pow((other.getPosX()-posX),2.0) + Math.pow((other.getPosY()-posY),2.0);
         double radiiSquared = Math.pow((other.getRadius()+radius),2.0);
@@ -230,6 +248,8 @@ abstract public class PhysicsObject {
         this.radius = radius;
     }
 
+
+    // Potentially remove these now
     /**
      * Accessor for the next horizontal velocity of the object.
      * @return the next horizontal velocity of the object.
