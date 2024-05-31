@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -56,7 +58,7 @@ public class Player extends PhysicsObject{
      * @param s The open spritebatch to draw to
      */
     public void draw(SpriteBatch s){
-        s.draw(playerTexture, (float) (posX-radius/2.0), (float) (posY-radius/2.0));
+        s.draw(playerTexture, (float) (posX-radius), (float) (posY-radius));
     }
     /**
      * Returns the current health of the player.
@@ -145,16 +147,75 @@ public class Player extends PhysicsObject{
         String returnString = "";
         super.toString()
     }*/
-    public void updateHook(){
-        if(isHooked) {
-            double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX()-posX,2) + Math.pow(hookedAsteroid.getPosY()-posY,2));
-            double angle = Math.atan((hookedAsteroid.getPosY() - posY)/(hookedAsteroid.getPosX() - posX));
-            double tanVel = velX*Math.cos(angle + Math.PI/2) + velY*Math.sin(angle+Math.PI/2);
-            double forceCent =((tanVel*tanVel*mass)/dist);
-            System.out.println("Before " +velX);
-            nextVelX += Math.cos(forceCent);
-            System.out.println("After " + velX);
-            nextVelY += Math.sin(forceCent);
+
+    public void updatePos(){
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            accX = -0.2;
+        }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            accX = 0.2;
+        }else{
+            accX = 0;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.S)){
+            accY = -0.2;
+        }else if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            accY = 0.2;
+        }else{
+            accY = 0;
+        }
+
+
+        super.updatePos();
+    }
+
+    /**
+     * Updates the physics for the grappling hook.
+     */
+    public void updateHook() {
+        if (hookedAsteroid != null && isHooked) { //Don't try to calculate physics for the grappling hook if it is not active or not connected to anything.
+            double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX() - posX, 2) + Math.pow(hookedAsteroid.getPosY() - posY, 2)); //Calculates the distance between the center of the asteroid and the player.
+            if (dist < 2*radius + hookedAsteroid.getRadius()) { //Disconnects the asteroid from the player if they are too close.
+                isHooked = false;
+                hookedAsteroid = null;
+            }
+            else{ //Calculate and apply the force to the objects.
+                double angle = Math.atan((hookedAsteroid.getPosY() - posY) / (hookedAsteroid.getPosX() - posX)); //Calculate the angle between the position of the asteroid relative to the player.
+                double tanVel = (velX - hookedAsteroid.getVelX()) * Math.cos(angle + Math.PI / 2) + (velY - hookedAsteroid.getVelY()) * Math.sin(angle + Math.PI / 2); //Calculate the velocity tangent to circular motion around the asteroid.
+                double forceCent = 0.001 + ((tanVel * tanVel * mass) / dist); //Calculate the force required to maintain circular motion with the current tangential velocity.
+                if (posX < hookedAsteroid.getPosX()) { //Pulls towards the center of the asteroid no matter where it is located relative to the player.
+                    velX += Math.abs(forceCent * Math.cos(angle));
+                    hookedAsteroid.setVelX(hookedAsteroid.getVelX() - Math.abs(forceCent * Math.cos(angle)));
+                } else {
+                    velX -= Math.abs(forceCent * Math.cos(angle));
+                    hookedAsteroid.setVelX(hookedAsteroid.getVelX() + Math.abs(forceCent * Math.cos(angle)));
+                }
+                if (posY < hookedAsteroid.posY) {
+                    velY += Math.abs(forceCent * Math.sin(angle));
+                    hookedAsteroid.setVelY(hookedAsteroid.getVelY() - Math.abs(forceCent * Math.cos(angle)));
+                } else {
+                    velY -= Math.abs(forceCent * Math.sin(angle));
+                    hookedAsteroid.setVelY(hookedAsteroid.getVelY() + Math.abs(forceCent * Math.cos(angle)));
+                }
+            }
+
+//            double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX() - posX, 2) + Math.pow(hookedAsteroid.getPosY() - posY, 2)); //Calculates the distance between the center of the asteroid and the player.
+//            if (dist < 2*radius + hookedAsteroid.getRadius()) { //Disconnects the asteroid from the player if they are too close.
+//                isHooked = false;
+//                hookedAsteroid = null;
+//            }else {
+//                // Angle pointing towards Asteroid
+//                double angle = Math.atan2(hookedAsteroid.getPosY() - posY, hookedAsteroid.getPosX() - posX);
+//                double forceCent = 0.1;
+//                double thisAccelCent = forceCent / mass;
+//                double asteroidAccelCent = forceCent / hookedAsteroid.getMass();
+//
+//                velX += thisAccelCent * Math.cos(angle);
+//                velY += thisAccelCent * Math.sin(angle);
+//
+//                hookedAsteroid.setVelX(hookedAsteroid.getVelX() + asteroidAccelCent * Math.cos(angle + Math.PI));
+//                hookedAsteroid.setVelY(hookedAsteroid.getVelY() + asteroidAccelCent * Math.sin(angle + Math.PI));
+//            }
         }
     }
 }

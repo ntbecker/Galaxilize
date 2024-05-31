@@ -27,6 +27,6 @@ public class Asteroid extends PhysicsObject{
      */
     public void setContainsUpgrade(boolean containsUpgrade){ this.containsUpgrade = containsUpgrade; }
     public void draw(SpriteBatch s){
-        s.draw(asteroidTexture, (float) posX, (float) posY);
+        s.draw(asteroidTexture, (float) (posX-radius), (float) (posY-radius));
     }
 }

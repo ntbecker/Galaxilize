@@ -4,12 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Galaxilize extends Game {
 	public SpriteBatch batch;
 	public Texture img;
 	public BitmapFont titleFont;
 	public BitmapFont subTitleFont;
+	public ShapeRenderer shapeRenderer;
 
 	/**
 	 * Runs when the application is started, instantiates SpriteBatch and fonts
@@ -17,6 +19,7 @@ public class Galaxilize extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		titleFont = new BitmapFont();
 		subTitleFont = new BitmapFont();
 		titleFont.getData().setScale(10);
