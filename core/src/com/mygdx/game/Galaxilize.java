@@ -31,7 +31,7 @@ public class Galaxilize extends Game {
 		shapeDrawer.setColor(1,1,1,1);
 
 		// Sets the screen to the Main Menu
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MainMenuScreen());
 	}
 
 	/**
@@ -51,4 +51,8 @@ public class Galaxilize extends Game {
 		batch.dispose();
 		img.dispose();
 	}
+	public void create() {
+		this.setScreen(new MainMenuScreen());
+	}
 }
+
