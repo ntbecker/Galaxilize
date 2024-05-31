@@ -37,11 +37,10 @@ public class GameScreen implements Screen {
 
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
-        player = new Player(200,200,1,1,1,10);
+        player = new Player(200,200,0,1,1,10);
         player.setIsHooked(true);
         physicsObjectsList.add(player);
-        physicsObjectsList.add(new Asteroid(300,220,1,0,1,10));
-        physicsObjectsList.add(new Asteroid(300,280,-2,-1,1,10));
+        physicsObjectsList.add(new Asteroid(300,220,0,1,1,10));
         player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
     }
 
