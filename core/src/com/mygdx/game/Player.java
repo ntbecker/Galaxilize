@@ -182,20 +182,20 @@ public class Player extends PhysicsObject{
             else{ //Calculate and apply the force to the objects.
                 double angle = Math.atan((hookedAsteroid.getPosY() - posY) / (hookedAsteroid.getPosX() - posX)); //Calculate the angle between the position of the asteroid relative to the player.
                 double tanVel = (velX - hookedAsteroid.getVelX()) * Math.cos(angle + Math.PI / 2) + (velY - hookedAsteroid.getVelY()) * Math.sin(angle + Math.PI / 2); //Calculate the velocity tangent to circular motion around the asteroid.
-                double forceCent = 0.001 + ((tanVel * tanVel * mass) / dist); //Calculate the force required to maintain circular motion with the current tangential velocity.
+                double forceCent = 0.01 + ((tanVel * mass)*dist)/1000; //Calculate the force required to maintain circular motion with the current tangential velocity.
                 if (posX < hookedAsteroid.getPosX()) { //Pulls towards the center of the asteroid no matter where it is located relative to the player.
-                    velX += Math.abs(forceCent * Math.cos(angle));
-                    hookedAsteroid.setVelX(hookedAsteroid.getVelX() - Math.abs(forceCent * Math.cos(angle)));
+                    velX += Math.abs(forceCent * Math.cos(angle))/mass;
+                    hookedAsteroid.setVelX((hookedAsteroid.getVelX() - Math.abs(forceCent * Math.cos(angle)))/hookedAsteroid.getMass());
                 } else {
-                    velX -= Math.abs(forceCent * Math.cos(angle));
-                    hookedAsteroid.setVelX(hookedAsteroid.getVelX() + Math.abs(forceCent * Math.cos(angle)));
+                    velX -= Math.abs(forceCent * Math.cos(angle))/mass;
+                    hookedAsteroid.setVelX((hookedAsteroid.getVelX() + Math.abs(forceCent * Math.cos(angle)))/hookedAsteroid.getMass());
                 }
                 if (posY < hookedAsteroid.posY) {
-                    velY += Math.abs(forceCent * Math.sin(angle));
-                    hookedAsteroid.setVelY(hookedAsteroid.getVelY() - Math.abs(forceCent * Math.cos(angle)));
+                    velY += Math.abs(forceCent * Math.sin(angle))/mass;
+                    hookedAsteroid.setVelY((hookedAsteroid.getVelY() - Math.abs(forceCent * Math.cos(angle)))/hookedAsteroid.getMass());
                 } else {
-                    velY -= Math.abs(forceCent * Math.sin(angle));
-                    hookedAsteroid.setVelY(hookedAsteroid.getVelY() + Math.abs(forceCent * Math.cos(angle)));
+                    velY -= Math.abs(forceCent * Math.sin(angle))/mass;
+                    hookedAsteroid.setVelY((hookedAsteroid.getVelY() + Math.abs(forceCent * Math.cos(angle)))/hookedAsteroid.getMass());
                 }
             }
 
