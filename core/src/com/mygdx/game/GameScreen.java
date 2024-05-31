@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -76,6 +75,10 @@ public class GameScreen implements Screen {
             physicsObjectsList.get(i).draw(game.batch);
         }
         // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
+
+        if(player.getHookedAsteroid() != null){
+            game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
+        }
 
         game.batch.end();
 

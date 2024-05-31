@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,8 +28,8 @@ public class Galaxilize extends Game {
 		img = new Texture("badlogic.jpg");
 
 		// Texture region specifies a single white pixel for
-		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(img,8,8,9,9));
-		shapeDrawer.setColor(1,1,1,1);
+		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(img,1,3,1,1));
+		shapeDrawer.setColor(Color.WHITE);
 
 		// Sets the screen to the Main Menu
 		this.setScreen(new MainMenuScreen(this));
