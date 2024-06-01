@@ -28,8 +28,6 @@ public class GameScreen implements Screen {
         // Create camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,800);
-        camX = 0;
-        camY = 0;
 
         background = new Texture("background.png");
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -37,9 +35,12 @@ public class GameScreen implements Screen {
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
         player = new Player(200,200,0,5,10,10);
+
+        camera.position.set(200,200,0);
+
         player.setIsHooked(true);
         physicsObjectsList.add(player);
-        physicsObjectsList.add(new Asteroid(300,220,0,2,10,10));
+        physicsObjectsList.add(new Asteroid(300,220,0,5,5,10));
         physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
         physicsObjectsList.add(new Asteroid(303,280,0,-1,10,10));
         physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
