@@ -42,9 +42,9 @@ public class GameScreen implements Screen {
         physicsObjectsList.add(player);
         physicsObjectsList.add(new Asteroid(300,220,0,5,5,10));
         physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
-        physicsObjectsList.add(new Asteroid(303,280,0,-1,10,10));
+        physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
         physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
-        physicsObjectsList.add(new Asteroid(350,220,0,2,10,10));
+        physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
 
         player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
     }
