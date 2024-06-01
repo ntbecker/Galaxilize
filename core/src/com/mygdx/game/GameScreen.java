@@ -36,10 +36,15 @@ public class GameScreen implements Screen {
 
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
-        player = new Player(200,200,0,5,1,10);
+        player = new Player(200,200,0,5,10,10);
         player.setIsHooked(true);
         physicsObjectsList.add(player);
-        physicsObjectsList.add(new Asteroid(300,220,0,2,100,10));
+        physicsObjectsList.add(new Asteroid(300,220,0,2,10,10));
+        physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
+        physicsObjectsList.add(new Asteroid(303,280,0,-1,10,10));
+        physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
+        physicsObjectsList.add(new Asteroid(350,220,0,2,10,10));
+
         player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
     }
 
@@ -50,17 +55,10 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        // Background (800 by 800 scrolling texture always drawn to the camera)
-        game.batch.draw(background,camX,camY,camX,-camY,800,800);
 
-        // Player objects for testing, potentially obsolete if the physicsObjectsList works without issue
-//        p.checkCollision(a);
-//        a.checkCollision(p);
-//        p.updateHook();
-//        p.updatePos();
-//        a.updatePos();
-//        p.draw(game.batch);
-//        a.draw(game.batch);
+        // Background (800 by 800 scrolling texture always drawn to the camera)
+        game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),800,800);
+
 
         for(int i = 0; i < physicsObjectsList.size(); i++){
             for(int j = 0; j < physicsObjectsList.size(); j++){
@@ -82,16 +80,18 @@ public class GameScreen implements Screen {
 
         game.batch.end();
 
-        // Code for moving the camera and scrolling the background
-        if (Gdx.input.isTouched()) {
-            int changeX = (Gdx.input.getX()-400)/100;
-            // Input uses y-down coords, so it needs to be inverted
-            int changeY = (Gdx.input.getY()-400)/-100;
+        camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
 
-            camera.translate((float)(changeX),(float)(changeY));
-            camX += changeX;
-            camY += changeY;
-        }
+//        // Code for moving the camera and scrolling the background
+//        if (Gdx.input.isTouched()) {
+//            int changeX = (Gdx.input.getX()-400)/100;
+//            // Input uses y-down coords, so it needs to be inverted
+//            int changeY = (Gdx.input.getY()-400)/-100;
+//
+//            camera.translate((float)(changeX),(float)(changeY));
+//            camX += changeX;
+//            camY += changeY;
+//        }
     }
 
 
