@@ -1,3 +1,8 @@
+/* Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ * 6/10/2024
+ * Abstract class for physics-affected objects, handles movement and collisions
+ */
+
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -5,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 abstract public class PhysicsObject {
 
+    // Attributes
     protected double accX;
     protected double accY;
     protected double velX;
@@ -20,6 +26,9 @@ abstract public class PhysicsObject {
     protected boolean hasCollided;
 
 
+    /**
+     * Primary constructor, sets all position related values to 0, mass and radius to 1
+     */
     public PhysicsObject() {
         accX = 0;
         accY = 0;
@@ -36,6 +45,15 @@ abstract public class PhysicsObject {
         nextVelY = 0;
     }
 
+    /**
+     * Secondary constructor. Sets all values
+     * @param posX Initial x coord
+     * @param posY Initial y coord
+     * @param velX Initial x velocity
+     * @param velY Initial y velocity
+     * @param mass Mass of the object
+     * @param radius Radius of the object
+     */
     public PhysicsObject(double posX, double posY, double velX, double velY, double mass, double radius) {
         this();
         this.velX = velX;
@@ -48,19 +66,13 @@ abstract public class PhysicsObject {
         this.radius = radius;
     }
 
+    /**
+     * Draws the object to the Galaxilize window
+     * @param game The spritebatch defined in Galaxilize class
+     */
     abstract public void draw(SpriteBatch game);
 
     public void updatePos(){
-        // This code is bad and gross, if I have replaced it and forget to delete this, do it
-//        // If a collision happened before this update, these values will be different
-//        if(nextVelX != velX){
-//            velX = nextVelX;
-//        }
-//        if(nextVelY != velY){
-//            velY = nextVelY;
-//        }
-//        nextVelX = velX;
-//        nextVelY = velY;
         // If this object has collided, nextVel is the new velocity
         if(hasCollided){
             velX = nextVelX;
@@ -72,13 +84,19 @@ abstract public class PhysicsObject {
             hasCollided = false;
         }
 
+        // Update velocity based on acceleration
         velX += accX;
         velY += accY;
 
+        // Update position based on velocity
         posX += velX;
         posY += velY;
     }
 
+    /**
+     * Checks the collision between this object and another, and changes the velocity accordingly
+     * @param other The other object that is being checked with
+     */
     public void checkCollision(PhysicsObject other){
         if(isColliding(other)){
             // Call these here so that we don't repeat method calls in the next two formulas
@@ -104,6 +122,7 @@ abstract public class PhysicsObject {
             nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
             nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
 
+            // When hasCollided is true, next update the velocity is set to nextVel
             hasCollided = true;
         }
     }
@@ -248,28 +267,4 @@ abstract public class PhysicsObject {
     public void setRadius(double radius) {
         this.radius = radius;
     }
-
-
-    // Potentially remove these now
-    /**
-     * Accessor for the next horizontal velocity of the object.
-     * @return the next horizontal velocity of the object.
-     */
-    public double getNextVelX(){ return(nextVelX); }
-
-    /**
-     * Mutator for the next horizontal velocity of the object.
-     * @param nextVelX the next horizontal velocity of the object.
-     */
-    public void setNextVelX(double nextVelX){ this.nextVelX = nextVelX; }
-    /**
-     * Accessor for the next vertical velocity of the object.
-     * @return the next vertical velocity of the object.
-     */
-    public double getNextVelY(){ return(nextVelY); }
-    /**
-     * Mutator for the next horizontal velocity of the object.
-     * @param nextVelY the next horizontal velocity of the object.
-     */
-    public void setNextVelY(double nextVelY){ this.nextVelY = nextVelY; }
 }
