@@ -29,26 +29,27 @@ public class AsteroidSpawning {
         } else {
             multi = -1;
         }
-        if (Math.abs(slope) < 1) {
-            posX += 625 * multi;
-        } else {
-            posY += slope * 625 * multi;
-        }
-        for (int i = 0; i < 4000; i+= 50) {
+        for (int i = 0; i < 4000; i+= 5) {
             dist = Math.sqrt(Math.pow(player.getPosX() - posX, 2) + Math.pow(player.getPosY() - posY, 2));
-            if (dist % 500 < 100 && dist < 3000) {
+            if (dist % 500 < 3 && dist < 3000) {
                 detected = false;
+                dist = Math.sqrt(Math.pow(player.getPosX() - posX + i * multi, 2) + Math.pow(player.getPosY() - posY + i * slope * multi, 2));
+                if (dist < 650) {
+                    detected = true;
+                }
                 for (int j = 0; j < asteroids.size(); j++) {
                     tempAst = asteroids.get(j);
-                    dist = Math.sqrt(Math.pow(tempAst.getPosX() - posX, 2) + Math.pow(tempAst.getPosY() - posY, 2));
+                    dist = Math.sqrt(Math.pow(tempAst.getPosX() - posX + i * multi, 2) + Math.pow(tempAst.getPosY() - posY + i * slope * multi, 2));
                     if (dist < 500) {
                         detected = true;
                     }
                 }
-                for (int j = 0; j < 10; j++) {
-                    AsteroidSpawning.spawnAtPos(asteroids, posX + i * multi, posY + slope * i * multi, 250, 0.5, 10, 10, 5, 20);
+                if(!detected) {
+                    for (int j = 0; j < 10; j++) {
+                        AsteroidSpawning.spawnAtPos(asteroids, posX + i * multi, posY + slope * i * multi, 250, 0.5, 10, 10, 5, 20);
+                    }
                 }
-                i += 100;
+                i += 10;
             }
         }
     }
