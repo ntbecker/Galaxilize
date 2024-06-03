@@ -71,6 +71,7 @@ public class GameScreen implements Screen {
         }
 
         if(counter%slow == 0) {
+            AsteroidSpawning.update(physicsObjectsList);
             for (int i = 0; i < physicsObjectsList.size(); i++) {
                 for (int j = 0; j < physicsObjectsList.size(); j++) {
                     if (j != i) {
