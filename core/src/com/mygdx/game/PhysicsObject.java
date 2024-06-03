@@ -133,11 +133,19 @@ abstract public class PhysicsObject {
      * @return True if the objects are overlapping
      */
     protected boolean isColliding(PhysicsObject other){
-        double distSquared = Math.pow((other.getPosX()-posX),2.0) + Math.pow((other.getPosY()-posY),2.0);
+        double distSquared;
         double radiiSquared = Math.pow((other.getRadius()+radius),2.0);
 
         // If the objects are closer than the length of the two radii, return true because they are colliding
-        return distSquared < radiiSquared;
+        // Move slowly to check if the object will collide during the next update() call
+        for(int i = 0; i < 10; i++) {
+        distSquared = Math.pow((other.getPosX()+other.getVelX()*i/10.0-posX-velX*i/10.0),2.0) + Math.pow((other.getPosY()+other.getVelY()*i/10.0-posY-velY*i/10.0),2.0);
+            if (distSquared < radiiSquared) {
+                return true;
+            }
+        }
+        // If all else fails, they aren't colliding
+        return false;
     }
 
     /**
