@@ -26,7 +26,7 @@ public class Galaxilize extends Game {
 		subTitleFont.getData().setScale(5);
 		img = new Texture("badlogic.jpg");
 		// Sets the screen to the Main Menu
-		this.setScreen(new MainMenuScreen());
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class Galaxilize extends Game {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		subTitleFont.dispose();
+		titleFont.dispose();
 	}
-	public void create() {
-		this.setScreen(new MainMenuScreen());
-	}
+
 }
 

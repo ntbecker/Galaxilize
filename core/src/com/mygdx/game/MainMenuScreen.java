@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
     /**
      * Constructor for main menu
      */
-    public MainMenuScreen() {
+    public MainMenuScreen(final Galaxilize game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 800);
@@ -87,7 +87,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Tutorial button clicked");
-                // Show tutorial logic here
+
             }
         });
 

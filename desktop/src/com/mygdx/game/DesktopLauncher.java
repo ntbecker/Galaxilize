@@ -14,4 +14,4 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		new Lwjgl3Application(new Galaxilize(), config);
 	}
-}
+	}
