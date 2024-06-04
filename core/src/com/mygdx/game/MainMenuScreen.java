@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
     /**
      * Constructor for main menu
      */
-    public MainMenuScreen(Galaxilize game) {
+    public MainMenuScreen(final Galaxilize game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 800);
@@ -55,60 +55,60 @@ public class MainMenuScreen implements Screen {
         }
 
         // Render the stage
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        stage.act(delta);
-//        stage.draw();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
     public void show() {
-//        stage = new Stage(new ScreenViewport());
-//        Gdx.input.setInputProcessor(stage);
-//
-//        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have a skin JSON file
-//
-//        Table table = new Table();
-//        table.setFillParent(true);
-//        stage.addActor(table);
-//
-//        TextButton playButton = new TextButton("Play!", skin);
-//        TextButton tutorialButton = new TextButton("Tutorial", skin);
-//        TextButton quitButton = new TextButton("Quit", skin);
-//
-//        playButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                System.out.println("Play button clicked");
-//                // Start game logic here
-//            }
-//        });
-//
-//        tutorialButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                System.out.println("Tutorial button clicked");
-//                // Show tutorial logic here
-//            }
-//        });
-//
-//        quitButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                System.out.println("Quit button clicked");
-//                Gdx.app.exit();
-//            }
-//        });
-//
-//        table.add(playButton).fillX().uniformX();
-//        table.row().pad(10, 0, 10, 0);
-//        table.add(tutorialButton).fillX().uniformX();
-//        table.row();
-//        table.add(quitButton).fillX().uniformX();
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have a skin JSON file
+
+        Table table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
+
+        TextButton playButton = new TextButton("Play!", skin);
+        TextButton tutorialButton = new TextButton("Tutorial", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
+
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Play button clicked");
+                // Start game logic here
+            }
+        });
+
+        tutorialButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Tutorial button clicked");
+
+            }
+        });
+
+        quitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Quit button clicked");
+                Gdx.app.exit();
+            }
+        });
+
+        table.add(playButton).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(tutorialButton).fillX().uniformX();
+        table.row();
+        table.add(quitButton).fillX().uniformX();
     }
 
     @Override
     public void resize(int width, int height) {
-        //stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        //stage.dispose();
-        //skin.dispose();
+        stage.dispose();
+        skin.dispose();
     }
 }
