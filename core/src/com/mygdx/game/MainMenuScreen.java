@@ -39,20 +39,21 @@ public class MainMenuScreen implements Screen {
         // Fill screen with black
         ScreenUtils.clear(0, 0, 0, 1);
 
-        // Update the camera
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-
-        // Draw sprites here
-        game.batch.begin();
-        game.titleFont.draw(game.batch, "GALAXILIZE", 0, 800, 800, 1, false);
-        game.subTitleFont.draw(game.batch, "Click to start!", 0, 650, 800, 1, false);
-        game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
+//        Old menu code, not sure if anyone needs this
+//        // Update the camera
+//        camera.update();
+//        game.batch.setProjectionMatrix(camera.combined);
+//
+//        // Draw sprites here
+//        game.batch.begin();
+//        game.titleFont.draw(game.batch, "GALAXILIZE", 0, 800, 800, 1, false);
+//        game.subTitleFont.draw(game.batch, "Click to start!", 0, 650, 800, 1, false);
+//        game.batch.end();
+//
+//        if (Gdx.input.isTouched()) {
+//            game.setScreen(new GameScreen(game));
+//            dispose();
+//        }
 
         // Render the stage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -65,7 +66,8 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have a skin JSON file
+        // Skin file from https://github.com/czyzby/gdx-skins/tree/master/default
+        skin = new Skin(Gdx.files.internal("UI/uiskin.json")); // Ensure you have a skin JSON file
 
         Table table = new Table();
         table.setFillParent(true);
@@ -78,8 +80,8 @@ public class MainMenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Play button clicked");
-                // Start game logic here
+                game.setScreen(new GameScreen(game));
+                dispose();
             }
         });
 
