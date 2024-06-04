@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -55,30 +56,56 @@ public class GameScreen implements Screen {
         physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
 
         // Attach the player to the first Asteroid in the list
-        player.setIsHooked(true);
-        player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
+        //player.setIsHooked(true);
+        //player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
     }
 
     public void render(float delta) {
-        ScreenUtils.clear(0,0,0,1);
+        ScreenUtils.clear(0, 0, 0, 1);
         // Slows the game's physics down to 1/5th speed
-        if(Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2){
+        if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) {
             speedFactor -= 0.08;
-        }else if(speedFactor < 0.2){
+        } else if (speedFactor < 0.2) {
             speedFactor = 0.2;
         }
-
-        if(!Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor < 1){
+        if (!Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor < 1) {
             speedFactor += 0.08;
-        }else if(speedFactor > 1){
+        } else if (speedFactor > 1) {
             speedFactor = 1;
         }
 
+        // Check if the player is clicking on an asteroid
+        if (Gdx.input.justTouched()){
+            // Get input relative to game world, not screen
+            Vector3 input = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+            camera.unproject(input);
+
+            // Closest to wherever the player is clicking
+            double bestDist = 400;
+            int finalIndex = 0;
+
+            for(int i = 1; i < physicsObjectsList.size(); i++){
+                double checkDist = ((Asteroid)physicsObjectsList.get(i)).mouseDist(input.x,input.y);
+                if(checkDist < bestDist){
+                    bestDist = checkDist;
+                    finalIndex = i;
+                }
+            }
+
+            if(finalIndex != 0){
+                player.setIsHooked(true);
+                player.setHookedAsteroid((Asteroid) physicsObjectsList.get(finalIndex));
+            }
+        }
+
+
 
         //AsteroidSpawning.update(physicsObjectsList);
+
+        // Check all collisions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             for (int j = 0; j < physicsObjectsList.size(); j++) {
                 if (j != i) {
@@ -86,12 +113,13 @@ public class GameScreen implements Screen {
                 }
             }
         }
+        // Update the player and grappled asteroid
         player.updateHook(speedFactor);
+
+        // Update all physics object's positions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
         }
-
-
 
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
