@@ -148,7 +148,7 @@ public class Player extends PhysicsObject{
         super.toString()
     }*/
 
-    public void updatePos(){
+    public void updatePos(double speedFactor){
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
             accX = -0.1;
         }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
@@ -166,13 +166,13 @@ public class Player extends PhysicsObject{
         }
 
 
-        super.updatePos();
+        super.updatePos(speedFactor);
     }
 
     /**
      * Updates the physics for the grappling hook.
      */
-    public void updateHook() {
+    public void updateHook(double speedFactor) {
         if (hookedAsteroid != null && isHooked) { //Don't try to calculate physics for the grappling hook if it is not active or not connected to anything.
             double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX() - posX, 2) + Math.pow(hookedAsteroid.getPosY() - posY, 2)); //Calculates the distance between the center of the asteroid and the player.
             if (dist < 2*radius + hookedAsteroid.getRadius()) { //Disconnects the asteroid from the player if they are too close.
@@ -190,11 +190,11 @@ public class Player extends PhysicsObject{
                 double forceCent = (Math.sqrt(dist))/4;
 
 
-                velX += (forceCent * Math.cos(angle))/mass;
-                hookedAsteroid.setVelX(hookedAsteroid.getVelX() + (forceCent * Math.cos(angle+Math.PI))/hookedAsteroid.getMass());
+                velX += (forceCent * Math.cos(angle))/mass*speedFactor;
+                hookedAsteroid.setVelX(hookedAsteroid.getVelX() + (forceCent * Math.cos(angle+Math.PI))/hookedAsteroid.getMass()*speedFactor);
 
-                velY += (forceCent * Math.sin(angle))/mass;
-                hookedAsteroid.setVelY(hookedAsteroid.getVelY() + (forceCent * Math.sin(angle+Math.PI))/hookedAsteroid.getMass());
+                velY += (forceCent * Math.sin(angle))/mass*speedFactor;
+                hookedAsteroid.setVelY(hookedAsteroid.getVelY() + (forceCent * Math.sin(angle+Math.PI))/hookedAsteroid.getMass()*speedFactor);
             }
         }
     }

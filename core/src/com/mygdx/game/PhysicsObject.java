@@ -72,14 +72,15 @@ abstract public class PhysicsObject {
      */
     abstract public void draw(SpriteBatch game);
 
-    public void updatePos(){
+    public void updatePos(double speedFactor){
+
         // If this object has collided, nextVel is the new velocity
         if(hasCollided){
             velX = nextVelX;
             velY = nextVelY;
             // Move once to avoid colliding next frame
-            posX += nextVelX;
-            posY += nextVelY;
+            posX += nextVelX*speedFactor;
+            posY += nextVelY*speedFactor;
 
             hasCollided = false;
         }
@@ -89,16 +90,16 @@ abstract public class PhysicsObject {
         velY += accY;
 
         // Update position based on velocity
-        posX += velX;
-        posY += velY;
+        posX += velX*speedFactor;
+        posY += velY*speedFactor;
     }
 
     /**
      * Checks the collision between this object and another, and changes the velocity accordingly
      * @param other The other object that is being checked with
      */
-    public void checkCollision(PhysicsObject other){
-        if(isColliding(other)){
+    public void checkCollision(PhysicsObject other, double speedFactor){
+        if(isColliding(other, speedFactor)){
             // Call these here so that we don't repeat method calls in the next two formulas
             double otherMass = other.getMass();
             double otherVelX = other.getVelX();
@@ -132,14 +133,14 @@ abstract public class PhysicsObject {
      * @param other The other object
      * @return True if the objects are overlapping
      */
-    protected boolean isColliding(PhysicsObject other){
+    protected boolean isColliding(PhysicsObject other, double speedFactor){
         double distSquared;
         double radiiSquared = Math.pow((other.getRadius()+radius),2.0);
 
         // If the objects are closer than the length of the two radii, return true because they are colliding
         // Move slowly to check if the object will collide during the next update method call
         for(int i = 0; i < 10; i++) {
-        distSquared = Math.pow((other.getPosX()+other.getVelX()*i/10.0-posX-velX*i/10.0),2.0) + Math.pow((other.getPosY()+other.getVelY()*i/10.0-posY-velY*i/10.0),2.0);
+            distSquared = Math.pow((other.getPosX()+(other.getVelX()*speedFactor)*i/10.0-posX-(velX*speedFactor)*i/10.0),2.0) + Math.pow((other.getPosY()+(other.getVelY()*speedFactor)*i/10.0-posY-(velY*speedFactor)*i/10.0),2.0);
             if (distSquared < radiiSquared) {
                 return true;
             }

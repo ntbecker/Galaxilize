@@ -17,9 +17,10 @@ public class GameScreen implements Screen {
     private Player player;
     private Asteroid a;
     private Texture background;
+    private Texture slowEffect;
 
-    private int counter;
-    private int slow;
+    private double speedFactor;
+    private boolean slowMotion;
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -28,10 +29,6 @@ public class GameScreen implements Screen {
         // Game object to draw to
         this.game = game;
 
-        // Counters used for slow motion
-        counter = 0;
-        slow = 1;
-
         // Create camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,800);
@@ -39,6 +36,10 @@ public class GameScreen implements Screen {
         // Initialize background texture
         background = new Texture("background.png");
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+        // Initialize screen effect textures
+        slowEffect = new Texture("slowmotion_effect.png");
+
 
         // List where all physics affected objects are stored
         physicsObjectsList = new ArrayList<PhysicsObject>();
@@ -54,36 +55,39 @@ public class GameScreen implements Screen {
         physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
         physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
 
-
         // Attach the player to the first Asteroid in the list
         player.setIsHooked(true);
         player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
+
+        // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
+        speedFactor = 1;
+        slowMotion = false;
     }
 
     public void render(float delta) {
         ScreenUtils.clear(0,0,0,1);
-
-        // Slow motion code cause slow motion is cool
-        counter++;
-        slow = 1;
+        // Slows the game's physics down to 1/5th speed
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
-            slow = 4;
+            speedFactor = 0.2;
+            slowMotion = true;
+        }else{
+            speedFactor = 1;
+            slowMotion = false;
         }
-
-        if(counter%slow == 0) {
-            AsteroidSpawning.update(physicsObjectsList);
-            for (int i = 0; i < physicsObjectsList.size(); i++) {
-                for (int j = 0; j < physicsObjectsList.size(); j++) {
-                    if (j != i) {
-                        physicsObjectsList.get(i).checkCollision(physicsObjectsList.get(j));
-                    }
+        //AsteroidSpawning.update(physicsObjectsList);
+        for (int i = 0; i < physicsObjectsList.size(); i++) {
+            for (int j = 0; j < physicsObjectsList.size(); j++) {
+                if (j != i) {
+                    physicsObjectsList.get(i).checkCollision(physicsObjectsList.get(j),speedFactor);
                 }
             }
-            player.updateHook();
-            for (int i = 0; i < physicsObjectsList.size(); i++) {
-                physicsObjectsList.get(i).updatePos();
-            }
         }
+        player.updateHook(speedFactor);
+        for (int i = 0; i < physicsObjectsList.size(); i++) {
+            physicsObjectsList.get(i).updatePos(speedFactor);
+        }
+
+
 
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
@@ -104,6 +108,11 @@ public class GameScreen implements Screen {
         // Draw hook between player and asteroid
         if(player.getHookedAsteroid() != null){
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
+        }
+
+        // Screen effects and UI
+        if(slowMotion) {
+            game.batch.draw(slowEffect, camera.position.x - 400, camera.position.y - 400);
         }
 
         // Drawing code ends
