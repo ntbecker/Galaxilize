@@ -20,7 +20,6 @@ public class GameScreen implements Screen {
     private Texture slowEffect;
 
     private double speedFactor;
-    private boolean slowMotion;
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -61,19 +60,24 @@ public class GameScreen implements Screen {
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
-        slowMotion = false;
     }
 
     public void render(float delta) {
         ScreenUtils.clear(0,0,0,1);
         // Slows the game's physics down to 1/5th speed
-        if(Gdx.input.isKeyPressed(Input.Keys.E)){
+        if(Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2){
+            speedFactor -= 0.08;
+        }else if(speedFactor < 0.2){
             speedFactor = 0.2;
-            slowMotion = true;
-        }else{
-            speedFactor = 1;
-            slowMotion = false;
         }
+
+        if(!Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor < 1){
+            speedFactor += 0.08;
+        }else if(speedFactor > 1){
+            speedFactor = 1;
+        }
+
+
         //AsteroidSpawning.update(physicsObjectsList);
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             for (int j = 0; j < physicsObjectsList.size(); j++) {
@@ -110,9 +114,10 @@ public class GameScreen implements Screen {
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
         }
 
-        // Screen effects and UI
-        if(slowMotion) {
-            game.batch.draw(slowEffect, camera.position.x - 400, camera.position.y - 400);
+        if(speedFactor < 1){
+            game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
+            game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
+            game.batch.setColor(1,1,1,1);
         }
 
         // Drawing code ends
