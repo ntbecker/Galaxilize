@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
-        physicsObjectsList.add(new Asteroid(300,200,0,10,1,10));
+        physicsObjectsList.add(new Asteroid(300,200,0,10,100,10));
         physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
         physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
         physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
@@ -114,8 +114,24 @@ public class GameScreen implements Screen {
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
         }
 
+        // Draws slow motion screen effects
         if(speedFactor < 1){
             game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
+
+            // Aiming line for orbiting asteroid or player, depending on which is bigger
+            if(player.getHookedAsteroid() != null && player.getMass() >= player.getHookedAsteroid().getMass()){
+                double velDir = Math.atan2(player.getHookedAsteroid().getVelY(),player.getHookedAsteroid().getVelX());
+                float posX = (float)player.getHookedAsteroid().getPosX();
+                float posY = (float)player.getHookedAsteroid().getPosY();
+                game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
+            }else if(player.getHookedAsteroid() != null && player.getMass() < player.getHookedAsteroid().getMass()){
+                double velDir = Math.atan2(player.getVelY(),player.getVelX());
+                float posX = (float)player.getPosX();
+                float posY = (float)player.getPosY();
+                game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
+            }
+
+            // Gradient around edges of screen
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
             game.batch.setColor(1,1,1,1);
         }
