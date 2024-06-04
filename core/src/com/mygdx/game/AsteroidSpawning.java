@@ -72,7 +72,7 @@ public class AsteroidSpawning {
         for(int i = 0; i < asteroids.size(); i++){
             currentAsteroid = asteroids.get(i);
             dist = Math.sqrt(Math.pow(currentAsteroid.getPosX() - player.getPosX(), 2) + Math.pow(currentAsteroid.getPosY() - player.getPosY(), 2));
-            if(dist > 5000){
+            if(dist > 2000){
                 asteroids.remove(i);
             }
         }
