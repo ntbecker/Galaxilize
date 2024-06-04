@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-// main class for the meny screen which is branched to the screen
+// Main class for the menu screen which is branched to the screen
 public class MainMenuScreen implements Screen {
 // my variables for the main menu screen
     private Stage stage;
