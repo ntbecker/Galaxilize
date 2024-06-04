@@ -122,7 +122,15 @@ abstract public class PhysicsObject {
             // Velocity is changed next update, hence nextVel variables
             nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
             nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
-
+            if(this instanceof Player){
+                double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
+                if(changeVel > 2 && changeVel < 5){
+                    ((Player)this).setHealth(((Player)this).getHealth() - 5*(int)changeVel);
+                }
+                else if(changeVel > 5){
+                    ((Player)this).setHealth(((Player)this).getHealth() - 25 - 5*(int)Math.sqrt(changeVel - 5));
+                }
+            }
             // When hasCollided is true, next update the velocity is set to nextVel
             hasCollided = true;
         }
