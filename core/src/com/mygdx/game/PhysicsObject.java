@@ -86,8 +86,8 @@ abstract public class PhysicsObject {
         }
 
         // Update velocity based on acceleration
-        velX += accX;
-        velY += accY;
+        velX += accX*speedFactor;
+        velY += accY*speedFactor;
 
         // Update position based on velocity
         posX += velX*speedFactor;
