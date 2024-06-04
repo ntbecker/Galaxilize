@@ -1,3 +1,7 @@
+/* Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ * 6/10/2024
+ * Subclass of PhysicsObject, accepts keyboard and mouse input to control the player object, also implements the grapple hook feature
+ */
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
