@@ -1,6 +1,8 @@
 package com.mygdx.game;
 import java.util.ArrayList;
 public class AsteroidSpawning {
+    private static ArrayList<Double> positions = new ArrayList<Double>(); //A variable to hold all positions that have previously spawned asteroids from.
+
     public static void update(ArrayList<PhysicsObject> objects) {
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
         Player player = (Player) objects.get(0);
@@ -29,38 +31,40 @@ public class AsteroidSpawning {
         } else {
             multi = -1;
         }
-        for (int i = 0; i < 4000; i+= 5) {
-            dist = Math.sqrt(Math.pow(player.getPosX() - posX, 2) + Math.pow(player.getPosY() - posY, 2));
-            if (dist % 500 < 3 && dist < 3000) {
-                detected = false;
-                dist = Math.sqrt(Math.pow(player.getPosX() - posX + i * multi, 2) + Math.pow(player.getPosY() - posY + i * slope * multi, 2));
-                if (dist < 650) {
-                    detected = true;
-                }
-                for (int j = 0; j < asteroids.size(); j++) {
-                    tempAst = asteroids.get(j);
-                    dist = Math.sqrt(Math.pow(tempAst.getPosX() - posX + i * multi, 2) + Math.pow(tempAst.getPosY() - posY + i * slope * multi, 2));
-                    if (dist < 500) {
-                        detected = true;
-                    }
-                }
-                if(!detected) {
-                    for (int j = 0; j < 10; j++) {
-                        AsteroidSpawning.spawnAtPos(asteroids, posX + i * multi, posY + slope * i * multi, 250, 0.5, 10, 10, 5, 20);
-                    }
-                }
-                i += 10;
+        for(int i = - 1; i <= 1; i++) {
+            for (int j = 0; j < 5; j++) {
+                spawnAtPos(asteroids, posX - 650, posY + i * 500, 250, 0.5, 10, 10, 7, 30);
+            }
+            for (int j = 0; j < 5; j++) {
+                spawnAtPos(asteroids, posX + 650, posY + i * 500, 250, 0.5, 10, 10, 7, 30);
+            }
+            for (int j = 0; j < 5; j++) {
+                spawnAtPos(asteroids, posX + i * 500, posY + 650, 250, 0.5, 10, 10, 7, 30);
+            }
+            for (int j = 0; j < 5; j++) {
+                spawnAtPos(asteroids, posX + i * 500, posY - 650, 250, 0.5, 10, 10, 7, 30);
             }
         }
     }
     private static void spawnAtPos(ArrayList<Asteroid> asteroids, double posX, double posY, double spread, double maxVel, double minRadius, double maxRadius, double minMass, double maxMass){
         posX += (Math.random()*spread*2)-spread;
         posY += (Math.random()*spread*2)-spread;
-        double velX = (Math.random()*maxVel*2)-1;
-        double velY = (Math.random()*maxVel*2)-1;
-        double radius = (Math.random()*(maxRadius - minRadius)) + minRadius;
-        double mass = (Math.random()*(maxMass - minMass)) + minMass;
-        asteroids.add(new Asteroid(posX,posY,velX,velY,mass,radius));
+        boolean spawn = true;
+        for(int i = 0; i < positions.size(); i+= 2){
+            double dist = Math.sqrt(Math.pow(positions.get(i) - posX, 2) + Math.pow(positions.get(i + 1) - posY, 2));
+            if(dist < 150){
+                spawn = false;
+            }
+        }
+        if(spawn) {
+            positions.add(posX);
+            positions.add(posY);
+            double velX = (Math.random() * maxVel * 2) - 1;
+            double velY = (Math.random() * maxVel * 2) - 1;
+            double radius = (Math.random() * (maxRadius - minRadius)) + minRadius;
+            double mass = (Math.random() * (maxMass - minMass)) + minMass;
+            asteroids.add(new Asteroid(posX, posY, velX, velY, mass, radius));
+        }
     }
     private static void deleteAsteroids(Player player, ArrayList<Asteroid> asteroids){
         double dist;
@@ -73,4 +77,5 @@ public class AsteroidSpawning {
             }
         }
     }
+
 }
