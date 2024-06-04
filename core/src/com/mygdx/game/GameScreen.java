@@ -66,6 +66,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         // Slows the game's physics down to 1/5th speed
+
         if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) {
             speedFactor -= 0.08;
         } else if (speedFactor < 0.2) {
@@ -75,6 +76,11 @@ public class GameScreen implements Screen {
             speedFactor += 0.08;
         } else if (speedFactor > 1) {
             speedFactor = 1;
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            player.setHookedAsteroid(null);
+            player.setIsHooked(false);
         }
 
         // Check if the player is clicking on an asteroid
@@ -101,9 +107,7 @@ public class GameScreen implements Screen {
             }
         }
 
-
-
-        //AsteroidSpawning.update(physicsObjectsList);
+        AsteroidSpawning.update(physicsObjectsList);
 
         // Check all collisions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
@@ -167,11 +171,6 @@ public class GameScreen implements Screen {
 
         // Drawing code ends
         game.batch.end();
-
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            player.setHookedAsteroid(null);
-            player.setIsHooked(false);
-        }
     }
 
 
