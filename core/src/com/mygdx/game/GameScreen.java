@@ -117,7 +117,7 @@ public class GameScreen implements Screen {
         // Draws slow motion screen effects
         if(speedFactor < 1){
             game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
-
+            game.shapeDrawer.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
             // Aiming line for orbiting asteroid or player, depending on which is bigger
             if(player.getHookedAsteroid() != null && player.getMass() >= player.getHookedAsteroid().getMass()){
                 double velDir = Math.atan2(player.getHookedAsteroid().getVelY(),player.getHookedAsteroid().getVelX());
@@ -133,6 +133,7 @@ public class GameScreen implements Screen {
 
             // Gradient around edges of screen
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
+            game.shapeDrawer.setColor(1,1,1,1);
             game.batch.setColor(1,1,1,1);
         }
 
