@@ -45,15 +45,15 @@ public class GameScreen implements Screen {
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
         // Initialize player
-        player = new Player(200,200,0,0,10,10);
+        player = new Player(200,200,0,10,10,10);
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
-        physicsObjectsList.add(new Asteroid(300,200,0,10,100,10));
-        physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
-        physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
-        physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
-        physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
+//        physicsObjectsList.add(new Asteroid(300,200,0,10,100,10));
+//        physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
+//        physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
+//        physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
+//        physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
 
         // Attach the player to the first Asteroid in the list
         //player.setIsHooked(true);
@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
         // Draw all physics objects
         for(int i = 0; i < physicsObjectsList.size(); i++){
             // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
-            physicsObjectsList.get(i).draw(game.batch);
+            physicsObjectsList.get(i).draw(game.batch, game.shapeDrawer);
         }
 
         // Draw hook between player and asteroid

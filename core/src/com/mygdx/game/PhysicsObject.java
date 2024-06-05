@@ -5,8 +5,8 @@
 
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 abstract public class PhysicsObject {
 
@@ -68,9 +68,11 @@ abstract public class PhysicsObject {
 
     /**
      * Draws the object to the Galaxilize window
+     *
      * @param game The spritebatch defined in Galaxilize class
+     * @param shapeDrawer The shapeDrawer defined in Galaxilize class
      */
-    abstract public void draw(SpriteBatch game);
+    abstract public void draw(SpriteBatch game, ShapeDrawer shapeDrawer);
 
     public void updatePos(double speedFactor){
 

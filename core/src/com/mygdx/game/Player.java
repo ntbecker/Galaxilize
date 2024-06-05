@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Player extends PhysicsObject{
     private static Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
@@ -59,9 +60,11 @@ public class Player extends PhysicsObject{
 
     /**
      * Draw's the texture of this ship
+     *
      * @param s The open spritebatch to draw to
+     * @param shapeDrawer The shapeDrawer to draw with
      */
-    public void draw(SpriteBatch s){
+    public void draw(SpriteBatch s, ShapeDrawer shapeDrawer){
         s.draw(playerTexture, (float) (posX-radius), (float) (posY-radius));
     }
     /**
