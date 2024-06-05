@@ -33,16 +33,16 @@ public class AsteroidSpawning {
         }
         for(int i = - 1; i <= 1; i++) {
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX - 650, posY + i * 500, 250, 0.5, 10, 10, 3, 30);
+                spawnAtPos(asteroids, posX - 650, posY + i * 500, 250, 0.5, 5, 50, 3, 30);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + 650, posY + i * 500, 250, 0.5, 10, 10, 3, 30);
+                spawnAtPos(asteroids, posX + 650, posY + i * 500, 250, 0.5, 5, 50, 3, 30);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + i * 500, posY + 650, 250, 0.5, 10, 10, 3, 30);
+                spawnAtPos(asteroids, posX + i * 500, posY + 650, 250, 0.5, 5, 50, 3, 30);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + i * 500, posY - 650, 250, 0.5, 10, 10, 3, 30);
+                spawnAtPos(asteroids, posX + i * 500, posY - 650, 250, 0.5, 5, 50, 3, 30);
             }
         }
     }
