@@ -34,11 +34,11 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false,800,800);
 
         // Initialize background texture
-        background = new Texture("background.png");
+        background = new Texture("Background_Elements/Background.png");
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         // Initialize screen effect textures
-        slowEffect = new Texture("slowmotion_effect.png");
+        slowEffect = new Texture("Screen_Effects/slowmotion_effect.png");
 
 
         // List where all physics affected objects are stored
@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
         // Drawing code starts
         game.batch.begin();
         // Background (800 by 800 scrolling texture always drawn to the camera)
-        game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),800,800);
+        game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),800,1600);
 
         // Draw all physics objects
         for(int i = 0; i < physicsObjectsList.size(); i++){
