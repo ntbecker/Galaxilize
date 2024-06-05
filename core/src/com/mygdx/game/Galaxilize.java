@@ -26,7 +26,7 @@ public class Galaxilize extends Game {
 		titleFont.getData().setScale(10);
 		subTitleFont.getData().setScale(5);
 
-		whitePixel = new Texture("whitePixel.png");
+		whitePixel = new Texture("White_Pixel.png");
 		// Texture region specifies a single white pixel
 		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(whitePixel,0,0,1,1));
 		shapeDrawer.setColor(Color.WHITE);
