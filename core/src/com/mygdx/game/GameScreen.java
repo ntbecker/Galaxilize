@@ -45,7 +45,7 @@ public class GameScreen implements Screen {
         physicsObjectsList = new ArrayList<PhysicsObject>();
 
         // Initialize player
-        player = new Player(200,200,0,10,10,10);
+        player = new Player(200,200,0,0,10,10);
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
