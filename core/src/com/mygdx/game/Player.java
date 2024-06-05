@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends PhysicsObject{
-    private static Texture playerTexture = new Texture("Object_Textures/circleRadius10.png");
+    private static Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
 
     int health;
     double fuel;

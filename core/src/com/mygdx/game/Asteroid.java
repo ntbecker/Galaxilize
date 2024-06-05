@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Asteroid extends PhysicsObject{
-    private static Texture asteroidTexture = new Texture("Object_Textures/circleRadius10.png");
+    private static Texture asteroidTexture = new Texture("Object_Textures/Circle_Radius_10.png");
     boolean containsUpgrade;
 
     /**

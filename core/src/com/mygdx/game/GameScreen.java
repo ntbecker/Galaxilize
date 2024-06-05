@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         // Initialize screen effect textures
-        slowEffect = new Texture("Screen_Effects/slowmotion_effect.png");
+        slowEffect = new Texture("Screen_Effects/Slowmotion_Effect.png");
 
 
         // List where all physics affected objects are stored
