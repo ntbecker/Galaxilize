@@ -54,7 +54,7 @@ public class Asteroid extends PhysicsObject{
      */
     public void draw(SpriteBatch s, ShapeDrawer shape){
         //s.draw(asteroidTexture, (float) (posX-radius), (float) (posY-radius));
-        shape.circle((float)posX,(float)posY,(float)radius);
+        shape.circle((float)posX,(float)posY,(float)radius, 3);
     }
 
     /**
