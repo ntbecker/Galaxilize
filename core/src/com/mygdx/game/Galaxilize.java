@@ -10,7 +10,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Galaxilize extends Game {
 	public SpriteBatch batch;
-	public Texture img;
+	public Texture whitePixel;
 	public BitmapFont titleFont;
 	public BitmapFont subTitleFont;
 	public ShapeDrawer shapeDrawer;
@@ -25,11 +25,12 @@ public class Galaxilize extends Game {
 		subTitleFont = new BitmapFont();
 		titleFont.getData().setScale(10);
 		subTitleFont.getData().setScale(5);
-		img = new Texture("badlogic.jpg");
 
-		// Texture region specifies a single white pixel for
-		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(img,1,3,1,1));
+		whitePixel = new Texture("whitePixel.png");
+		// Texture region specifies a single white pixel
+		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(whitePixel,0,0,1,1));
 		shapeDrawer.setColor(Color.WHITE);
+
 
 		// Sets the screen to the Main Menu
 		this.setScreen(new MainMenuScreen(this));
@@ -50,7 +51,7 @@ public class Galaxilize extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		whitePixel.dispose();
 		subTitleFont.dispose();
 		titleFont.dispose();
 	}
