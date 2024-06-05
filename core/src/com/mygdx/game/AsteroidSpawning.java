@@ -52,7 +52,7 @@ public class AsteroidSpawning {
         boolean spawn = true;
         for(int i = 0; i < positions.size(); i+= 2){
             double dist = Math.sqrt(Math.pow(positions.get(i) - posX, 2) + Math.pow(positions.get(i + 1) - posY, 2));
-            if(dist < 150){
+            if(dist < 250){
                 spawn = false;
             }
         }
