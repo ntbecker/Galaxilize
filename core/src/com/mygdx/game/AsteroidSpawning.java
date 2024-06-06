@@ -33,20 +33,20 @@ public class AsteroidSpawning {
         }
         for(int i = - 1; i <= 1; i++) {
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX - 650, posY + i * 500, 250, 0.5, 5, 50, 3, 30);
+                spawnAtPos(asteroids, posX - 650, posY + i * 500, 250, 0.5, 5,100);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + 650, posY + i * 500, 250, 0.5, 5, 50, 3, 30);
+                spawnAtPos(asteroids, posX + 650, posY + i * 500, 250, 0.5, 5, 100);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + i * 500, posY + 650, 250, 0.5, 5, 50, 3, 30);
+                spawnAtPos(asteroids, posX + i * 500, posY + 650, 250, 0.5, 5, 100);
             }
             for (int j = 0; j < 5; j++) {
-                spawnAtPos(asteroids, posX + i * 500, posY - 650, 250, 0.5, 5, 50, 3, 30);
+                spawnAtPos(asteroids, posX + i * 500, posY - 650, 250, 0.5, 5, 100);
             }
         }
     }
-    private static void spawnAtPos(ArrayList<Asteroid> asteroids, double posX, double posY, double spread, double maxVel, double minRadius, double maxRadius, double minMass, double maxMass){
+    private static void spawnAtPos(ArrayList<Asteroid> asteroids, double posX, double posY, double spread, double maxVel, double minSize, double maxSize){
         posX += (Math.random()*spread*2)-spread;
         posY += (Math.random()*spread*2)-spread;
         boolean spawn = true;
@@ -62,8 +62,9 @@ public class AsteroidSpawning {
             exclusionRadius.add((int)(Math.random()*200) + 200);
             double velX = (Math.random() * maxVel * 2) - maxVel;
             double velY = (Math.random() * maxVel * 2) - maxVel;
-            double radius = (Math.random() * (maxRadius - minRadius)) + minRadius;
-            double mass = (Math.random() * (maxMass - minMass)) + minMass;
+            double size = (Math.random() * (maxSize - minSize)) + minSize;
+            double radius = size/2;
+            double mass =  size;
             asteroids.add(new Asteroid(posX, posY, velX, velY, mass, radius));
         }
     }
