@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.freetype.*;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import java.util.ArrayList;
 
@@ -14,7 +17,9 @@ public class GameScreen implements Screen {
 
     private final Galaxilize game;
     private OrthographicCamera camera;
-
+    FreeTypeFontGenerator generator;
+    FreeTypeFontParameter parameter;
+    BitmapFont font;
     private Player player;
     private Asteroid a;
     private Texture background;
@@ -60,6 +65,13 @@ public class GameScreen implements Screen {
         //player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
+        parameter = new FreeTypeFontParameter();
+        parameter.size = 12;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+
         speedFactor = 1;
     }
 
@@ -162,7 +174,7 @@ public class GameScreen implements Screen {
                 float posY = (float)player.getPosY();
                 game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
             }
-
+            font.draw(game.batch,"Score: " + player.getScore(),(float) player.getPosX() -240, (float)player.getPosY() - 230);
             // Gradient around edges of screen
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
             game.shapeDrawer.setColor(1,1,1,1);
