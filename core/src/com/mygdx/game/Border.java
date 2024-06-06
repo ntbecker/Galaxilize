@@ -36,7 +36,7 @@ public class Border {
      */
     public void draw(ShapeDrawer shapeDrawer, double camX){
         shapeDrawer.setColor(1,0,0,0.5f);
-        shapeDrawer.filledRectangle((float) (camX-400), (float) 0, (float) (camX+400), (float) posY);
+        shapeDrawer.filledRectangle((float) (camX-400), (float) -200, (float)(800), (float) posY);
         shapeDrawer.setColor(1,1,1,1);
     }
 
