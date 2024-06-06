@@ -1,18 +1,28 @@
+/*
+Matthew Witherspoon, Nathan Becker, Muhammad Umar
+June 11th 2024
+A class that spawns and deletes asteroids around the player randomly to generate the game area
+ */
 package com.mygdx.game;
 import java.util.ArrayList;
 public class AsteroidSpawning {
     private static ArrayList<Double> positions = new ArrayList<Double>(); //A variable to hold all positions that have previously spawned asteroids from.
     private static ArrayList<Integer> exclusionRadius = new ArrayList<Integer>();
+
+    /**
+     * Updates the spawning algorithm by activating the methods that spawn and delete asteroids. Also seperates asteroids and players into different variables for later manipulation.
+     * @param objects all of the physics objects in the game world.
+     */
     public static void update(ArrayList<PhysicsObject> objects) {
-        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-        Player player = (Player) objects.get(0);
-        for (int i = 1; i < objects.size(); i++) {
+        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); //An array list that will hold all of the asteroids.
+        Player player = (Player) objects.get(0); //Pulls the player from the first index of the physics objects array list.
+        for (int i = 1; i < objects.size(); i++) { //Loops through the rest of the physics object array list and puts all of the asteroids into a separate array list.
             asteroids.add((Asteroid) objects.get(i));
         }
-        spawnAsteroids(player, asteroids);
-        deleteAsteroids(player, asteroids);
-        objects.clear();
-        objects.add(player);
+        spawnAsteroids(player, asteroids); //Spawns new asteroids.
+        deleteAsteroids(player, asteroids); //Deletes distant asteroids.
+        objects.clear(); //Empty the objects array so no asteroids deleted or added aren't deleted or added to the world.
+        objects.add(player); //Add the player at the first index of the array list.
         for (int i = 0; i < asteroids.size(); i++) {
             objects.add(asteroids.get(i));
         }
