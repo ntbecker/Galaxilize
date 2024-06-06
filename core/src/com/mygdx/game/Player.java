@@ -11,14 +11,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Player extends PhysicsObject{
-    private static Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
-
+    private static final Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
+    private String name;
+    private double score;
+    private Scoring scoring;
     int health;
     double fuel;
-    int score;
+   // int score;
     boolean isHooked;
     Asteroid hookedAsteroid;
-    String name;
+    //String name;
     String playerName;
 
     /**
@@ -39,6 +41,7 @@ public class Player extends PhysicsObject{
         //hookedAsteroid = null;
         name = "";
         playerName = "";
+        scoring = new Scoring (); // initialize scoring
     }
 
     /**
@@ -52,10 +55,12 @@ public class Player extends PhysicsObject{
      * @param health The health of the player
      * @param fuel The fuel of the player
      */
-    public Player(double posX, double posY, double velX, double velY, double mass, double radius, int health, double fuel){
+    public Player(double posX, double posY, double velX, double velY, double mass, double radius, int health, double fuel,String name){
         this(posX,posY,velX,velY, mass, radius);
         this.health = health;
         this.fuel = fuel;
+        this.name = name ;
+
     }
 
     /**
@@ -71,73 +76,105 @@ public class Player extends PhysicsObject{
      * Returns the current health of the player.
      * @return the health of the player.
      */
-    public int getHealth(){ return(health); }
+    public int getHealth(){
+        return(health);
+    }
 
     /**
      * Sets the health of the player to the input value.
      * @param health the health of the player.
      */
-    public void setHealth(int health){ this.health = health; }
+    public void setHealth(int health){
+        this.health = health;
+    }
 
     /**
      * Returns the current fuel of the player.
      * @return the fuel of the player.
      */
-    public double getFuel(){ return(fuel); }
+    public double getFuel(){
+        return(fuel);
+    }
 
     /**
      * Sets the fuel of the player to the input value.
      * @param fuel the fuel of the player.
      */
-    public void setFuel(double fuel){ this.fuel = fuel; }
+    public void setFuel(double fuel){
+        this.fuel = fuel;
+    }
 
     /**
      * Returns the current score of the player.
      * @return the score of the player.
      */
-    public int getScore(){ return(score); }
+    public double getScore(){
+    return score;
+    }
 
     /**
      * Sets the score of the player to the input value.
      * @param score the score of the player.
      */
-    public void setScore(int score){ this.score = score; }
+    public void setScore(double score){
+        this.score = score;
+        scoring.addScore(score); // updat the highest score
+    }
+
+    /**0
+     * Sets the highest score
+     */
+    public void displayHighScores() {
+        scoring.displayHighScores();
+    }
 
     /**
      * Returns if the player is hooked to an asteroid.
      * @return a boolean holding if the player is hooked to an asteroid.
      */
-    public boolean getIsHooked(){ return(isHooked); }
+    public boolean getIsHooked(){
+        return(isHooked);
+    }
 
     /**
      * Sets if the player is hooked to an asteroid based on the input value.
      * @param isHooked a boolena holding if the player is hooked to an asteroid.
      */
-    public void setIsHooked(boolean isHooked){ this.isHooked = isHooked; }
+    public void setIsHooked(boolean isHooked){
+        this.isHooked = isHooked;
+    }
 
     /**
      * Returns the asteroid that the player is hooked onto.
      * @return the asteroid that the player is hooked onto.
      */
-    public Asteroid getHookedAsteroid() { return(hookedAsteroid); }
+    public Asteroid getHookedAsteroid() {
+        return(hookedAsteroid);
+    }
 
     /**
      * Sets what asteroid the player is hooked onto to the input object.
      * @param hookedAsteroid the asteroid that the player is hooked onto.
      */
-    public void setHookedAsteroid(Asteroid hookedAsteroid){ this.hookedAsteroid = hookedAsteroid; }
+    public void setHookedAsteroid(Asteroid hookedAsteroid){
+        this.hookedAsteroid = hookedAsteroid;
+    }
 
     /**
      * Returns a string holding the name of the ship.
      * @return a String holding the name of the ship.
      */
-    public String getName() { return(name); }
+    public String getName() {
+        return(name);
+    }
 
     /**
      * Sets the name of the ship to the input string.
      * @param name a string the name of the ship
      */
-    public void setName(String name){ this.name = name; }
+    public void setName(String name){
+        this.name = name;
+    }
 
     /**
      * Return a string holding the name of the player.
@@ -149,7 +186,9 @@ public class Player extends PhysicsObject{
      * Sets the name of the player to the input string.
      * @param playerName a string holding the name of the player.
      */
-    public void setPlayerName(String playerName){ this.playerName = playerName; }
+    public void setPlayerName(String playerName){
+        this.playerName = playerName;
+    }
     /*public String toString(){
         String returnString = "";
         super.toString()
