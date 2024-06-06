@@ -1,5 +1,5 @@
 /* Nathan Becker, Muhammad Umar, Matthew Witherspoon
- * 6/10/2024
+ * 6/11/2024
  * Abstract class for physics-affected objects, handles movement and collisions
  */
 

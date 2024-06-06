@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
-//        physicsObjectsList.add(new Asteroid(300,200,0,10,100,10));
+//        physicsObjectsList.add(new Asteroid(300,200,0,10,30,10));
 //        physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
 //        physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
 //        physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));

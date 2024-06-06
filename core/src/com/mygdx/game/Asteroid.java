@@ -1,5 +1,5 @@
 /* Nathan Becker, Muhammad Umar, Matthew Witherspoon
- * 6/10/2024
+ * 6/11/2024
  * Subclass of PhysicsObject, acts as an obstacle for the player
  */
 package com.mygdx.game;
