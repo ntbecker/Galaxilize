@@ -174,7 +174,7 @@ public class GameScreen implements Screen {
                 float posY = (float)player.getPosY();
                 game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
             }
-            font.draw(game.batch,"Score: " + player.getScore(),(float) player.getPosX() -240, (float)player.getPosY() - 230);
+            font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x, camera.position.y);
             // Gradient around edges of screen
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
             game.shapeDrawer.setColor(1,1,1,1);
