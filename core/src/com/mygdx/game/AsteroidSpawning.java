@@ -86,7 +86,7 @@ public class AsteroidSpawning {
             double velY = (Math.random() * maxVel * 2) - maxVel;
             double size = (Math.random() * (maxSize - minSize)) + minSize;
             double radius = size/2;
-            double mass =  size;
+            double mass =  size/2;
             asteroids.add(new Asteroid(posX, posY, velX, velY, mass, radius)); //Spawn the asteroid by adding it to the array.
         }
     }
