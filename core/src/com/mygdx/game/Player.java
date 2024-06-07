@@ -15,7 +15,7 @@ public class Player extends PhysicsObject{
     private String name;
     private int score;
     private Scoring scoring;
-    int health;
+    double health;
     double fuel;
    // int score;
     boolean isHooked;
@@ -67,7 +67,7 @@ public class Player extends PhysicsObject{
      * Reduces health by a value
      * @param dmgPoints The amount of damage the player should take
      */
-    public void dealDamage(int dmgPoints){
+    public void dealDamage(double dmgPoints){
         health -= dmgPoints;
     }
 
@@ -84,7 +84,7 @@ public class Player extends PhysicsObject{
      * Returns the current health of the player.
      * @return the health of the player.
      */
-    public int getHealth(){
+    public double getHealth(){
         return(health);
     }
 
@@ -92,7 +92,7 @@ public class Player extends PhysicsObject{
      * Sets the health of the player to the input value.
      * @param health the health of the player.
      */
-    public void setHealth(int health){
+    public void setHealth(double health){
         this.health = health;
     }
 

@@ -128,10 +128,10 @@ abstract public class PhysicsObject {
             if(this instanceof Player){
                 double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
                 if(changeVel > 5 && changeVel < 20){
-                    ((Player)this).setHealth(((Player)this).getHealth() - 5*(int)(changeVel/4));
+                    ((Player)this).dealDamage(5*(int)(changeVel/4));
                 }
                 else if(changeVel > 20){
-                    ((Player)this).setHealth(((Player)this).getHealth() - 20 - 5*(int)Math.sqrt(changeVel - 5));
+                    ((Player)this).dealDamage(-20 - 5*(int)Math.sqrt(changeVel - 5));
                     System.out.println(20 + 5*(int)Math.sqrt(changeVel - 5));
                 }
             }

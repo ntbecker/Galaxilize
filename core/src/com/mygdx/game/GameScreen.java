@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     private DecimalFormat velForm;
     private double speedFactor;
     private Border border;
+    private double timer;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
@@ -78,6 +79,9 @@ public class GameScreen implements Screen {
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
+
+        // A timer that counts up every 60th of an in game second (accounting for slowmotion effect)
+        double timer = 0;
     }
 
     public void render(float delta) {
@@ -143,6 +147,10 @@ public class GameScreen implements Screen {
         // Update all physics object's positions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
+        }
+
+        if(border.getPosY() > player.getPosY() - player.getRadius()){
+            player.dealDamage(speedFactor);
         }
 
         // Update camera position
