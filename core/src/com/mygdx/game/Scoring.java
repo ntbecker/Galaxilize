@@ -1,17 +1,19 @@
 package com.mygdx.game;
 // my imports
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Scoring {
     private static final String SCORES_FILE = "highscores.txt";// The file where high scores will be stored
-    private List<Double> highScores; // store high scores
-
+    private ArrayList<Integer> highScores; // store high scores
+    private ArrayList<String> scoreNames;
     /**
      * Constructor method initializing the highScores and load files
      */
     public Scoring() {
         highScores = new ArrayList<>();
+        scoreNames = new ArrayList<>();
         loadScores();
     }
 
@@ -19,13 +21,9 @@ public class Scoring {
      * Method to add new score to the high score list
      * @param score - the score
      */
-    public void addScore(double score) {
+    public void addScore(int score, String playerName) {
         highScores.add(score);
-        highScores.sort(Collections.reverseOrder());//setting high scores in the descending order
-        if (highScores.size() > 10) {
-            highScores = highScores.subList(0, 10);  // Keep only top 10 scores
-        }
-        saveScores(); // save the updated scores
+        saveScores();
     }
 
     /**
@@ -35,10 +33,10 @@ public class Scoring {
 
     private void loadScores() {
         try {
-            FileReader fileReader = new FileReader(SCORES_FILE);// create a file
-            Scanner scanner = new Scanner(fileReader);
+            File file = new File(SCORES_FILE);// create a file
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNextDouble()) {
-                highScores.add(scanner.nextDouble());
+                highScores.add(scanner.nextInt());
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -54,44 +52,44 @@ public class Scoring {
             try {
                 File file = new File(SCORES_FILE); // create a file
                 PrintWriter writer = new PrintWriter(file); // using this new function known as PrintWriter which will write to the file
-                for (double score : highScores) {
-                    writer.println(score);
+                for (int i = 0; i < highScores.size(); i++){
+                    writer.println(scoreNames.get(i));
+                    writer.println(highScores.get(i));
                 }
                 writer.close();
             } catch (FileNotFoundException e) {
                 System.out.println("An error occurred while saving the scores." + e);
-
-
-
-        }
+           }
     }
 
     /**
      * Method to diplay high scores to the file
      */
 
-    public void displayHighScores( ) {
-        System.out.println("High Scores:");
+    public String displayHighScores( ) {
+        String output  = "";
+        output += ("High Scores:");
         for (int i = 0; i < highScores.size(); i++) {
-            System.out.println((i + 1) + ". " + highScores.get(i));
+            output += ("\n" + (i + 1) + ". " + scoreNames.get(i) + highScores.get(i));
         }
+        return(output);
     }
 
-    /**
-     * Main Method to test everything
-     * @param args
-     */
-    public static void main(String[] args) {
-        Scoring scoring = new Scoring();
-
-        // Simulate adding scores
-        scoring.addScore(100);
-        scoring.addScore(200);
-        scoring.addScore(150);
-
-        // Display high scores
-        scoring.displayHighScores();
-    }
+//    /**
+//     * Main Method to test everything
+//     * @param args
+//     */
+//    public static void main(String[] args) {
+//        Scoring scoring = new Scoring();
+//
+//        // Simulate adding scores
+//        scoring.addScore(100);
+//        scoring.addScore(200);
+//        scoring.addScore(150);
+//
+//        // Display high scores
+//        scoring.displayHighScores();
+//    }
 }
 
 
