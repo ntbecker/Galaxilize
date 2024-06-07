@@ -11,20 +11,21 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
     private final Galaxilize game;
     private OrthographicCamera camera;
-    FreeTypeFontGenerator generator;
-    FreeTypeFontParameter parameter;
-    BitmapFont font;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontParameter parameter;
+    private BitmapFont font;
     private Player player;
     private Asteroid a;
     private Texture background;
     private Texture slowEffect;
-
+    private DecimalFormat velForm;
     private double speedFactor;
 
 
@@ -63,15 +64,17 @@ public class GameScreen implements Screen {
         // Attach the player to the first Asteroid in the list
         //player.setIsHooked(true);
         //player.setHookedAsteroid((Asteroid)physicsObjectsList.get(1));
-
-        // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
-
+        //Creates a font for use in the GUI
         generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
         parameter = new FreeTypeFontParameter();
-        parameter.size = 12;
+        parameter.size = 20;
         font = generator.generateFont(parameter);
         generator.dispose();
 
+        //Creates formating for velocity text.
+        velForm = new DecimalFormat("#,##0.0");
+
+        // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
     }
 
@@ -157,7 +160,11 @@ public class GameScreen implements Screen {
         if(player.getHookedAsteroid() != null){
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
         }
-
+        //Draws text for UI on the screen.
+        font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
+        game.shapeDrawer.circle(camera.position.x - 325,camera.position.y - 275,50);
+        game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())) );
+        font.draw(game.batch,"Velocity: " + velForm.format(Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.x - 380, camera.position.y - 350);
         // Draws slow motion screen effects
         if(speedFactor < 1){
             game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
@@ -174,7 +181,6 @@ public class GameScreen implements Screen {
                 float posY = (float)player.getPosY();
                 game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
             }
-            font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x, camera.position.y);
             // Gradient around edges of screen
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
             game.shapeDrawer.setColor(1,1,1,1);
