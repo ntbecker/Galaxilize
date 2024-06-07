@@ -99,6 +99,7 @@ abstract public class PhysicsObject {
     /**
      * Checks the collision between this object and another, and changes the velocity accordingly
      * @param other The other object that is being checked with
+     * @param speedFactor The speed that the game is running at
      */
     public void checkCollision(PhysicsObject other, double speedFactor){
         if(isColliding(other, speedFactor)){
