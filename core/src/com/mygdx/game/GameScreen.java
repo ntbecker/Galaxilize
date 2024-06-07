@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
     private Texture slowEffect;
     private DecimalFormat velForm;
     private double speedFactor;
-
+    private Border border;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
@@ -52,6 +52,8 @@ public class GameScreen implements Screen {
 
         // Initialize player
         player = new Player(200,200,0,0,10,10);
+
+        border = new Border(-200,1);
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
@@ -124,6 +126,9 @@ public class GameScreen implements Screen {
 
         AsteroidSpawning.update(physicsObjectsList);
 
+        // Update border position
+        border.update(speedFactor);
+
         // Check all collisions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             for (int j = 0; j < physicsObjectsList.size(); j++) {
@@ -160,6 +165,10 @@ public class GameScreen implements Screen {
         if(player.getHookedAsteroid() != null){
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
         }
+
+        // Draw the border
+        border.draw(game.shapeDrawer, camera.position);
+
         //Draws text for UI on the screen.
         font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
         game.shapeDrawer.circle(camera.position.x - 325,camera.position.y - 275,50);

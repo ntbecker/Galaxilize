@@ -5,6 +5,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 public class Border {
 
@@ -32,11 +33,13 @@ public class Border {
     /**
      * Draws the border relative to the camera assuming the camera is 800 px wide
      * @param shapeDrawer Shape drawer from main game screen
-     * @param camX X position of the camera
+     * @param camPos Position of the camera
      */
-    public void draw(ShapeDrawer shapeDrawer, double camX){
+    public void draw(ShapeDrawer shapeDrawer, Vector3 camPos){
         shapeDrawer.setColor(1,0,0,0.5f);
-        shapeDrawer.filledRectangle((float) (camX-400), (float) -200, (float)(800), (float) posY);
+
+        // Draws the border across the X axis of the screen and from the bottom of the camera to the position it needs to be at in the Y axis
+        shapeDrawer.filledRectangle((camPos.x-400),camPos.y-400, (float)(800), (float) posY-camPos.y+400);
         shapeDrawer.setColor(1,1,1,1);
     }
 
