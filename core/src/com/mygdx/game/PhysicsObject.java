@@ -131,8 +131,7 @@ abstract public class PhysicsObject {
                     ((Player)this).dealDamage(5*(int)(changeVel/4));
                 }
                 else if(changeVel > 20){
-                    ((Player)this).dealDamage(-20 - 5*(int)Math.sqrt(changeVel - 5));
-                    System.out.println(20 + 5*(int)Math.sqrt(changeVel - 5));
+                    ((Player)this).dealDamage(20 + 5*(int)Math.sqrt(changeVel - 5));
                 }
             }
             // When hasCollided is true, next update the velocity is set to nextVel

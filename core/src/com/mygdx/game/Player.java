@@ -124,10 +124,10 @@ public class Player extends PhysicsObject{
      * Sets the score of the player to the input value.
      * @param score the score of the player.
      */
-    public void setScore(int score){
-        this.score = score;
-        scoring.addScore(score); // updat the highest score
-    }
+//    public void setScore(int score){
+//        this.score = score;
+//        scoring.addScore(score); // updat the highest score
+//    }
 
     /**0
      * Sets the highest score
