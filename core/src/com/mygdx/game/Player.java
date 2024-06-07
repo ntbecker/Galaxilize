@@ -64,6 +64,14 @@ public class Player extends PhysicsObject{
     }
 
     /**
+     * Reduces health by a value
+     * @param dmgPoints The amount of damage the player should take
+     */
+    public void dealDamage(int dmgPoints){
+        health -= dmgPoints;
+    }
+
+    /**
      * Draw's the texture of this ship
      *
      * @param s The open spritebatch to draw to
