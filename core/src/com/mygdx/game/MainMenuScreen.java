@@ -2,6 +2,7 @@ package com.mygdx.game;
 // imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,6 +20,7 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
     final Galaxilize game;
     OrthographicCamera camera;
+    Music menuMusic;
 
     /**
      * Constructor for main menu
@@ -27,6 +29,10 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 800);
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
+        menuMusic.play();
+        menuMusic.setVolume(0.5f);
+        menuMusic.setLooping(true);
     }
 
 
