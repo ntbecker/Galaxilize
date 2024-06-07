@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     private DecimalFormat velForm;
     private double speedFactor;
     private Border border;
+    private double timer;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
@@ -78,6 +79,9 @@ public class GameScreen implements Screen {
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
+
+        // A timer that counts up every 60th of an in game second (accounting for slowmotion effect)
+        double timer = 0;
     }
 
     public void render(float delta) {
@@ -145,6 +149,10 @@ public class GameScreen implements Screen {
             physicsObjectsList.get(i).updatePos(speedFactor);
         }
 
+        if(border.getPosY() > player.getPosY() - player.getRadius()){
+            player.dealDamage(speedFactor);
+        }
+
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
         camera.update();
@@ -169,15 +177,27 @@ public class GameScreen implements Screen {
         // Draw the border
         border.draw(game.shapeDrawer, camera.position);
 
+        // UI
+
         //Draws text for UI on the screen.
         font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
         game.shapeDrawer.circle(camera.position.x - 325,camera.position.y - 275,50);
         game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())) );
         font.draw(game.batch,"Velocity: " + velForm.format(Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.x - 380, camera.position.y - 350);
+
+        // Draws Healthbar
+        game.shapeDrawer.setColor(0,1,0,1);
+        game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y+300, (float) player.getHealth(),30);
+        game.shapeDrawer.setColor(1,1,1,1);
+
+
+        // Screen Effects
+
         // Draws slow motion screen effects
         if(speedFactor < 1){
             game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
             game.shapeDrawer.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
+
             // Aiming line for orbiting asteroid or player, depending on which is bigger
             if(player.getHookedAsteroid() != null && player.getMass() >= player.getHookedAsteroid().getMass()){
                 double velDir = Math.atan2(player.getHookedAsteroid().getVelY(),player.getHookedAsteroid().getVelX());
