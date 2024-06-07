@@ -13,7 +13,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public class Player extends PhysicsObject{
     private static final Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
     private String name;
-    private double score;
+    private int score;
     private Scoring scoring;
     int health;
     double fuel;
@@ -108,7 +108,7 @@ public class Player extends PhysicsObject{
      * Returns the current score of the player.
      * @return the score of the player.
      */
-    public double getScore(){
+    public int getScore(){
     return score;
     }
 
@@ -116,7 +116,7 @@ public class Player extends PhysicsObject{
      * Sets the score of the player to the input value.
      * @param score the score of the player.
      */
-    public void setScore(double score){
+    public void setScore(int score){
         this.score = score;
         scoring.addScore(score); // updat the highest score
     }
