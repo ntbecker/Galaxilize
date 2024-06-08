@@ -23,6 +23,7 @@ public class Scoring {
      */
     public void addScore(int score, String playerName) {
         highScores.add(score);
+        scoreNames.add(playerName);
         saveScores();
     }
 
@@ -35,8 +36,9 @@ public class Scoring {
         try {
             File file = new File(SCORES_FILE);// create a file
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNextDouble()) {
-                highScores.add(scanner.nextInt());
+            while (scanner.hasNextLine()) {
+                scoreNames.add(scanner.nextLine());
+                highScores.add(Integer.parseInt(scanner.nextLine()));
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -61,15 +63,20 @@ public class Scoring {
                 System.out.println("An error occurred while saving the scores." + e);
            }
     }
-
+    public ArrayList<Integer> dscMerge(ArrayList<Integer> highScores){
+        return(highScores);
+    }
+    public ArrayList<Integer> dscMergeSort(ArrayList<Integer> highScores){
+        return(highScores);
+    }
     /**
-     * Method to diplay high scores to the file
+     * Method to display high scores from the file.
      */
-
     public String displayHighScores( ) {
         String output  = "";
-        output += ("High Scores:");
-        for (int i = 0; i < highScores.size(); i++) {
+
+        output += ("Top 10 High Scores:");
+        for (int i = 0; i < 10; i++) {
             output += ("\n" + (i + 1) + ". " + scoreNames.get(i) + highScores.get(i));
         }
         return(output);
