@@ -11,7 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Player extends PhysicsObject{
-    private static final Texture playerTexture = new Texture("Object_Textures/Circle_Radius_10.png");
+    private static final Texture playerTexture = new Texture("Object_Textures/Spaceship_Base.png");
+    private static final Texture playerOverlay = new Texture("Object_Textures/Spaceship_Colourable.png");
     private String name;
     private int score;
     private Scoring scoring;
@@ -75,10 +76,15 @@ public class Player extends PhysicsObject{
      * Draw's the texture of this ship
      *
      * @param s The open spritebatch to draw to
-     * @param shapeDrawer The shapeDrawer to draw with
+     * @param shape The shapeDrawer to draw with
      */
-    public void draw(SpriteBatch s, ShapeDrawer shapeDrawer){
-        s.draw(playerTexture, (float) (posX-radius), (float) (posY-radius));
+    public void draw(SpriteBatch s, ShapeDrawer shape){
+        //s.draw(playerTexture,(float)(posX-radius),(float)(posY-radius));
+        //shape.circle((float)posX,(float)posY,(float)radius, 3);
+        s.draw(playerTexture,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
+        s.setColor(1,0,1,1);
+        s.draw(playerOverlay,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
+        s.setColor(1,1,1,1);
     }
     /**
      * Returns the current health of the player.
