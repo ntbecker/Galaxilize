@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class GameScreen implements Screen {
     private Border border;
     private double timer;
 
+    private ExtendViewport viewport;
+
     private ArrayList<PhysicsObject> physicsObjectsList;
 
     public GameScreen(final Galaxilize game){
@@ -38,7 +41,8 @@ public class GameScreen implements Screen {
 
         // Create camera
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,800,800);
+        //camera.setToOrtho(false,800,800);
+        viewport = new ExtendViewport(800,800, 1920,800,camera);
 
         // Initialize background texture
         background = new Texture("Background_Elements/Background.png");
@@ -47,6 +51,9 @@ public class GameScreen implements Screen {
         // Initialize screen effect textures
         slowEffect = new Texture("Screen_Effects/Slowmotion_Effect.png");
 
+
+        // Reset the positions stored in this class in case the player has started another game after losing or returning to the main menu
+        AsteroidSpawning.reset();
 
         // List where all physics affected objects are stored
         physicsObjectsList = new ArrayList<PhysicsObject>();
@@ -73,6 +80,7 @@ public class GameScreen implements Screen {
         parameter.size = 20;
         font = generator.generateFont(parameter);
         generator.dispose();
+        font.setUseIntegerPositions(false);
 
         //Creates formating for velocity text.
         velForm = new DecimalFormat("#,##0.0");
@@ -102,6 +110,19 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             player.setHookedAsteroid(null);
             player.setIsHooked(false);
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            if(!Gdx.graphics.isFullscreen()) {
+                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+            }else{
+                Gdx.graphics.setWindowedMode(800,800);
+            }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
         }
 
         // Check if the player is clicking on an asteroid
@@ -230,7 +251,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width,height);
     }
 
     @Override

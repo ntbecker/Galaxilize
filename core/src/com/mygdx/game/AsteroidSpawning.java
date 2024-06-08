@@ -10,6 +10,14 @@ public class AsteroidSpawning {
     private static ArrayList<Integer> exclusionRadius = new ArrayList<Integer>();
 
     /**
+     * Empties the two arrays when called, used to fully reset the game after a loss or returning to the main menu
+     */
+    public static void reset(){
+        positions.clear();
+        exclusionRadius.clear();
+    }
+
+    /**
      * Updates the spawning algorithm by activating the methods that spawn and delete asteroids. Also seperates asteroids and players into different variables for later manipulation.
      * @param objects all of the physics objects in the game world.
      */

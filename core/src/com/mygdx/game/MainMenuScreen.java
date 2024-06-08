@@ -1,6 +1,7 @@
 package com.mygdx.game;
 // imports
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -85,6 +86,8 @@ public class MainMenuScreen implements Screen {
         TextButton playButton = new TextButton("Play!", skin);
         TextButton tutorialButton = new TextButton("Tutorial", skin);
         TextButton quitButton = new TextButton("Quit", skin);
+        TextButton fullScreenButton = new TextButton("Fullscreen", skin);
+
 
         playButton.addListener(new ClickListener() {
             @Override
@@ -117,10 +120,24 @@ public class MainMenuScreen implements Screen {
                 Gdx.app.exit(); // exits the system
             }
         });
+        fullScreenButton.addListener(new ClickListener() {
+            @Override
+
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Fullscreen button clicked");
+                if(!Gdx.graphics.isFullscreen()) {
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                }else{
+                    Gdx.graphics.setWindowedMode(800,800);
+                }
+            }
+        });
 // add the play button to the table
         table.add(playButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0); // add a row
         table.add(tutorialButton).fillX().uniformX(); // add a tutorial button
+        table.row(); // add a row
+        table.add(fullScreenButton).fillX().uniformX();
         table.row(); // add a row
         table.add(quitButton).fillX().uniformX(); // add the quit button to the table
     }
