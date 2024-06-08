@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
     private double speedFactor;
     private Border border;
     private double timer;
+    private ArrayList<PlayerTrail> trail;
 
     private ExtendViewport viewport;
 
@@ -57,6 +58,7 @@ public class GameScreen implements Screen {
 
         // List where all physics affected objects are stored
         physicsObjectsList = new ArrayList<PhysicsObject>();
+        trail = new ArrayList<PlayerTrail>();
 
         // Initialize player
         player = new Player(200,200,0,0,10,10);
@@ -65,8 +67,8 @@ public class GameScreen implements Screen {
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
-//        physicsObjectsList.add(new Asteroid(300,200,0,10,30,10));
-//        physicsObjectsList.add(new Asteroid(350,220,-1,1,10,10));
+//        physicsObjectsList.add(new Asteroid(300,200,0,0,30,10));
+//        physicsObjectsList.add(new Asteroid(330,200,-0.1,0,10,10));
 //        physicsObjectsList.add(new Asteroid(300,280,0,-1,10,10));
 //        physicsObjectsList.add(new Asteroid(400,420,-1,-1,10,10));
 //        physicsObjectsList.add(new Asteroid(350,290,0,0,10,10));
@@ -164,7 +166,6 @@ public class GameScreen implements Screen {
         }
         // Update the player and grappled asteroid
         player.updateHook(speedFactor);
-
         // Update all physics object's positions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
@@ -173,7 +174,8 @@ public class GameScreen implements Screen {
         if(border.getPosY() > player.getPosY() - player.getRadius()){
             player.dealDamage(speedFactor);
         }
-
+        //Adds a new part of the trail to the player.
+        trail.add(new PlayerTrail(player,120));
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
         camera.update();
@@ -183,13 +185,34 @@ public class GameScreen implements Screen {
         game.batch.begin();
         // Background (800 by 800 scrolling texture always drawn to the camera)
         game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),800,1600);
-
+        //Draws trail behind player.
+        double dist;
+        for(int i = 0; i < trail.size(); i++){
+            if(trail.get(i).getTimeLeft() > 0){
+                for(int j = 1; j < physicsObjectsList.size(); j++){
+                    dist = Math.sqrt(Math.pow(physicsObjectsList.get(j).getPosX() - trail.get(i).getPosX(),2) + Math.pow(physicsObjectsList.get(j).getPosY() - trail.get(i).getPosY(),2));
+                    if(dist - 4 < physicsObjectsList.get(j).getRadius()){
+                        trail.remove(i);
+                        j = physicsObjectsList.size();
+                        if(i > 0){
+                            i--;
+                        }
+                    }
+                }
+                if(trail.size() > 0) {
+                    trail.get(i).draw(game.batch, game.shapeDrawer);
+                    trail.get(i).setTimeLeft(trail.get(i).getTimeLeft() - speedFactor);
+                }
+            }
+            else{
+                trail.remove(i);
+            }
+        }
         // Draw all physics objects
         for(int i = 0; i < physicsObjectsList.size(); i++){
             // To draw PhysicsObjects, call the draw method and pass game variable (Reminder: game variable contains Galaxilize object, as in the instance of the program)
             physicsObjectsList.get(i).draw(game.batch, game.shapeDrawer);
         }
-
         // Draw hook between player and asteroid
         if(player.getHookedAsteroid() != null){
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
