@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /*
 Tutorial Class
@@ -29,11 +30,9 @@ public class Tutorial implements Screen{
         this.game = game;
         // Create a new camera
         camera = new OrthographicCamera();
-        // Set the camera to orthographic mode with a width and height of 800
-        camera.setToOrtho(false, 800, 800);
 
         // Create a new stage with a screen viewport
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new ExtendViewport(800,800, 1920,800,camera));
         // Set the input processor to the stage
         Gdx.input.setInputProcessor(stage);
 
@@ -55,7 +54,7 @@ public class Tutorial implements Screen{
                         "2. Press 'E' for slow motion.\n" +
                         "3. Press 'Space' to release from an asteroid.\n" +
                         "4. Press 'F' for fullscreen.\n" +
-                        "5. Avoid asteroids and survive as long as possible." +
+                        "5. Avoid asteroids and survive as long as possible.\n" +
                          "6. Click anywhere on the screen to go back to Main Menu",
                 skin
         );
