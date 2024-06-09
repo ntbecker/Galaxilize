@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -66,6 +67,7 @@ public class GameScreen implements Screen {
         // Initialize player
         player = new Player(200,200,0,0,10,10);
 
+        player.setName(JOptionPane.showInputDialog("What is your name? (scores will be saved under this name)"));
         border = new Border(-200,1);
 
         // Add all objects to list for rendering and colliding
@@ -126,7 +128,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            scores.addScore(player.getScore(), player.getPlayerName());
+            scores.addScore(player.getScore(), player.getName());
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
