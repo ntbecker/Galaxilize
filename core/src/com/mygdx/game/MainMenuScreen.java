@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.awt.*;
@@ -27,6 +26,7 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
     final Galaxilize game;
     private Texture background;
+    private Texture title;
     private OrthographicCamera camera;
     private Music menuMusic;
     private int scroll;
@@ -39,7 +39,7 @@ public class MainMenuScreen implements Screen {
         // Skin file from https://github.com/czyzby/gdx-skins/tree/master/default
         skin = new Skin(Gdx.files.internal("UI/uiskin.json")); // Ensure you have a skin JSON file
         camera = new OrthographicCamera();
-        stage = new Stage(new ExtendViewport(800,800, 1920,800,camera));
+        stage = new Stage(new ScreenViewport(camera));
         Gdx.input.setInputProcessor(stage);
         // Plays menu music.
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
@@ -50,6 +50,8 @@ public class MainMenuScreen implements Screen {
         background = new Texture(Gdx.files.internal("Background_Elements/Background.png"));
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         scroll = 0;
+        title = new Texture(Gdx.files.internal("logo.png"));
+
     }
 
 
@@ -85,6 +87,9 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
         scroll++;
         game.batch.draw(background,0,0,scroll,scroll,1600,1600);
+        //s.draw(playerTexture,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
+
+        game.batch.draw(title, 103,600,0,0,1982,520,0.3f,0.3f,0,0,0,1982,520,false,false);
 
         game.batch.end();
 
@@ -106,7 +111,6 @@ public class MainMenuScreen implements Screen {
         TextButton playButton = new TextButton("Play!", skin);
         TextButton tutorialButton = new TextButton("Tutorial", skin);
         TextButton quitButton = new TextButton("Quit", skin);
-        TextButton fullScreenButton = new TextButton("Fullscreen", skin);
         TextButton scoresButton = new TextButton("High Scores", skin);
 
 
@@ -143,18 +147,6 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        fullScreenButton.addListener(new ClickListener() {
-            @Override
-
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Fullscreen button clicked");
-                if(!Gdx.graphics.isFullscreen()) {
-                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                }else{
-                    Gdx.graphics.setWindowedMode(800,800);
-                }
-            }
-        });
         scoresButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
                 game.setScreen(new ScoreScreen(game));
@@ -165,8 +157,6 @@ public class MainMenuScreen implements Screen {
         table.row().pad(10, 0, 10, 0); // add a row
         table.add(tutorialButton).fillX().uniformX(); // add a tutorial button
         table.row().pad(0, 0, 10, 0); // add a row
-        table.add(fullScreenButton).fillX().uniformX();
-        table.row().pad(0, 0, 10, 0); // add a row
         table.add(scoresButton).fillX().uniformX();
         table.row().pad(0, 0, 10, 0); // add a row
         table.add(quitButton).fillX().uniformX(); // add the quit button to the table
@@ -174,7 +164,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.mygdx.game;
 // the imports
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /*
 Tutorial Class
@@ -32,7 +30,7 @@ public class Tutorial implements Screen{
         camera = new OrthographicCamera();
 
         // Create a new stage with a screen viewport
-        stage = new Stage(new ExtendViewport(800,800, 1920,800,camera));
+        stage = new Stage(new ScreenViewport());
         // Set the input processor to the stage
         Gdx.input.setInputProcessor(stage);
 
@@ -92,8 +90,7 @@ public class Tutorial implements Screen{
     // Method called when the screen is resized
     @Override
     public void resize(int width, int height) {
-        // Update the stage viewport with the new width and height
-        stage.getViewport().update(width, height, true);
+
     }
 
     // Method called when the game is paused

@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
@@ -24,16 +23,13 @@ public class GameScreen implements Screen {
     private FreeTypeFontParameter parameter;
     private BitmapFont font;
     private Player player;
-    private Asteroid a;
     private Texture background;
     private Texture slowEffect;
     private DecimalFormat velForm;
     private double speedFactor;
     private Border border;
-    private double timer;
     private ArrayList<PlayerTrail> trail;
     private Scoring scores;
-    private ExtendViewport viewport;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
@@ -43,8 +39,7 @@ public class GameScreen implements Screen {
 
         // Create camera
         camera = new OrthographicCamera();
-        //camera.setToOrtho(false,800,800);
-        viewport = new ExtendViewport(800,800, 1920,800,camera);
+        camera.setToOrtho(false,800,800);
 
         // Initialize background texture
         background = new Texture("Background_Elements/Background.png");
@@ -280,7 +275,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width,height);
+
     }
 
     @Override

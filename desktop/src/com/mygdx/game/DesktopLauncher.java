@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.setWindowedMode(800, 800); // set the title of the game
 		config.useVsync(true);// Enable vertical synchronization to reduce tearing of the screen
 		config.setForegroundFPS(60); // set the foreground to 60 fps
+		config.setResizable(false);
 		new Lwjgl3Application(new Galaxilize(), config);// create a new instance application within your application
 	}
 	}
