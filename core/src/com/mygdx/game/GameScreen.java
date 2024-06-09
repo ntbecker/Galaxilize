@@ -114,20 +114,6 @@ public class GameScreen implements Screen {
             player.setIsHooked(false);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
-            if(!Gdx.graphics.isFullscreen()) {
-                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-            }else{
-                Gdx.graphics.setWindowedMode(800,800);
-            }
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            scores.addScore(player.getScore(), player.getName());
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
-        }
-
         // Check if the player is clicking on an asteroid
         if (Gdx.input.justTouched()){
             // Get input relative to game world, not screen

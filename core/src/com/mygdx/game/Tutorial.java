@@ -51,9 +51,8 @@ public class Tutorial implements Screen{
                 "1. Use arrow keys to move.\n" +
                         "2. Press 'E' for slow motion.\n" +
                         "3. Press 'Space' to release from an asteroid.\n" +
-                        "4. Press 'F' for fullscreen.\n" +
-                        "5. Avoid asteroids and survive as long as possible.\n" +
-                         "6. Click anywhere on the screen to go back to Main Menu",
+                        "4. Avoid asteroids and survive as long as possible.\n" +
+                        "5. Click anywhere on the screen to go back to Main Menu",
                 skin
         );
 
