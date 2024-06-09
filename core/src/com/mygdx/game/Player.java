@@ -18,11 +18,8 @@ public class Player extends PhysicsObject{
     private Scoring scoring;
     double health;
     double fuel;
-   // int score;
     boolean isHooked;
     Asteroid hookedAsteroid;
-    //String name;
-    String playerName;
 
     /**
      * Partially filled constructor for the Player class
@@ -41,7 +38,6 @@ public class Player extends PhysicsObject{
         isHooked = false;
         //hookedAsteroid = null;
         name = "";
-        playerName = "";
         scoring = new Scoring (); // initialize scoring
     }
 
@@ -130,17 +126,7 @@ public class Player extends PhysicsObject{
      * Sets the score of the player to the input value.
      * @param score the score of the player.
      */
-//    public void setScore(int score){
-//        this.score = score;
-//        scoring.addScore(score); // updat the highest score
-//    }
-
-    /**0
-     * Sets the highest score
-     */
-    public void displayHighScores() {
-        scoring.displayHighScores();
-    }
+    public void setScore(int score){this.score = score;}
 
     /**
      * Returns if the player is hooked to an asteroid.
@@ -190,20 +176,7 @@ public class Player extends PhysicsObject{
         this.name = name;
     }
 
-    /**
-     * Return a string holding the name of the player.
-     * @return a string holding the name of the player.
-     */
-    public String getPlayerName(){ return(playerName); }
-
-    /**
-     * Sets the name of the player to the input string.
-     * @param playerName a string holding the name of the player.
-     */
-    public void setPlayerName(String playerName){
-        this.playerName = playerName;
-    }
-    /*public String toString(){
+      /*public String toString(){
         String returnString = "";
         super.toString()
     }*/
