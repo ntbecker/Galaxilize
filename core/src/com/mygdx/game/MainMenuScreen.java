@@ -147,7 +147,9 @@ public class MainMenuScreen implements Screen {
         table.row(); // add a row
         table.add(fullScreenButton).fillX().uniformX();
         table.row(); // add a row
-        table.add(quitButton).fillX().uniformX(); // add the quit button to the table
+        table.add(scoresButton); // add the scores button to the table
+        table.row(); // add a row
+        table.add(quitButton).fillX().uniformX();// add the quit button to the table
     }
 
     @Override
