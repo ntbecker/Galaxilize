@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         stage = new Stage(new ExtendViewport(800,800, 1920,800,camera));
         Gdx.input.setInputProcessor(stage);
-
+        // Plays menu music.
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
         menuMusic.play();
         menuMusic.setVolume(0.5f);
