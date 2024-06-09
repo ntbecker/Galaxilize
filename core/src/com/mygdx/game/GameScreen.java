@@ -143,6 +143,13 @@ public class GameScreen implements Screen {
         // Update border position
         border.update(speedFactor);
 
+        // If the border is too far away, speed it up
+        if(border.getPosY()+800 < player.getPosY()){
+            border.setSpeed(50);
+        }else{
+            border.setSpeed(2);
+        }
+
         // Check all collisions
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             for (int j = 0; j < physicsObjectsList.size(); j++) {
