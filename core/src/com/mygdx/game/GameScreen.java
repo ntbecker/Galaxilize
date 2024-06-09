@@ -144,8 +144,8 @@ public class GameScreen implements Screen {
         border.update(speedFactor);
 
         // If the border is too far away, speed it up
-        if(border.getPosY()+400 < player.getPosY()){
-            border.setPosY(player.getPosY()-400);
+        if(border.getPosY()+800 < player.getPosY()){
+            border.setPosY(player.getPosY()-800);
         }else{
             border.setSpeed(3);
         }
