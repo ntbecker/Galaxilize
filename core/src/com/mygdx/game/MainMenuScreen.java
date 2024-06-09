@@ -87,6 +87,7 @@ public class MainMenuScreen implements Screen {
         TextButton tutorialButton = new TextButton("Tutorial", skin);
         TextButton quitButton = new TextButton("Quit", skin);
         TextButton fullScreenButton = new TextButton("Fullscreen", skin);
+        TextButton scoresButton = new TextButton("High Scores", skin);
 
 
         playButton.addListener(new ClickListener() {
@@ -130,6 +131,11 @@ public class MainMenuScreen implements Screen {
                 }else{
                     Gdx.graphics.setWindowedMode(800,800);
                 }
+            }
+        });
+        scoresButton.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new ScoreScreen(game));
             }
         });
 // add the play button to the table
