@@ -31,7 +31,7 @@ public class GameScreen implements Screen {
     private Border border;
     private double timer;
     private ArrayList<PlayerTrail> trail;
-
+    private Scoring scores;
     private ExtendViewport viewport;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -58,7 +58,10 @@ public class GameScreen implements Screen {
 
         // List where all physics affected objects are stored
         physicsObjectsList = new ArrayList<PhysicsObject>();
+        // List to store all the trail of the player
         trail = new ArrayList<PlayerTrail>();
+        // Create an object that will later be used to upload scores.
+        scores = new Scoring();
 
         // Initialize player
         player = new Player(200,200,0,0,10,10);
@@ -123,6 +126,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            scores.addScore(player.getScore(), player.getPlayerName());
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
