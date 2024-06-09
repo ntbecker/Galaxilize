@@ -40,6 +40,7 @@ public class Scoring {
                 scoreNames.add(scanner.nextLine());
                 highScores.add(Integer.parseInt(scanner.nextLine()));
             }
+            highScores = dscMergeSort(highScores);
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Scores file not found. Starting with an empty high scores list.");
@@ -76,12 +77,36 @@ public class Scoring {
         String output  = "";
 
         output += ("Top 10 High Scores:");
-        for (int i = 0; i < 10; i++) {
-            output += ("\n" + (i + 1) + ". " + scoreNames.get(i) + highScores.get(i));
+        int scoresToDisplay = 10;
+        if(highScores.size() < 10){
+            scoresToDisplay = highScores.size();
+        }
+        for (int i = 0; i < scoresToDisplay; i++) {
+            output += ("\n" + (i + 1) + ". " + scoreNames.get(i) + " - " + highScores.get(i)) + " points.";
         }
         return(output);
     }
-
+    public String searchScore(String nameSearch){
+        String output;
+        boolean foundName = false;
+        ArrayList<Integer> foundScores = new ArrayList<Integer>();
+        for(int i = 0; i < highScores.size(); i++){
+            if(nameSearch.equalsIgnoreCase(scoreNames.get(i))){
+                foundName = true;
+                foundScores.add(highScores.get(i));
+            }
+        }
+        if(foundName){
+            output = nameSearch + "'s Scores:";
+            for(int i = 0; i < foundScores.size(); i++){
+                output += "\n" + foundScores.get(i);
+            }
+        }
+        else{
+            output = "There was no scores found for user: " + nameSearch;
+        }
+        return(output);
+    }
 //    /**
 //     * Main Method to test everything
 //     * @param args
