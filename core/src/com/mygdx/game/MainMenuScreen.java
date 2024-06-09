@@ -107,8 +107,9 @@ public class MainMenuScreen implements Screen {
              */
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Tutorial button clicked");
-
+                // Navigate to the TutorialScreen when the tutorial button is clicked
+                game.setScreen(new Tutorial(game));
+                dispose();
             }
         });
 
@@ -120,6 +121,7 @@ public class MainMenuScreen implements Screen {
                 Gdx.app.exit(); // exits the system
             }
         });
+
         fullScreenButton.addListener(new ClickListener() {
             @Override
 
