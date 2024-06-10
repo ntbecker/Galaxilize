@@ -30,12 +30,16 @@ public class GameScreen implements Screen {
     private Border border;
     private ArrayList<PlayerTrail> trail;
     private Scoring scores;
+    private int deadTime;
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
     public GameScreen(final Galaxilize game){
         // Game object to draw to
         this.game = game;
+
+        //Sets the time the player has been dead for to zero
+        deadTime = 0;
 
         // Create camera
         camera = new OrthographicCamera();
@@ -144,6 +148,14 @@ public class GameScreen implements Screen {
             dispose();
         }
 
+        //Checks if the player is dead
+        if(player.getHealth() < 0){
+            speedFactor = 0;
+            if(deadTime < 150) {
+                deadTime++;
+            }
+        }
+
         AsteroidSpawning.update(physicsObjectsList);
 
         // Update border position
@@ -239,7 +251,7 @@ public class GameScreen implements Screen {
         // Screen Effects
 
         // Draws slow motion screen effects
-        if(speedFactor < 1){
+        if(speedFactor < 1 && speedFactor != 0){
             game.batch.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
             game.shapeDrawer.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
 
@@ -259,6 +271,15 @@ public class GameScreen implements Screen {
             game.batch.draw(slowEffect,camera.position.x-400,camera.position.y-400);
             game.shapeDrawer.setColor(1,1,1,1);
             game.batch.setColor(1,1,1,1);
+        }
+        if(deadTime > 0) {
+            game.shapeDrawer.setColor(0,0,0,((float)deadTime)/150f);
+            game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y-400, 800,800);
+            game.shapeDrawer.setColor(1,1,1,1);
+            if(deadTime >= 150){
+                game.batch.setColor(1,1,1,1);
+                font.draw(game.batch,"You died. . .\nFinal Score: " + player.getScore() + "\nPress Escape to return to menu.",camera.position.x-150, camera.position.y+50);
+            }
         }
 
         // Drawing code ends
