@@ -22,7 +22,7 @@ public class PlayerTrail {
     public double getPosX(){return(posX);}
     public void setPosX(double posX){this.posX = posX;}
     public double getPosY(){return(posY);}
-    public void setPosY(double posX){this.posY = posY;}
+    public void setPosY(double posY){this.posY = posY;}
     public void draw(SpriteBatch s, ShapeDrawer shape){
         shape.setColor(new Color(0f,0f,1f,((float)timeLeft)/((float)startTime)));
         shape.circle((float)posX,(float)posY,4);
