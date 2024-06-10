@@ -14,7 +14,8 @@ public class Player extends PhysicsObject{
     private static final Texture playerTexture = new Texture("Object_Textures/Spaceship_Base.png");
     private static final Texture playerOverlay = new Texture("Object_Textures/Spaceship_Colourable.png");
     private String name;
-    private int score;
+    private double score;
+    private double furthestDist;
     private Scoring scoring;
     double health;
     double fuel;
@@ -35,6 +36,7 @@ public class Player extends PhysicsObject{
         health = 100;
         fuel = 100;
         score = 0;
+        furthestDist = posY;
         isHooked = false;
         //hookedAsteroid = null;
         name = "";
@@ -118,7 +120,7 @@ public class Player extends PhysicsObject{
      * Returns the current score of the player.
      * @return the score of the player.
      */
-    public int getScore(){
+    public double getScore(){
     return score;
     }
 
@@ -126,7 +128,7 @@ public class Player extends PhysicsObject{
      * Sets the score of the player to the input value.
      * @param score the score of the player.
      */
-    public void setScore(int score){this.score = score;}
+    public void setScore(double score){this.score = score;}
 
     /**
      * Returns if the player is hooked to an asteroid.
@@ -200,6 +202,20 @@ public class Player extends PhysicsObject{
 
 
         super.updatePos(speedFactor);
+
+        if(posY > furthestDist){
+            double vel = Math.sqrt(velX*velX + velY*velY);
+
+            if(vel < 10){
+                score += 1*speedFactor;
+            }else if(vel < 20){
+                score += 2*speedFactor;
+            }else if(vel > 20){
+                score += 3*speedFactor;
+            }
+
+            furthestDist = posY;
+        }
     }
 
     /**

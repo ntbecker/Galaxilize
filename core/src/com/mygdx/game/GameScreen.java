@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            scores.addScore(player.getScore(), player.getName());
+            scores.addScore((int)player.getScore(), player.getName());
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
@@ -237,7 +237,7 @@ public class GameScreen implements Screen {
         // UI
 
         //Draws text for UI on the screen.
-        font.draw(game.batch,"Score: " + player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
+        font.draw(game.batch,"Score: " + (int)player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
         game.shapeDrawer.circle(camera.position.x - 325,camera.position.y - 275,50);
         game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())) );
         font.draw(game.batch,"Velocity: " + velForm.format(Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.x - 380, camera.position.y - 350);
@@ -278,7 +278,7 @@ public class GameScreen implements Screen {
             game.shapeDrawer.setColor(1,1,1,1);
             if(deadTime >= 150){
                 game.batch.setColor(1,1,1,1);
-                font.draw(game.batch,"You died. . .\nFinal Score: " + player.getScore() + "\nPress Escape to return to menu.",camera.position.x-150, camera.position.y+50);
+                font.draw(game.batch,"You died. . .\nFinal Score: " + (int)player.getScore() + "\nPress Escape to return to menu.",camera.position.x-150, camera.position.y+50);
             }
         }
 
