@@ -138,6 +138,12 @@ public class GameScreen implements Screen {
             }
         }
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            scores.addScore(player.getScore(), player.getName());
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        }
+
         AsteroidSpawning.update(physicsObjectsList);
 
         // Update border position
