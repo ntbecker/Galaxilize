@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen {
     private Texture background;
     private Texture title;
     private OrthographicCamera camera;
-    private Music menuMusic;
+    private static Music menuMusic;
     private int scroll;
 
     /**
@@ -42,10 +42,14 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport(camera));
         Gdx.input.setInputProcessor(stage);
         // Plays menu music.
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
-        menuMusic.play();
-        menuMusic.setVolume(0.5f);
-        menuMusic.setLooping(true);
+        if(menuMusic == null){
+            menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
+        }
+        if(!menuMusic.isPlaying()){
+            menuMusic.play();
+            menuMusic.setVolume(0.5f);
+            menuMusic.setLooping(true);
+        }
         // Create scrolling background
         background = new Texture(Gdx.files.internal("Background_Elements/Background.png"));
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
