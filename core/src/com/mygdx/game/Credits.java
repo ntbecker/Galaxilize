@@ -9,10 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-/*
-Tutorial Class
- */
-public class Tutorial implements Screen{
+import com.badlogic.gdx.graphics.Texture;
+public class Credits implements Screen {
     // Reference to the main game class
     final Galaxilize game;
     // Camera to view the game world
@@ -21,9 +19,10 @@ public class Tutorial implements Screen{
     private Stage stage;
     // Skin for the UI elements
     private Skin skin;
-
+    // Texture for the background image
+    private Texture background;
     // Constructor to initialize the tutorial screen
-    public Tutorial(final Galaxilize game) {
+    public Credits (final Galaxilize game) {
         // Set the game reference
         this.game = game;
         // Create a new camera
@@ -44,15 +43,18 @@ public class Tutorial implements Screen{
         // Add the table to the stage
         stage.addActor(table);
 
-        // Create a label for the title "How to Play" using the skin
-        Label titleLabel = new Label("How to Play?", skin);
-        // Create a label for the instructions using the skin
+        // Create a label for the title "Credits" using the skin
+        Label titleLabel = new Label(" Credits\n", skin );
+        // Create a label for the credits using the skin
         Label instructionsLabel = new Label(
-                 "1. Use arrow keys to move.\n" +
-                        "2. Press 'E' for slow motion.\n" +
-                        "3. Press 'Space' to release from an asteroid.\n" +
-                        "4. Avoid asteroids and survive as long as possible.\n" +
-                        "5. Click anywhere on the screen to go back to Main Menu",
+                "Created by MNM Productions\n\n" +
+                        "Special Thanks to: Mr.Cutten\n\n" +
+                        " - Team Members: \n\n" +
+                        "   - Matthew Wittherspoon\n" +
+                        "   - Nathan Becker\n" +
+                        "   - Muhammad Umar\n\n" +
+                        " - Supporters: Mr.Wallace\n",
+
                 skin
         );
 
@@ -74,15 +76,16 @@ public class Tutorial implements Screen{
     public void render(float num) {
         // Clear the screen with a black color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // Update the stage with the time since the last render
+
+
         stage.act(num);
         // Draw the stage
         stage.draw();
         // Check if the screen was clicked or touched
         if (Gdx.input.justTouched()) {
-           game.setScreen(new MainMenuScreen(game));
+            game.setScreen(new MainMenuScreen(game));
             dispose();
-       }
+        }
 
     }
 
@@ -116,3 +119,5 @@ public class Tutorial implements Screen{
         skin.dispose();
     }
 }
+
+
