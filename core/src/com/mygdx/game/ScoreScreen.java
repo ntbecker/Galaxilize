@@ -1,3 +1,8 @@
+/*
+ Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ 6/11/2024
+ A screen that will display all the existing scores stored in the file and allow the user to search for scores.
+ */
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
@@ -30,34 +35,47 @@ public class ScoreScreen implements Screen{
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font;
-
-    public ScoreScreen(Galaxilize game){
+    /**
+     * A constructor for the score screen.
+     */
+    public ScoreScreen(final Galaxilize game){
         scores = new Scoring();
         output = scores.displayHighScores();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 800);
         this.game = game;
+
+        //Creates a font for use on the screen.
         generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20;
         font = generator.generateFont(parameter);
         generator.dispose();
         font.setUseIntegerPositions(false);
+
+        //Creates the stage
         stage = new Stage(new ScreenViewport());
+
         Gdx.input.setInputProcessor(stage);
+
+        //Creates the skin for the buttons.
         skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
     }
 
     @Override
     public void show() {
+        //Creates a table
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
+        //Creates button to display the high scores and search for scores under a user's name.
         TextButton searchButton = new TextButton("Search", skin);
         TextButton topScoreButton = new TextButton("View Leaderboard", skin);
         table.add(searchButton).fillX().uniformX();
         table.add(topScoreButton).fillX().uniformX();
+
+
 
         topScoreButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
