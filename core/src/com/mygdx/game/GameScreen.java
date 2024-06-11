@@ -33,6 +33,11 @@ public class GameScreen implements Screen {
     private Scoring scores;
     private int deadTime;
 
+    private Texture dashboard;
+    private Texture healthBar;
+    private Texture scoreDisplay;
+
+
     private ArrayList<PhysicsObject> physicsObjectsList;
 
     public GameScreen(final Galaxilize game){
@@ -56,6 +61,10 @@ public class GameScreen implements Screen {
         // Initialize screen effect textures
         slowEffect = new Texture("Screen_Effects/Slowmotion_Effect.png");
 
+        // UI Elements
+        dashboard = new Texture("UI/Dashboard.png");
+        healthBar = new Texture("UI/Health_Bar.png");
+        scoreDisplay = new Texture("UI/Score_Bar.png");
 
         // Reset the positions stored in this class in case the player has started another game after losing or returning to the main menu
         AsteroidSpawning.reset();
@@ -246,15 +255,23 @@ public class GameScreen implements Screen {
 
         // UI
 
-        //Draws text for UI on the screen.
-        font.draw(game.batch,"Score: " + (int)player.getScore(),(float)camera.position.x - 380, camera.position.y + 350);
-        game.shapeDrawer.circle(camera.position.x - 325,camera.position.y - 275,50);
-        game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())) );
+        // Draws Score
+        game.batch.draw(scoreDisplay,camera.position.x+205,camera.position.y+291);
+        font.setColor(0,1,0,1);
+        font.draw(game.batch,"Score: " + (int)player.getScore(),(float)camera.position.x+225, camera.position.y + 325);
+        font.setColor(1,1,1,1);
+
+        // Draws Dashboard (Direction and Velocity)
+        game.batch.draw(dashboard,camera.position.x-400,camera.position.y-386);
+        game.shapeDrawer.setColor(0.8f,0.8f,0.9f,1);
+        game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())),8 );
+        game.shapeDrawer.setColor(1,1,1,1);
         font.draw(game.batch,"Velocity: " + velForm.format(Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.x - 380, camera.position.y - 350);
 
         // Draws Healthbar
+        game.batch.draw(healthBar,camera.position.x-400,camera.position.y+291);
         game.shapeDrawer.setColor(0,1,0,1);
-        game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y+300, (float) player.getHealth(),30);
+        game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y+300, (float) (player.getHealth()*1.5),30);
         game.shapeDrawer.setColor(1,1,1,1);
 
 
