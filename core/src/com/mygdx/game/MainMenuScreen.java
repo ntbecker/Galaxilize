@@ -123,6 +123,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 menuMusic.stop();
+                menuMusic.dispose();
                 game.setScreen(new GameScreen(game));
                 dispose();
             }
@@ -201,5 +202,7 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        background.dispose();
+        title.dispose();
     }
 }

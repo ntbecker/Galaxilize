@@ -174,6 +174,7 @@ public class GameScreen implements Screen {
             musicTracks.get(trackNum).stop();
             game.setScreen(new MainMenuScreen(game));
             dispose();
+            return;
         }
 
         //Checks if the player is dead
@@ -361,7 +362,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        font.dispose();
+        background.dispose();
+        stars.dispose();
+        slowEffect.dispose();
+        dashboard.dispose();
+        healthBar.dispose();
+        scoreDisplay.dispose();
     }
-
 }
