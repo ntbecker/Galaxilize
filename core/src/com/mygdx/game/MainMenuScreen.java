@@ -116,6 +116,7 @@ public class MainMenuScreen implements Screen {
         TextButton tutorialButton = new TextButton("Tutorial", skin);
         TextButton quitButton = new TextButton("Quit", skin);
         TextButton scoresButton = new TextButton("High Scores", skin);
+        TextButton creditsButton = new TextButton("Credits", skin);
 
 
         playButton.addListener(new ClickListener() {
@@ -156,6 +157,14 @@ public class MainMenuScreen implements Screen {
                 game.setScreen(new ScoreScreen(game));
             }
         });
+        // Add listener for the credits button
+        creditsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Credits(game));
+                dispose();
+            }
+        });
 // add the play button to the table
         table.add(playButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0); // add a row
@@ -163,6 +172,8 @@ public class MainMenuScreen implements Screen {
         table.row().pad(0, 0, 10, 0); // add a row
         table.add(scoresButton).fillX().uniformX();
         table.row().pad(0, 0, 10, 0); // add a row
+        table.add(creditsButton).fillX().uniformX();
+        table.row().pad(0, 0, 10, 0);
         table.add(quitButton).fillX().uniformX(); // add the quit button to the table
     }
 
