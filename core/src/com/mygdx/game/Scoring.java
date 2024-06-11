@@ -40,11 +40,66 @@ public class Scoring {
                 scoreNames.add(scanner.nextLine());
                 highScores.add(Integer.parseInt(scanner.nextLine()));
             }
-            highScores = dscMergeSort(highScores);
+            quickSort(highScores, scoreNames,0 , highScores.size()-1);
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Scores file not found. Starting with an empty high scores list.");
         }
+    }
+
+    /**
+     * Quick sort algorithm, sorts a list recursively, in ascending order
+     * @param scoreList The list to sort by (a list of integers)
+     * @param nameList The list of names that correspond to scores
+     * @param start The start of indices to sort
+     * @param end The end of indices to sort
+     */
+    private static void quickSort(ArrayList<Integer> scoreList, ArrayList<String> nameList, int start, int end){
+        // Base Case
+        if(start >= end) {
+            return;
+        }
+
+        // Last element is set as the pivot value
+        int pivot = scoreList.get(end);
+
+        // Index to put elements that are higher than the pivot (i.e. After sorted portion of the list)
+        int highIndex = start;
+
+        // Go up to 'end' exclusive, 'end' is the index of the pivot value
+        for(int i = start; i < end; i++){
+            /* If current value is larger than the pivot, we swap it with value at highIndex
+             * e.g. [35,23,30,10,19,|50|,20] -> [35,23,30,|50|,19,10,20]
+             * 50 is swapped with 10 because it is higher than the pivot (20) */
+            if(scoreList.get(i) > pivot){
+                // Swap items
+                int temp = scoreList.get(i);
+                scoreList.set(i,scoreList.get(highIndex));
+                scoreList.set(highIndex,temp);
+
+                // Swap names
+                String sTemp = nameList.get(i);
+                nameList.set(i,nameList.get(highIndex));
+                nameList.set(highIndex,sTemp);
+
+                // highIndex gets incremented to place next item one further to the right
+                highIndex++;
+            }
+        }
+        /* Move pivot to end of highIndex portion of the array
+         * e.g. [23,35,30,50,19,10,|20|] -> [23,35,30,50,|20|,10,19] */
+        int temp = scoreList.get(highIndex);
+        scoreList.set(highIndex,pivot);
+        scoreList.set(end,temp);
+
+        // Swap names
+        String sTemp = nameList.get(highIndex);
+        nameList.set(highIndex,nameList.get(end));
+        nameList.set(end,sTemp);
+
+        // Recursive calls (Sort everything in the current portion but the pivot)
+        quickSort(scoreList, nameList,start,highIndex-1);
+        quickSort(scoreList,nameList,highIndex+1,end);
     }
 
     /**
@@ -64,12 +119,9 @@ public class Scoring {
                 System.out.println("An error occurred while saving the scores." + e);
            }
     }
-    public ArrayList<Integer> dscMerge(ArrayList<Integer> highScores){
-        return(highScores);
-    }
-    public ArrayList<Integer> dscMergeSort(ArrayList<Integer> highScores){
-        return(highScores);
-    }
+
+
+
     /**
      * Method to display high scores from the file.
      */
