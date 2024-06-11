@@ -82,7 +82,6 @@ public class ScoreScreen implements Screen{
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         game.batch.setColor(new Color(1,1,1,1));
         font.draw(game.batch,output,camera.position.x - 100,camera.position.y - 30);
@@ -114,6 +113,8 @@ public class ScoreScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        skin.dispose();
+        font.dispose();
     }
 }
