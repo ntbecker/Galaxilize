@@ -51,7 +51,7 @@ public class MainMenuScreen implements Screen {
             menuMusic.setLooping(true);
         }
         // Create scrolling background
-        background = new Texture(Gdx.files.internal("Background_Elements/Background.png"));
+        background = new Texture(Gdx.files.internal("Background_Elements/BackgroundMenu.png"));
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         scroll = 0;
         title = new Texture(Gdx.files.internal("logo.png"));
