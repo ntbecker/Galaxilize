@@ -5,7 +5,7 @@ A class that spawns and deletes asteroids around the player randomly to generate
  */
 package com.mygdx.game;
 import java.util.ArrayList;
-public class AsteroidSpawning {
+public class Spawning {
     private static ArrayList<Double> positions = new ArrayList<Double>(); //A variable to hold all positions that have previously spawned asteroids from.
     private static ArrayList<Integer> exclusionRadius = new ArrayList<Integer>();
 

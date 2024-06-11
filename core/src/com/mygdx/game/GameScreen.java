@@ -41,6 +41,7 @@ public class GameScreen implements Screen {
     private Texture dashboard;
     private Texture healthBar;
     private Texture scoreDisplay;
+    private Item test;
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -72,7 +73,7 @@ public class GameScreen implements Screen {
         scoreDisplay = new Texture("UI/Score_Bar.png");
 
         // Reset the positions stored in this class in case the player has started another game after losing or returning to the main menu
-        AsteroidSpawning.reset();
+        Spawning.reset();
 
         // List where all physics affected objects are stored
         physicsObjectsList = new ArrayList<PhysicsObject>();
@@ -103,6 +104,8 @@ public class GameScreen implements Screen {
 
         // Add all objects to list for rendering and colliding
         physicsObjectsList.add(player);
+
+        test = new Item(100,1000);
 
         //Creates a font for use in the GUI
         generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
@@ -189,7 +192,7 @@ public class GameScreen implements Screen {
         }
 
         //Updates the spawning of the asteroids, spawning more if necessary.
-        AsteroidSpawning.update(physicsObjectsList);
+        Spawning.update(physicsObjectsList);
 
         // Update border position
         border.update(speedFactor);
@@ -222,6 +225,9 @@ public class GameScreen implements Screen {
         }
         //Adds a new part of the trail to the player.
         trail.add(new PlayerTrail(player,120));
+
+        test.isCollected(player);
+
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
         camera.update();
@@ -270,6 +276,8 @@ public class GameScreen implements Screen {
         if(player.getHookedAsteroid() != null){
             game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
         }
+
+        test.draw(game.batch);
 
         // Draw the border
         border.draw(game.shapeDrawer, camera.position);

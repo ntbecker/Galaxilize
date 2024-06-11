@@ -69,6 +69,13 @@ public class Player extends PhysicsObject{
     public void dealDamage(double dmgPoints){
         health -= dmgPoints;
     }
+    /**
+     * Increases health by a value
+     * @param healPoints The amount of health the player should get
+     */
+    public void addHealth(double healPoints){
+        health += healPoints;
+    }
 
     /**
      * Draw's the texture of this ship
