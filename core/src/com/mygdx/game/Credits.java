@@ -19,8 +19,7 @@ public class Credits implements Screen {
     private Stage stage;
     // Skin for the UI elements
     private Skin skin;
-    // Texture for the background image
-    private Texture background;
+    private Texture logo;
     // Constructor to initialize the tutorial screen
     public Credits (final Galaxilize game) {
         // Set the game reference
@@ -35,6 +34,9 @@ public class Credits implements Screen {
 
         // Load the skin for the UI elements
         skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
+        logo = new Texture(Gdx.files.internal("UI/mnm_logo.png"));
+
+
 
         // Create a table to organize UI elements
         Table table = new Table();
@@ -43,8 +45,7 @@ public class Credits implements Screen {
         // Add the table to the stage
         stage.addActor(table);
 
-        // Create a label for the title "Credits" using the skin
-        Label titleLabel = new Label(" Credits\n", skin );
+
         // Create a label for the credits using the skin
         Label instructionsLabel = new Label(
                 "Created by MNM Productions\n\n" +
@@ -59,7 +60,7 @@ public class Credits implements Screen {
         );
 
         // Add the title label to the table with some padding at the bottom
-        table.add(titleLabel).padBottom(20);
+        table.add(instructionsLabel).padBottom(70);
         // Move to the next row in the table
         table.row();
         // Add the instructions label to the table
@@ -74,8 +75,14 @@ public class Credits implements Screen {
     // Method called every frame to render the screen
     @Override
     public void render(float num) {
-        // Clear the screen with a black color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        game.batch.begin();
+        float logoWidth = logo.getWidth() * 0.4f; // Adjust the scale as needed
+        float logoHeight = logo.getHeight() * 0.4f; // Adjust the scale as needed
+        game.batch.draw(logo, (Gdx.graphics.getWidth() - logoWidth) / 2, Gdx.graphics.getHeight() - logoHeight - 100, logoWidth, logoHeight); // Center the logo at the top
+        game.batch.end();
+
 
 
         stage.act(num);
@@ -117,6 +124,7 @@ public class Credits implements Screen {
         stage.dispose();
         // Dispose of the skin
         skin.dispose();
+        logo.dispose();
     }
 }
 
