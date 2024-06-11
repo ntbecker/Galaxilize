@@ -84,20 +84,17 @@ public class GameScreen implements Screen {
 
         //Creates music array list.
         musicTracks = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("backgroundRadiation.mp3")));
-            musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("solarFlare.mp3")));
-        }
-        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("secretTrack.mp3"))); //Adds super secret track
-        for(int i = 0; i < musicTracks.size();i++){
-            musicTracks.get(i).setVolume(0.5f);
+        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("backgroundRadiation.mp3")));
+        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("solarFlare.mp3")));
+        for (Music musicTrack : musicTracks) {
+            musicTrack.setVolume(0.5f);
         }
         //Randomizes what track the music starts on.
         trackNum = (int)(Math.random()*((double)musicTracks.size()));
         //Plays the first track.
         musicTracks.get(trackNum).play();
         // Initialize player
-        player = new Player(200,200,0,0,10,10);
+        player = new Player(200,200,0,0,10 + game.bonusMass,10, 100 + game.bonusHealth, 100,"");
 
         player.setName(JOptionPane.showInputDialog("What is your name? (scores will be saved under this name)"));
         border = new Border(-200,1);
@@ -216,7 +213,8 @@ public class GameScreen implements Screen {
         // Update the player and grappled asteroid
         player.updateHook(speedFactor);
         // Update all physics object's positions
-        for (int i = 0; i < physicsObjectsList.size(); i++) {
+        player.updatePos(speedFactor,game.thrustMulti);
+        for (int i = 1; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
         }
 

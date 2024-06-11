@@ -190,19 +190,19 @@ public class Player extends PhysicsObject{
         super.toString()
     }*/
 
-    public void updatePos(double speedFactor){
+    public void updatePos(double speedFactor, double thrustMulti){
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            accX = -0.1;
+            accX = -0.1*thrustMulti;
         }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            accX = 0.1;
+            accX = 0.1*thrustMulti;
         }else{
             accX = 0;
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            accY = -0.1;
+            accY = -0.1*thrustMulti;
         }else if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            accY = 0.1;
+            accY = 0.1*thrustMulti;
         }else{
             accY = 0;
         }
