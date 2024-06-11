@@ -6,6 +6,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -35,7 +36,8 @@ public class GameScreen implements Screen {
     private ArrayList<PlayerTrail> trail;
     private Scoring scores;
     private int deadTime;
-
+    private static ArrayList<Music> musicTracks;
+    private int trackNum;
     private Texture dashboard;
     private Texture healthBar;
     private Texture scoreDisplay;
@@ -79,6 +81,20 @@ public class GameScreen implements Screen {
         // Create an object that will later be used to upload scores.
         scores = new Scoring();
 
+        //Creates music array list.
+        musicTracks = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("backgroundRadiation.mp3")));
+            musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("solarFlare.mp3")));
+        }
+        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("secretTrack.mp3"))); //Adds super secret track
+        for(int i = 0; i < musicTracks.size();i++){
+            musicTracks.get(i).setVolume(0.5f);
+        }
+        //Randomizes what track the music starts on.
+        trackNum = (int)(Math.random()*((double)musicTracks.size()));
+        //Plays the first track.
+        musicTracks.get(trackNum).play();
         // Initialize player
         player = new Player(200,200,0,0,10,10);
 
@@ -108,8 +124,14 @@ public class GameScreen implements Screen {
 
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        if(!musicTracks.get(trackNum).isPlaying()){
+            trackNum++;
+            if(trackNum >= musicTracks.size()){
+                trackNum = 0;
+            }
+            musicTracks.get(trackNum).play();
+        }
         // Slows the game's physics down to 1/5th speed
-
         if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) {
             speedFactor -= 0.08;
         } else if (speedFactor < 0.2) {
@@ -152,6 +174,7 @@ public class GameScreen implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             scores.addScore((int)player.getScore(), player.getName());
+            musicTracks.get(trackNum).stop();
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
