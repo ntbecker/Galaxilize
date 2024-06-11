@@ -24,6 +24,7 @@ public class GameScreen implements Screen {
     private BitmapFont font;
     private Player player;
     private Texture background;
+    private Texture stars;
     private Texture slowEffect;
     private DecimalFormat velForm;
     private double speedFactor;
@@ -48,6 +49,9 @@ public class GameScreen implements Screen {
         // Initialize background texture
         background = new Texture("Background_Elements/Background.png");
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+        stars = new Texture("Background_Elements/Stars.png");
+        stars.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         // Initialize screen effect textures
         slowEffect = new Texture("Screen_Effects/Slowmotion_Effect.png");
@@ -197,7 +201,13 @@ public class GameScreen implements Screen {
         // Drawing code starts
         game.batch.begin();
         // Background (800 by 800 scrolling texture always drawn to the camera)
-        game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),800,1600);
+        float hueShiftR = (float)(Math.sin(2*Math.PI/110000.0*(player.getPosY()-40000)+1.5));
+        float hueShiftG = (float)(Math.cos(2*Math.PI/100000.0*(player.getPosY())+1.5));
+        float hueShiftB = (float)(Math.cos(2*Math.PI/120000.0*(player.getPosY()-150000)+1.5));
+        game.batch.setColor(hueShiftR,hueShiftG,hueShiftB,1);
+        game.batch.draw(background,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),1600,1600);
+        game.batch.setColor(1,1,1,1);
+        game.batch.draw(stars,camera.position.x-400,camera.position.y-400,(int)camera.position.x,(int)(-camera.position.y),1600,1600);
         //Draws trail behind player.
         double dist;
         for(int i = 0; i < trail.size(); i++){
