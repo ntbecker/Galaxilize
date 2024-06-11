@@ -60,7 +60,7 @@ public class Credits implements Screen {
         );
 
         // Add the title label to the table with some padding at the bottom
-        table.add(instructionsLabel).padBottom(20);
+        table.add(instructionsLabel).padBottom(70);
         // Move to the next row in the table
         table.row();
         // Add the instructions label to the table
@@ -78,9 +78,9 @@ public class Credits implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        float logoWidth = logo.getWidth() * 0.5f; // Adjust the scale as needed
-        float logoHeight = logo.getHeight() * 0.5f; // Adjust the scale as needed
-        game.batch.draw(logo, (Gdx.graphics.getWidth() - logoWidth) / 2, Gdx.graphics.getHeight() - logoHeight - 50, logoWidth, logoHeight); // Center the logo at the top
+        float logoWidth = logo.getWidth() * 0.4f; // Adjust the scale as needed
+        float logoHeight = logo.getHeight() * 0.4f; // Adjust the scale as needed
+        game.batch.draw(logo, (Gdx.graphics.getWidth() - logoWidth) / 2, Gdx.graphics.getHeight() - logoHeight - 100, logoWidth, logoHeight); // Center the logo at the top
         game.batch.end();
 
 
