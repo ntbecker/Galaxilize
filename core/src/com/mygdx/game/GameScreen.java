@@ -1,5 +1,7 @@
 /*
  Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ June 11th 2024
+ The screen that displays the game world.
  */
 package com.mygdx.game;
 
@@ -40,12 +42,17 @@ public class GameScreen implements Screen {
     private int trackNum;
     private Texture dashboard;
     private Texture healthBar;
+    private Texture fuelBar;
     private Texture scoreDisplay;
     private Item test;
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
 
+    /**
+     * A constructor for the game screen object.
+     * @param game the object holding data about the game.
+     */
     public GameScreen(final Galaxilize game){
         // Game object to draw to
         this.game = game;
@@ -70,6 +77,7 @@ public class GameScreen implements Screen {
         // UI Elements
         dashboard = new Texture("UI/Dashboard.png");
         healthBar = new Texture("UI/Health_Bar.png");
+        fuelBar = new Texture("UI/Fuel_Bar.png");
         scoreDisplay = new Texture("UI/Score_Bar.png");
 
         // Reset the positions stored in this class in case the player has started another game after losing or returning to the main menu
@@ -94,7 +102,7 @@ public class GameScreen implements Screen {
         //Plays the first track.
         musicTracks.get(trackNum).play();
         // Initialize player
-        player = new Player(200,200,0,0,10 + game.bonusMass,10, 100 + game.bonusHealth, 100,"");
+        player = new Player(200,200,0,0,10,10, 100, 100,"");
 
         player.setName(JOptionPane.showInputDialog("What is your name? (scores will be saved under this name)"));
         border = new Border(-200,1);
@@ -124,12 +132,12 @@ public class GameScreen implements Screen {
 
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-        if(!musicTracks.get(trackNum).isPlaying()){
-            trackNum++;
-            if(trackNum >= musicTracks.size()){
-                trackNum = 0;
+        if(!musicTracks.get(trackNum).isPlaying()){ //Checks if the music has stopped.
+            trackNum++; //Moves to the next track.
+            if(trackNum >= musicTracks.size()){ //If the last track has been reached.
+                trackNum = 0; //Reset to the first track.
             }
-            musicTracks.get(trackNum).play();
+            musicTracks.get(trackNum).play(); //Start a new song.
         }
         // Slows the game's physics down to 1/5th speed
         if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) {
@@ -171,7 +179,7 @@ public class GameScreen implements Screen {
                 player.setHookedAsteroid((Asteroid) physicsObjectsList.get(finalIndex));
             }
         }
-
+        //Checks if the user wants to return to the menu.
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             scores.addScore((int)player.getScore(), player.getName());
             musicTracks.get(trackNum).stop();
@@ -213,7 +221,7 @@ public class GameScreen implements Screen {
         // Update the player and grappled asteroid
         player.updateHook(speedFactor);
         // Update all physics object's positions
-        player.updatePos(speedFactor,game.thrustMulti);
+        player.updatePos(speedFactor);
         for (int i = 1; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
         }
@@ -301,6 +309,10 @@ public class GameScreen implements Screen {
         game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y+300, (float) (player.getHealth()*1.5),30);
         game.shapeDrawer.setColor(1,1,1,1);
 
+        // Draws Fuel bar
+        game.batch.draw(fuelBar,camera.position.x-400,camera.position.y + 243);
+        game.shapeDrawer.setColor(1,0.5f,0,1);
+        game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y+252,(float)(player.getFuel()*1.5),30);
 
         // Screen Effects
 

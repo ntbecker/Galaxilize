@@ -14,9 +14,6 @@ public class Galaxilize extends Game {
 	public BitmapFont titleFont;
 	public BitmapFont subTitleFont;
 	public ShapeDrawer shapeDrawer;
-	public double thrustMulti;
-	public int bonusHealth;
-	public double bonusMass;
 	/**
 	 * Runs when the application is started, instantiates SpriteBatch and fonts
 	 */
@@ -32,9 +29,6 @@ public class Galaxilize extends Game {
 		// Texture region specifies a single white pixel
 		shapeDrawer = new ShapeDrawer(batch, new TextureRegion(whitePixel,0,0,1,1));
 		shapeDrawer.setColor(Color.WHITE);
-		thrustMulti = 1;
-		bonusHealth = 0;
-		bonusMass = 0;
 		// Sets the screen to the Main Menu
 		this.setScreen(new MainMenuScreen(this));
 	}

@@ -190,23 +190,39 @@ public class Player extends PhysicsObject{
         super.toString()
     }*/
 
-    public void updatePos(double speedFactor, double thrustMulti){
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            accX = -0.1*thrustMulti;
-        }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            accX = 0.1*thrustMulti;
-        }else{
-            accX = 0;
-        }
+    public void updatePos(double speedFactor){
+        boolean fuelSpent = false;
+        if(fuel > 0) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                accX = -0.1;
+                fuel -= 0.028 * speedFactor;
+                fuelSpent = true;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                accX = 0.1;
+                fuel -= 0.028 * speedFactor;
+                fuelSpent = true;
+            } else {
+                accX = 0;
+            }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            accY = -0.1*thrustMulti;
-        }else if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            accY = 0.1*thrustMulti;
-        }else{
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                accY = -0.1;
+                if (!fuelSpent) {
+                    fuel -= 0.028 * speedFactor;
+                }
+            } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                accY = 0.1;
+                if (!fuelSpent) {
+                    fuel -= 0.028 * speedFactor;
+                }
+            } else {
+                accY = 0;
+            }
+        }
+        else{
+            accX = 0;
             accY = 0;
         }
-
 
         super.updatePos(speedFactor);
 
