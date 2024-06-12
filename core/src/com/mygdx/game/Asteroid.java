@@ -41,14 +41,6 @@ public class Asteroid extends PhysicsObject{
     }
 
     /**
-     * Finds the distance from this asteroid to the mouse
-     * @return The distance from the asteroid to the mouse
-     */
-    public double mouseDist(double mouseX, double mouseY){
-        return Math.sqrt(Math.pow((posX-mouseX),2.0) + Math.pow((posY-mouseY),2.0));
-    }
-
-    /**
      * Draws the asteroid to the Galaxilize window
      * @param s The spritebatch defined in Galaxilize class
      */
