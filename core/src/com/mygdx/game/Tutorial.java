@@ -1,6 +1,7 @@
 package com.mygdx.game;
 // the imports
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.GL20;
@@ -57,7 +58,7 @@ public class Tutorial implements Screen{
                         "3. Press 'Space' to release from an asteroid.\n" +
                         "4. Avoid asteroids and survive as long as possible.\n" +
                          "5. Manage your fuel and health by picking up resupply items.\n" +
-                        "5. Click anywhere on the screen to go back to Main Menu.",
+                        "6. Press escape to go back to Main Menu (Works in game too).",
                 skin
         );
 
@@ -87,8 +88,8 @@ public class Tutorial implements Screen{
         stage.act(num);
         // Draw the stage
         stage.draw();
-        // Check if the screen was clicked or touched
-        if (Gdx.input.justTouched()) {
+        // Check if escape is pressed and if so returns to menu.
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
            game.setScreen(new MainMenuScreen(game));
             dispose();
        }
