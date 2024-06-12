@@ -5,44 +5,45 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class Item {
-
-    private double posX;
-    private double posY;
-    private boolean delete;
-    private static final Texture itemTexture = new Texture("Object_Textures/Circle_Radius_10.png");
-
+public class Item extends PhysicsObject{
+    private static final Texture healthTexture = new Texture("Object_Textures/Health_Item.png");
+    private static final Texture fuelTexture = new Texture("Object_Textures/Fuel_Item.png");
+    private boolean isHealth;
     /**
      * Constructor for Item, initializes with a position
      * @param posX X position of the item
      * @param posY Y position of the item
      */
-    public Item(double posX, double posY){
+    public Item(double posX, double posY, double velX, double velY, double mass, double radius, boolean isHealth){
         this.posX = posX;
         this.posY = posY;
-        delete = false;
+        this.isHealth = isHealth;
     }
 
     /**
      * Draws this item to the screen
      * @param s The open sprite batch to draw to
      */
-    public void draw(SpriteBatch s){
-        s.draw(itemTexture, (float) (posX-10), (float) (posY-10));
+    public void draw(SpriteBatch s, ShapeDrawer shape){
+        if(isHealth) {
+            s.draw(healthTexture, (float) (posX - 10), (float) (posY - 10));
+        }
+        else{
+            s.draw(fuelTexture, (float) (posX - 10), (float) (posY) - 10);
+        }
     }
 
     /**
-     * Heals the player and flags self for deletion if successful
-     * @param player The player object
+     * Returns if the item is health or fuel.
+     * @return if the item is health or fuel.
      */
-    public void isCollected(Player player){
-        double dist = Math.pow(player.getPosX()-posX,2.0) + Math.pow(player.getPosY()-posY,2.0);
+    public boolean isHealth(){return(isHealth);}
 
-        if(Math.pow((player.getRadius() + 10),2.0)+100 > dist){
-            player.addHealth(25);
-            delete = true;
-        }
-    }
+    /**
+     * Sets if the item is health or fuel.
+     * @param isHealth is the item health or fuel.
+     */
+    public void setIsHealth(boolean isHealth){this.isHealth = isHealth;}
 
     /**
      * Accessor for X position
@@ -74,5 +75,14 @@ public class Item {
      */
     public void setPosY(double posY) {
         this.posY = posY;
+    }
+
+    /**
+     * If
+     * @param item
+     * @return
+     */
+    public boolean equals(Item item){
+        return(super.equals(item) && isHealth == item.isHealth);
     }
 }
