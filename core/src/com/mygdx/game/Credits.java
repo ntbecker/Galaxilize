@@ -1,5 +1,9 @@
+/*
+ Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ June 11th 2024
+ Displays the credits for the game.
+ */
 package com.mygdx.game;
-// the imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
