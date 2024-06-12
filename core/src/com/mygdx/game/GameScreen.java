@@ -44,8 +44,6 @@ public class GameScreen implements Screen {
     private Texture healthBar;
     private Texture fuelBar;
     private Texture scoreDisplay;
-    private static final Sound grappleSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shoot_Grapple.mp3"));
-    private static final Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Player_Death.mp3"));
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -176,7 +174,6 @@ public class GameScreen implements Screen {
             }
             //If an object was found that the player can grapple to grapple to it and play a sound effect.
             if(finalIndex != 0){
-                grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
                 player.setIsHooked(true);
                 player.setHookedObject(physicsObjectsList.get(finalIndex));
             }
@@ -194,9 +191,6 @@ public class GameScreen implements Screen {
         if(player.getHealth() < 0){
             speedFactor = 0;
             if(deadTime < 150) {
-                if(deadTime == 0){
-                    deathSound.play();
-                }
                 deadTime++;
             }
         }

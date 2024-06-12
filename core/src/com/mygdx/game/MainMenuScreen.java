@@ -34,7 +34,6 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
-    private static final Sound selectSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_select.mp3"));
 
     public static float colourR = 1f;
     public static float colourG = 0f;
@@ -137,7 +136,6 @@ public class MainMenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectSound.play(0.5f);
                 // Stop menu music when game starts
                 menuMusic.stop();
                 // Dispose of menu music to remove it from memory
@@ -152,7 +150,6 @@ public class MainMenuScreen implements Screen {
         tutorialButton.addListener(new ClickListener() { //Checks if the tutorial button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectSound.play(0.5f);
                 // Navigate to the TutorialScreen when the tutorial button is clicked
                 game.setScreen(new Tutorial(game));
                 // Dispose of other menu assets
@@ -164,14 +161,12 @@ public class MainMenuScreen implements Screen {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-                selectSound.play(0.5f);
                 Gdx.app.exit(); // exits the system
             }
         });
 
         scoresButton.addListener(new ClickListener(){ //Checks if the score button is pressed.
             public void clicked(InputEvent event, float x, float y){
-                selectSound.play(0.5f);
                 // Navigates to the leaderboards
                 game.setScreen(new ScoreScreen(game));
             }
@@ -180,7 +175,6 @@ public class MainMenuScreen implements Screen {
         creditsButton.addListener(new ClickListener() { //Checks if the credits button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectSound.play(0.5f);
                 // Navigates to the credits
                 game.setScreen(new Credits(game));
                 dispose();

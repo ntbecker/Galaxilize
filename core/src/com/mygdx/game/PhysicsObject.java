@@ -27,8 +27,6 @@ abstract public class PhysicsObject {
     protected double nextVelY;
     protected boolean hasCollided;
 
-    //Create sound effect for collision
-    private final static Sound collideSound = Gdx.audio.newSound(Gdx.files.internal("Sound/collide.mp3"));
 
     /**
      * Primary constructor, sets all position related values to 0, mass and radius to 1
@@ -132,7 +130,6 @@ abstract public class PhysicsObject {
             nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
             nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
             if(this instanceof Player){
-                collideSound.play(1,((float)Math.random()*1.5f + 0.25f),0);
                 if(other instanceof Asteroid) {
                     double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
                     if (changeVel > 10) {
