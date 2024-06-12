@@ -20,7 +20,7 @@ public class Player extends PhysicsObject{
     double health;
     double fuel;
     boolean isHooked;
-    Asteroid hookedAsteroid;
+    PhysicsObject hookedObject;
 
     /**
      * Partially filled constructor for the Player class
@@ -38,7 +38,7 @@ public class Player extends PhysicsObject{
         score = 0;
         furthestDist = posY;
         isHooked = false;
-        //hookedAsteroid = null;
+        //hookedObject = null;
         name = "";
         scoring = new Scoring (); // initialize scoring
     }
@@ -75,6 +75,16 @@ public class Player extends PhysicsObject{
      */
     public void addHealth(double healPoints){
         health += healPoints;
+        if(health > 100){
+            health = 100;
+        }
+    }
+
+    public void addFuel(double fuelAdded){
+        fuel += fuelAdded;
+        if(fuel > 100){
+            fuel = 100;
+        }
     }
 
     /**
@@ -157,16 +167,16 @@ public class Player extends PhysicsObject{
      * Returns the asteroid that the player is hooked onto.
      * @return the asteroid that the player is hooked onto.
      */
-    public Asteroid getHookedAsteroid() {
-        return(hookedAsteroid);
+    public PhysicsObject getHookedObject() {
+        return(hookedObject);
     }
 
     /**
      * Sets what asteroid the player is hooked onto to the input object.
-     * @param hookedAsteroid the asteroid that the player is hooked onto.
+     * @param hookedObject the asteroid that the player is hooked onto.
      */
-    public void setHookedAsteroid(Asteroid hookedAsteroid){
-        this.hookedAsteroid = hookedAsteroid;
+    public void setHookedObject(PhysicsObject hookedObject){
+        this.hookedObject = hookedObject;
     }
 
     /**
@@ -245,17 +255,17 @@ public class Player extends PhysicsObject{
      * Updates the physics for the grappling hook.
      */
     public void updateHook(double speedFactor) {
-        if (hookedAsteroid != null && isHooked) { //Don't try to calculate physics for the grappling hook if it is not active or not connected to anything.
-            double dist = Math.sqrt(Math.pow(hookedAsteroid.getPosX() - posX, 2) + Math.pow(hookedAsteroid.getPosY() - posY, 2)); //Calculates the distance between the center of the asteroid and the player.
-            if (dist < 2*radius + hookedAsteroid.getRadius()) { //Disconnects the asteroid from the player if they are too close.
+        if (hookedObject != null && isHooked) { //Don't try to calculate physics for the grappling hook if it is not active or not connected to anything.
+            double dist = Math.sqrt(Math.pow(hookedObject.getPosX() - posX, 2) + Math.pow(hookedObject.getPosY() - posY, 2)); //Calculates the distance between the center of the asteroid and the player.
+            if (dist < 2*radius + hookedObject.getRadius()) { //Disconnects the asteroid from the player if they are too close.
                 //isHooked = false;
-                //hookedAsteroid = null;
+                //hookedObject = null;
             }
             else{ //Calculate and apply the force to the objects.
-                double angle = Math.atan2((hookedAsteroid.getPosY() - posY), (hookedAsteroid.getPosX() - posX)); //Calculate the angle between the position of the asteroid relative to the player.
+                double angle = Math.atan2((hookedObject.getPosY() - posY), (hookedObject.getPosX() - posX)); //Calculate the angle between the position of the asteroid relative to the player.
 
                 // Potentially use this to slowly guide player into circular motion, however it is unused for now
-                double tanVel = Math.abs((hookedAsteroid.getVelX()-velX) * Math.cos(angle + (Math.PI/2)) + (hookedAsteroid.getVelY()-velY) * Math.sin(angle + Math.PI / 2)); //Calculate the velocity tangent to circular motion around the asteroid.
+                double tanVel = Math.abs((hookedObject.getVelX()-velX) * Math.cos(angle + (Math.PI/2)) + (hookedObject.getVelY()-velY) * Math.sin(angle + Math.PI / 2)); //Calculate the velocity tangent to circular motion around the asteroid.
                 // To slowly guide the player we could get the velocity not tangential to the velocity and decay it ( * 0.99) every frame
 
                 // Old formula was 0.01 + (tanVel * dist * mass) / 10000
@@ -263,10 +273,10 @@ public class Player extends PhysicsObject{
 
 
                 velX += (forceCent * Math.cos(angle))/mass*speedFactor;
-                hookedAsteroid.setVelX(hookedAsteroid.getVelX() + (forceCent * Math.cos(angle+Math.PI))/hookedAsteroid.getMass()*speedFactor);
+                hookedObject.setVelX(hookedObject.getVelX() + (forceCent * Math.cos(angle+Math.PI))/hookedObject.getMass()*speedFactor);
 
                 velY += (forceCent * Math.sin(angle))/mass*speedFactor;
-                hookedAsteroid.setVelY(hookedAsteroid.getVelY() + (forceCent * Math.sin(angle+Math.PI))/hookedAsteroid.getMass()*speedFactor);
+                hookedObject.setVelY(hookedObject.getVelY() + (forceCent * Math.sin(angle+Math.PI))/hookedObject.getMass()*speedFactor);
             }
         }
     }
