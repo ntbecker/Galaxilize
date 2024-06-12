@@ -97,7 +97,7 @@ public class Spawning {
                 if(num == 0){
                     isHealth = true;
                 }
-                objects.add(new Item(posX,posY,0,0,50,10,isHealth));
+                objects.add(new Item(posX,posY,0,0,50,20,isHealth));
             }
             else {
                 //Randomizes attributes of the asteroid.

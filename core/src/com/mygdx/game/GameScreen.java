@@ -175,7 +175,7 @@ public class GameScreen implements Screen {
             if(finalIndex != 0){
                 player.setIsHooked(true);
                 player.setHookedObject(physicsObjectsList.get(finalIndex));
-                shootGrapple.play(0.5f);
+                shootGrapple.play(0.25f, (float)Math.random()*0.5f + 0.75f,0);
             }
         }
         //Checks if the user wants to return to the menu.

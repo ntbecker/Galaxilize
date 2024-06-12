@@ -29,10 +29,10 @@ public class Item extends PhysicsObject{
      */
     public void draw(SpriteBatch s, ShapeDrawer shape){
         if(isHealth) {
-            s.draw(healthTexture, (float) (posX - 10), (float) (posY - 10));
+            s.draw(healthTexture, (float) (posX - 15), (float) (posY - 15));
         }
         else{
-            s.draw(fuelTexture, (float) (posX - 10), (float) (posY) - 10);
+            s.draw(fuelTexture, (float) (posX - 15), (float) (posY) - 15);
         }
     }
 

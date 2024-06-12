@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
-    private Sound menuSelect;
+    private static Sound menuSelect;
 
 
     public static float colourR = 1f;
@@ -177,6 +177,7 @@ public class MainMenuScreen implements Screen {
                 menuSelect.play(0.5f);
                 // Navigates to the leaderboards
                 game.setScreen(new ScoreScreen(game));
+                dispose();
             }
         });
         // Add listener for the credits button
@@ -241,7 +242,6 @@ public class MainMenuScreen implements Screen {
         stage.dispose();
         skin.dispose();
         background.dispose();
-        menuSelect.dispose();
         title.dispose();
     }
 }
