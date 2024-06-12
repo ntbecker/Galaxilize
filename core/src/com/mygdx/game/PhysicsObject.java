@@ -100,8 +100,9 @@ abstract public class PhysicsObject {
      * Checks the collision between this object and another, and changes the velocity accordingly
      * @param other The other object that is being checked with
      * @param speedFactor The speed that the game is running at
+     * @return if the collided object should be deleted on impact.
      */
-    public void checkCollision(PhysicsObject other, double speedFactor){
+    public boolean checkCollision(PhysicsObject other, double speedFactor){
         if(isColliding(other, speedFactor)){
             // Call these here so that we don't repeat method calls in the next two formulas
             double otherMass = other.getMass();
@@ -126,14 +127,34 @@ abstract public class PhysicsObject {
             nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
             nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
             if(this instanceof Player){
-                double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
-                if(changeVel > 10){
-                    ((Player)this).dealDamage((int)(changeVel/5));
+                if(other instanceof Asteroid) {
+                    double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
+                    if (changeVel > 10) {
+                        ((Player) this).dealDamage((int) (changeVel / 5));
+                    }
+                }
+                else{
+                    if(((Item)other).isHealth()){
+                        ((Player)this).addHealth(25);
+                    }
+                    else{
+                        ((Player)this).addFuel(25);
+                    }
+                    return(true);
                 }
             }
             // When hasCollided is true, next update the velocity is set to nextVel
             hasCollided = true;
         }
+        return(false);
+    }
+
+    /**
+     * Finds the distance from this asteroid to the mouse
+     * @return The distance from the asteroid to the mouse
+     */
+    public double mouseDist(double mouseX, double mouseY){
+        return Math.sqrt(Math.pow((posX-mouseX),2.0) + Math.pow((posY-mouseY),2.0));
     }
 
     /**
@@ -283,5 +304,9 @@ abstract public class PhysicsObject {
      */
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    public boolean equals(PhysicsObject object){
+        return(posX == object.getPosX() && posY == object.getPosY() && velX == object.getVelX() && velY == object.getVelY() && accX == object.getAccX() && accY == object.getAccY() && mass == object.getMass() && radius == object.getRadius());
     }
 }
