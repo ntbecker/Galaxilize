@@ -175,10 +175,10 @@ public class GameScreen implements Screen {
             }
 
             if(finalIndex != 0){
-                if(player.getIsHooked() && !player.getHookedObject().equals(physicsObjectsList.get(finalIndex))){
+                if(player.getHookedObject() != null && !player.getHookedObject().equals(physicsObjectsList.get(finalIndex))){
                     grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
                 }
-                else if(!player.getIsHooked()){
+                else if(player.getHookedObject() == null){
                     grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
                 }
                 player.setIsHooked(true);
