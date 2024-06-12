@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-
+import com.badlogic.gdx.audio.Sound;
 import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,6 +44,8 @@ public class GameScreen implements Screen {
     private Texture healthBar;
     private Texture fuelBar;
     private Texture scoreDisplay;
+    private static final Sound grappleSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shoot_Grapple2.wav"));
+    private static final Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Player_Death2.wav"));
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
@@ -92,15 +94,12 @@ public class GameScreen implements Screen {
 
         //Creates music array list.
         musicTracks = new ArrayList<>();
-        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("backgroundRadiation.mp3")));
-        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("solarFlare.mp3")));
-        for (Music musicTrack : musicTracks) {
-            musicTrack.setVolume(0.5f);
-        }
+        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("Sound/backgroundRadiation.mp3")));
+        musicTracks.add(Gdx.audio.newMusic(Gdx.files.internal("Sound/solarFlare.mp3")));
+        musicTracks.get(0).setVolume(0.5f);
+        musicTracks.get(1).setVolume(0.3f);
         //Randomizes what track the music starts on.
         trackNum = (int)(Math.random()*((double)musicTracks.size()));
-        //Plays the first track.
-        musicTracks.get(trackNum).play();
         // Initialize player
         player = new Player(200,200,0,0,10,10, 100, 100,"");
 
@@ -176,6 +175,12 @@ public class GameScreen implements Screen {
             }
 
             if(finalIndex != 0){
+                if(player.getHookedObject() != null && !player.getHookedObject().equals(physicsObjectsList.get(finalIndex))){
+                    grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
+                }
+                else if(player.getHookedObject() == null){
+                    grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
+                }
                 player.setIsHooked(true);
                 player.setHookedObject(physicsObjectsList.get(finalIndex));
             }
@@ -193,6 +198,9 @@ public class GameScreen implements Screen {
         if(player.getHealth() < 0){
             speedFactor = 0;
             if(deadTime < 150) {
+                if(deadTime == 0){
+                    deathSound.play();
+                }
                 deadTime++;
             }
         }
@@ -231,7 +239,7 @@ public class GameScreen implements Screen {
         for (int i = 1; i < physicsObjectsList.size(); i++) {
             physicsObjectsList.get(i).updatePos(speedFactor);
         }
-
+        //Deals damage to the player if they are inside the border.
         if(border.getPosY() > player.getPosY() - player.getRadius()){
             player.dealDamage(speedFactor);
         }

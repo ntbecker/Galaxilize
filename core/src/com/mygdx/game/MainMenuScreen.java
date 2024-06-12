@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.audio.Sound;
 
 // Main class for the menu screen which is branched to the screen
 public class MainMenuScreen implements Screen {
@@ -27,6 +28,7 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
+    private static final Sound selectSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_select.wav"));
 
     public static float colourR = 1f;
     public static float colourG = 0f;
@@ -44,7 +46,7 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         // Plays menu music.
         if(menuMusic == null){
-            menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuTrack.mp3"));
+            menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/menuTrack.mp3"));
         }
         if(!menuMusic.isPlaying()){
             menuMusic.play();
@@ -60,6 +62,7 @@ public class MainMenuScreen implements Screen {
         //Create background player and asteroid.
         player = new Player((int)(Math.random()*2)*800,(int)(Math.random()*2)*800,Math.random()*3 - 1,Math.random()*3-1,10,10);
         player.setMoveLocked(true);
+        //Create menu select sound effect.
     }
 
 
@@ -127,6 +130,7 @@ public class MainMenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                selectSound.play(0.5f);
                 // Stop menu music when game starts
                 menuMusic.stop();
                 // Dispose of menu music to remove it from memory
@@ -147,6 +151,7 @@ public class MainMenuScreen implements Screen {
              */
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                selectSound.play(0.5f);
                 // Navigate to the TutorialScreen when the tutorial button is clicked
                 game.setScreen(new Tutorial(game));
                 // Dispose of other menu assets
@@ -158,12 +163,14 @@ public class MainMenuScreen implements Screen {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit(); // exits the game
+                selectSound.play(0.5f);
+                Gdx.app.exit(); // exits the system
             }
         });
 
         scoresButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
+                selectSound.play(0.5f);
                 // Navigates to the leaderboards
                 game.setScreen(new ScoreScreen(game));
             }
@@ -172,6 +179,7 @@ public class MainMenuScreen implements Screen {
         creditsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                selectSound.play(0.5f);
                 // Navigates to the credits
                 game.setScreen(new Credits(game));
                 dispose();
