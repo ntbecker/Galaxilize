@@ -1,6 +1,7 @@
 package com.mygdx.game;
 // the imports
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.GL20;
@@ -88,8 +89,8 @@ public class Credits implements Screen {
         stage.act(num);
         // Draw the stage
         stage.draw();
-        // Check if the screen was clicked or touched
-        if (Gdx.input.justTouched()) {
+        // Checks if escape is pressed.
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
