@@ -1,12 +1,10 @@
 package com.mygdx.game;
 // imports
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,9 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import space.earlygrey.shapedrawer.ShapeDrawer;
-
-import java.awt.*;
 
 // Main class for the menu screen which is branched to the screen
 public class MainMenuScreen implements Screen {
@@ -32,6 +27,10 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
+
+    public static float colourR = 1f;
+    public static float colourG = 0f;
+    public static float colourB = 1f;
 
     /**
      * Constructor for main menu
@@ -121,14 +120,20 @@ public class MainMenuScreen implements Screen {
         TextButton quitButton = new TextButton("Quit", skin);
         TextButton scoresButton = new TextButton("High Scores", skin);
         TextButton creditsButton = new TextButton("Credits", skin);
+        TextButton colourButton = new TextButton("Randomize Player", skin);
 
 
+        // Listeners
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // Stop menu music when game starts
                 menuMusic.stop();
+                // Dispose of menu music to remove it from memory
                 menuMusic.dispose();
+                // Set screen to game screen
                 game.setScreen(new GameScreen(game));
+                // Dispose of other menu assets
                 dispose();
             }
         });
@@ -144,6 +149,7 @@ public class MainMenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 // Navigate to the TutorialScreen when the tutorial button is clicked
                 game.setScreen(new Tutorial(game));
+                // Dispose of other menu assets
                 dispose();
             }
         });
@@ -152,13 +158,13 @@ public class MainMenuScreen implements Screen {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Quit button clicked");
-                Gdx.app.exit(); // exits the system
+                Gdx.app.exit(); // exits the game
             }
         });
 
         scoresButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
+                // Navigates to the leaderboards
                 game.setScreen(new ScoreScreen(game));
             }
         });
@@ -166,13 +172,24 @@ public class MainMenuScreen implements Screen {
         creditsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // Navigates to the credits
                 game.setScreen(new Credits(game));
                 dispose();
             }
         });
-// add the play button to the table
-        table.top().padTop(450);
+        colourButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Randomize player colour
+                colourR = (float)Math.random();
+                colourG = (float)Math.random();
+                colourB = (float)Math.random();
+            }
+        });
+
         // Adjust this value as needed to move the buttons lower
+        table.top().padTop(450);
+        // add the play button to the table
         table.add(playButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0); // add a row
         table.add(tutorialButton).fillX().uniformX(); // add a tutorial button
@@ -181,6 +198,8 @@ public class MainMenuScreen implements Screen {
         table.row().pad(0, 0, 10, 0); // add a row
         table.add(creditsButton).fillX().uniformX();
         table.row().pad(0, 0, 10, 0);
+        table.add(colourButton).fillX().uniformX(); // add the quit button to the table
+        table.row().pad(60, 0, 10, 0);
         table.add(quitButton).fillX().uniformX(); // add the quit button to the table
     }
 

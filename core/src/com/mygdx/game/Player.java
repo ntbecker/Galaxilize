@@ -98,10 +98,9 @@ public class Player extends PhysicsObject{
      * @param shape The shapeDrawer to draw with
      */
     public void draw(SpriteBatch s, ShapeDrawer shape){
-        //s.draw(playerTexture,(float)(posX-radius),(float)(posY-radius));
-        //shape.circle((float)posX,(float)posY,(float)radius, 3);
         s.draw(playerTexture,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
-        s.setColor(1,0,1,1);
+        // 3 colours set on the main menu
+        s.setColor(MainMenuScreen.colourR,MainMenuScreen.colourG,MainMenuScreen.colourB,1);
         s.draw(playerOverlay,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
         s.setColor(1,1,1,1);
     }
