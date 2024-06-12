@@ -44,10 +44,10 @@ public class GameScreen implements Screen {
     private Texture healthBar;
     private Texture fuelBar;
     private Texture scoreDisplay;
-    private Item test;
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
+    private ArrayList<Item> items;
 
     /**
      * A constructor for the game screen object.
@@ -107,10 +107,11 @@ public class GameScreen implements Screen {
         player.setName(JOptionPane.showInputDialog("What is your name? (scores will be saved under this name)"));
         border = new Border(-200,1);
 
-        // Add all objects to list for rendering and colliding
+        // Add all starting objects to list for rendering and colliding
         physicsObjectsList.add(player);
 
-        test = new Item(100,1000);
+        // Create an array list for storing all items.
+        items = new ArrayList<Item>();
 
         //Creates a font for use in the GUI
         generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
@@ -152,7 +153,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            player.setHookedAsteroid(null);
+            player.setHookedObject(null);
             player.setIsHooked(false);
         }
 
@@ -167,7 +168,7 @@ public class GameScreen implements Screen {
             int finalIndex = 0;
 
             for(int i = 1; i < physicsObjectsList.size(); i++){
-                double checkDist = ((Asteroid)physicsObjectsList.get(i)).mouseDist(input.x,input.y);
+                double checkDist = ((physicsObjectsList.get(i)).mouseDist(input.x,input.y));
                 if(checkDist < bestDist){
                     bestDist = checkDist;
                     finalIndex = i;
@@ -176,7 +177,7 @@ public class GameScreen implements Screen {
 
             if(finalIndex != 0){
                 player.setIsHooked(true);
-                player.setHookedAsteroid((Asteroid) physicsObjectsList.get(finalIndex));
+                player.setHookedObject(physicsObjectsList.get(finalIndex));
             }
         }
         //Checks if the user wants to return to the menu.
@@ -214,7 +215,12 @@ public class GameScreen implements Screen {
         for (int i = 0; i < physicsObjectsList.size(); i++) {
             for (int j = 0; j < physicsObjectsList.size(); j++) {
                 if (j != i) {
-                    physicsObjectsList.get(i).checkCollision(physicsObjectsList.get(j),speedFactor);
+                    if(physicsObjectsList.get(i).checkCollision(physicsObjectsList.get(j),speedFactor)){
+                        if(player.getHookedObject() instanceof Item && ((Item) player.getHookedObject()).equals((Item) physicsObjectsList.get(j))){
+                            player.setHookedObject(null);
+                        }
+                        physicsObjectsList.remove(j);
+                    }
                 }
             }
         }
@@ -231,8 +237,6 @@ public class GameScreen implements Screen {
         }
         //Adds a new part of the trail to the player.
         trail.add(new PlayerTrail(player,120));
-
-        test.isCollected(player);
 
         // Update camera position
         camera.position.set((float)player.getPosX(),(float)player.getPosY(),0);
@@ -279,11 +283,9 @@ public class GameScreen implements Screen {
             physicsObjectsList.get(i).draw(game.batch, game.shapeDrawer);
         }
         // Draw hook between player and asteroid
-        if(player.getHookedAsteroid() != null){
-            game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedAsteroid().getPosX(),(float)player.getHookedAsteroid().getPosY());
+        if(player.getHookedObject() != null){
+            game.shapeDrawer.line((float)player.getPosX(),(float)player.getPosY(),(float)player.getHookedObject().getPosX(),(float)player.getHookedObject().getPosY());
         }
-
-        test.draw(game.batch);
 
         // Draw the border
         border.draw(game.shapeDrawer, camera.position);
@@ -322,12 +324,12 @@ public class GameScreen implements Screen {
             game.shapeDrawer.setColor(1,1,1,(float)(-1.25*(speedFactor-1)));
 
             // Aiming line for orbiting asteroid or player, depending on which is bigger
-            if(player.getHookedAsteroid() != null && player.getMass() >= player.getHookedAsteroid().getMass()){
-                double velDir = Math.atan2(player.getHookedAsteroid().getVelY(),player.getHookedAsteroid().getVelX());
-                float posX = (float)player.getHookedAsteroid().getPosX();
-                float posY = (float)player.getHookedAsteroid().getPosY();
+            if(player.getHookedObject() != null && player.getMass() >= player.getHookedObject().getMass()){
+                double velDir = Math.atan2(player.getHookedObject().getVelY(),player.getHookedObject().getVelX());
+                float posX = (float)player.getHookedObject().getPosX();
+                float posY = (float)player.getHookedObject().getPosY();
                 game.shapeDrawer.line(posX,posY,posX+50*(float)Math.cos(velDir),posY+50*(float)Math.sin(velDir), 3f);
-            }else if(player.getHookedAsteroid() != null && player.getMass() < player.getHookedAsteroid().getMass()){
+            }else if(player.getHookedObject() != null && player.getMass() < player.getHookedObject().getMass()){
                 double velDir = Math.atan2(player.getVelY(),player.getVelX());
                 float posX = (float)player.getPosX();
                 float posY = (float)player.getPosY();
