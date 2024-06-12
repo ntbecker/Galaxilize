@@ -15,8 +15,7 @@ public class Item extends PhysicsObject{
      * @param posY Y position of the item
      */
     public Item(double posX, double posY, double velX, double velY, double mass, double radius, boolean isHealth){
-        this.posX = posX;
-        this.posY = posY;
+        super(posX,posY,velX,velY,mass,radius);
         this.isHealth = isHealth;
     }
 
