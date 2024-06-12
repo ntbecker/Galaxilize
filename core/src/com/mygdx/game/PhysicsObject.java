@@ -5,6 +5,8 @@
 
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -25,6 +27,7 @@ abstract public class PhysicsObject {
     protected double nextVelY;
     protected boolean hasCollided;
 
+    private final Sound collideSound;
 
     /**
      * Primary constructor, sets all position related values to 0, mass and radius to 1
@@ -39,6 +42,8 @@ abstract public class PhysicsObject {
         mass = 1;
         radius = 1;
 
+        //Create sound effect for collision
+        collideSound = Gdx.audio.newSound(Gdx.files.internal("Sound/collide.wav"));
         // Assume no collisions are happening when the object is created
         hasCollided = false;
         nextVelX = 0;
@@ -127,6 +132,7 @@ abstract public class PhysicsObject {
             nextVelX = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.cos(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.cos(contactAngle+Math.PI/2.0);
             nextVelY = ((vel*Math.cos(velAngle - contactAngle)*(mass-otherMass) + 2*otherMass*otherVel*Math.cos(otherVelAngle-contactAngle))/(mass+otherMass))*Math.sin(contactAngle)+vel*Math.sin(velAngle-contactAngle)*Math.sin(contactAngle+Math.PI/2.0);
             if(this instanceof Player){
+                collideSound.play(1,((float)Math.random()*1.5f + 0.25f),0);
                 if(other instanceof Asteroid) {
                     double changeVel = Math.abs(this.velX - nextVelX) + Math.abs(this.velY - nextVelX);
                     if (changeVel > 10) {
