@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.audio.Sound;
 
 import javax.swing.*;
 
@@ -35,6 +36,7 @@ public class ScoreScreen implements Screen{
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font;
+    private Sound menuSelect;
     /**
      * A constructor for the score screen.
      */
@@ -52,6 +54,9 @@ public class ScoreScreen implements Screen{
         font = generator.generateFont(parameter);
         generator.dispose();
         font.setUseIntegerPositions(false);
+
+        // Create sound effect
+        menuSelect = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_Select.ogg"));
 
         //Creates the stage
         stage = new Stage(new ScreenViewport());
@@ -79,12 +84,17 @@ public class ScoreScreen implements Screen{
 
         topScoreButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                menuSelect.play(0.5f);
                 output = scores.displayHighScores();
             }
         });
         searchButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                output = scores.searchScore(JOptionPane.showInputDialog("What name would you like to search for scores under?"));
+                menuSelect.play(0.5f);
+                String input = JOptionPane.showInputDialog("What name would you like to search for scores under?");
+                if(input != null) {
+                    output = scores.searchScore(input);
+                }
             }
         });
     }
@@ -134,5 +144,6 @@ public class ScoreScreen implements Screen{
         stage.dispose();
         skin.dispose();
         font.dispose();
+        menuSelect.dispose();
     }
 }

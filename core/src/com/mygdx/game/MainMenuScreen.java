@@ -34,10 +34,13 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
+    private Sound menuSelect;
+
 
     public static float colourR = 1f;
     public static float colourG = 0f;
     public static float colourB = 1f;
+
 
     /**
      * Constructor for main menu
@@ -68,6 +71,7 @@ public class MainMenuScreen implements Screen {
         player = new Player((int)(Math.random()*2)*800,(int)(Math.random()*2)*800,Math.random()*3 - 1,Math.random()*3-1,10,10);
         player.setMoveLocked(true);
         //Create menu select sound effect.
+        menuSelect = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_Select.ogg"));
     }
 
 
@@ -140,6 +144,7 @@ public class MainMenuScreen implements Screen {
                 menuMusic.stop();
                 // Dispose of menu music to remove it from memory
                 menuMusic.dispose();
+                menuSelect.play(0.5f);
                 // Set screen to game screen
                 game.setScreen(new GameScreen(game));
                 // Dispose of other menu assets
@@ -150,6 +155,7 @@ public class MainMenuScreen implements Screen {
         tutorialButton.addListener(new ClickListener() { //Checks if the tutorial button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                menuSelect.play(0.5f);
                 // Navigate to the TutorialScreen when the tutorial button is clicked
                 game.setScreen(new Tutorial(game));
                 // Dispose of other menu assets
@@ -161,12 +167,14 @@ public class MainMenuScreen implements Screen {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
+                menuSelect.play(0.5f);
                 Gdx.app.exit(); // exits the system
             }
         });
 
         scoresButton.addListener(new ClickListener(){ //Checks if the score button is pressed.
             public void clicked(InputEvent event, float x, float y){
+                menuSelect.play(0.5f);
                 // Navigates to the leaderboards
                 game.setScreen(new ScoreScreen(game));
             }
@@ -175,6 +183,7 @@ public class MainMenuScreen implements Screen {
         creditsButton.addListener(new ClickListener() { //Checks if the credits button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                menuSelect.play(0.5f);
                 // Navigates to the credits
                 game.setScreen(new Credits(game));
                 dispose();
@@ -183,6 +192,7 @@ public class MainMenuScreen implements Screen {
         colourButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                menuSelect.play(0.5f);
                 // Randomize player colour
                 colourR = (float)Math.random();
                 colourG = (float)Math.random();
@@ -231,6 +241,7 @@ public class MainMenuScreen implements Screen {
         stage.dispose();
         skin.dispose();
         background.dispose();
+        menuSelect.dispose();
         title.dispose();
     }
 }

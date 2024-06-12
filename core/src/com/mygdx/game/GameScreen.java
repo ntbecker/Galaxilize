@@ -45,9 +45,11 @@ public class GameScreen implements Screen {
     private Texture fuelBar;
     private Texture scoreDisplay;
 
+    private Sound playerDeath;
+    private Sound shootGrapple;
+
 
     private ArrayList<PhysicsObject> physicsObjectsList;
-    private ArrayList<Item> items;
 
     /**
      * A constructor for the game screen object.
@@ -98,6 +100,9 @@ public class GameScreen implements Screen {
         musicTracks.get(1).setVolume(0.3f);
         //Randomizes what track the music starts on.
         trackNum = (int)(Math.random()*((double)musicTracks.size()));
+        // Create Sound Effects
+        playerDeath = Gdx.audio.newSound(Gdx.files.internal("Sound/Player_Death.ogg"));
+        shootGrapple = Gdx.audio.newSound(Gdx.files.internal("Sound/Shoot_Grapple.ogg"));
         // Initialize player
         player = new Player(200,200,0,0,10,10, 100, 100,"");
 
@@ -106,9 +111,6 @@ public class GameScreen implements Screen {
 
         // Add all starting objects to list for rendering and colliding
         physicsObjectsList.add(player);
-
-        // Create an array list for storing all items.
-        items = new ArrayList<Item>();
 
         //Creates a font for use in the GUI
         generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
@@ -123,9 +125,6 @@ public class GameScreen implements Screen {
 
         // Speed factor used in all physics methods for slow motion effect, pass into all update and collision methods
         speedFactor = 1;
-
-        // A timer that counts up every 60th of an in game second (accounting for slowmotion effect)
-        double timer = 0;
     }
 
     public void render(float delta) {
@@ -176,6 +175,7 @@ public class GameScreen implements Screen {
             if(finalIndex != 0){
                 player.setIsHooked(true);
                 player.setHookedObject(physicsObjectsList.get(finalIndex));
+                shootGrapple.play(0.5f);
             }
         }
         //Checks if the user wants to return to the menu.
@@ -190,6 +190,9 @@ public class GameScreen implements Screen {
         //Checks if the player is dead
         if(player.getHealth() < 0){
             speedFactor = 0;
+            if(deadTime == 0){
+                playerDeath.play(0.5f);
+            }
             if(deadTime < 150) {
                 deadTime++;
             }
@@ -312,7 +315,7 @@ public class GameScreen implements Screen {
         game.shapeDrawer.setColor(1,1,1,1);
 
         font.setColor(0,0,0,1);
-        font.draw(game.batch,"Velocity: " + (int)velDisplay, camera.position.x - 380, camera.position.y - 350);
+        font.draw(game.batch,"Velocity: " + velForm.format(velDisplay), camera.position.x - 380, camera.position.y - 350);
         font.setColor(1,1,1,1);
 
         // Draws Healthbar
@@ -401,5 +404,13 @@ public class GameScreen implements Screen {
         dashboard.dispose();
         healthBar.dispose();
         scoreDisplay.dispose();
+        musicTracks.get(0).dispose();
+        musicTracks.get(1).dispose();
+        dashboard.dispose();
+        healthBar.dispose();
+        fuelBar.dispose();
+        scoreDisplay.dispose();
+        playerDeath.dispose();
+        shootGrapple.dispose();
     }
 }

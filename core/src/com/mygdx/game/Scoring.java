@@ -155,7 +155,7 @@ public class Scoring {
         if(foundName){ //Create an output of all the user's scores if they had any.
             output = nameSearch + "'s Scores:";
             for(int i = 0; i < foundScores.size(); i++){ //Loops through all the user's scores and adds them to the output.
-                output += "\n" + foundScores.get(i) + "points.";
+                output += "\n" + foundScores.get(i) + " points.";
             }
         }
         else{ //Output a message if no user was found with the input name.
