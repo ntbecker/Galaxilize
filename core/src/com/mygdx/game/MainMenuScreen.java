@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.awt.*;
 
@@ -30,6 +31,7 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera camera;
     private static Music menuMusic;
     private int scroll;
+    private Player player;
 
     /**
      * Constructor for main menu
@@ -56,6 +58,9 @@ public class MainMenuScreen implements Screen {
         scroll = 0;
         title = new Texture(Gdx.files.internal("UI/logo.png"));
 
+        //Create background player and asteroid.
+        player = new Player((int)(Math.random()*2)*800,(int)(Math.random()*2)*800,Math.random()*3 - 1,Math.random()*3-1,10,10);
+        player.setMoveLocked(true);
     }
 
 
@@ -69,30 +74,26 @@ public class MainMenuScreen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-//        Old menu code, not sure if anyone needs this // still not sure
-//        // Update the camera
-//        camera.update();
-//        game.batch.setProjectionMatrix(camera.combined);
-//
-//        // Draw sprites here
-//        game.batch.begin();
-//        game.titleFont.draw(game.batch, "GALAXILIZE", 0, 800, 800, 1, false);
-//        game.subTitleFont.draw(game.batch, "Click to start!", 0, 650, 800, 1, false);
-//        game.batch.end();
-//
-//        if (Gdx.input.isTouched()) {
-//            game.setScreen(new GameScreen(game));
-//            dispose();
-//        }
-
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        player.updatePos(1);
+        if(player.getPosY() > 810){
+            player.setPosY(player.getPosY()-820);
+        }
+        else if(player.getPosY() < -10){
+            player.setPosY(player.getPosY()+820);
+        }
+        if (player.getPosX() < -10){
+            player.setPosX(player.getPosX() + 820);
+        }
+        else if(player.getPosX() > 810){
+            player.setPosX(player.getPosX() - 820);
+        }
         // Draw background and logo
-
         game.batch.begin();
         scroll++;
         game.batch.draw(background,0,0,scroll,scroll,1600,1600);
-        //s.draw(playerTexture,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
-         // Adjust the logo position and scaling
+        player.draw(game.batch,game.shapeDrawer);
+        // Adjust the logo position and scaling
         float logoX = (Gdx.graphics.getWidth() - title.getWidth() * 0.5f) / 2;
         float logoY = Gdx.graphics.getHeight() - title.getHeight() * 0.5f - 50; // Adjust this value as needed
         game.batch.draw(title, logoX, logoY, title.getWidth() * 0.5f, title.getHeight() * 0.5f);
