@@ -45,7 +45,7 @@ public class Spawning {
         //Create variables for storing basic data about the player.
         double posX = player.getPosX();
         double posY = player.getPosY();
-        for(int i = - 1; i <= 1; i++) { //Loop through 3 values spawning three clusters of asteroids just outside of each side of the screen.
+        for(int i = - 1; i <= 1; i++) { //Loop through 3 values spawning three clusters of asteroids just outside each side of the screen.
             for (int j = 0; j < 5; j++) { //Spawns 5 asteroids on the left side of the screen.
                 spawnAtPos(objects, posX - 700, posY + i * 500, 250, 0.5, 5,100);
             }
