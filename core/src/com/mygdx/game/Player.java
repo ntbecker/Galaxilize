@@ -20,6 +20,7 @@ public class Player extends PhysicsObject{
     double health;
     double fuel;
     boolean isHooked;
+    boolean moveLock;
     PhysicsObject hookedObject;
 
     /**
@@ -41,6 +42,7 @@ public class Player extends PhysicsObject{
         //hookedObject = null;
         name = "";
         scoring = new Scoring (); // initialize scoring
+        moveLock = false;
     }
 
     /**
@@ -195,19 +197,26 @@ public class Player extends PhysicsObject{
         this.name = name;
     }
 
-      /*public String toString(){
-        String returnString = "";
-        super.toString()
-    }*/
+    /**
+     * Returns if the player's movement is locked.
+     * @return if the player's movement is locked.
+     */
+    public boolean getMoveLocked(){return(moveLock);}
+
+    /**
+     * Sets if the player's movement is locked.
+     * @param moveLock if the player's movement is locked.
+     */
+    public void setMoveLocked(boolean moveLock){ this.moveLock = moveLock;}
 
     public void updatePos(double speedFactor){
         boolean fuelSpent = false;
-        if(fuel > 0) {
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if(fuel > 0 && !moveLock) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) { //Moves the player left if they press A.
                 accX = -0.1;
                 fuel -= 0.028 * speedFactor;
                 fuelSpent = true;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) { //Moves the player right if they press D.
                 accX = 0.1;
                 fuel -= 0.028 * speedFactor;
                 fuelSpent = true;
@@ -215,31 +224,31 @@ public class Player extends PhysicsObject{
                 accX = 0;
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) { //Moves the player down if they press S
                 accY = -0.1;
-                if (!fuelSpent) {
+                if (!fuelSpent) { //Consumes fuel if it has not been consumed earlier on this frame.
                     fuel -= 0.028 * speedFactor;
                 }
-            } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.W)) { //Moves the player up if they press W.
                 accY = 0.1;
-                if (!fuelSpent) {
+                if (!fuelSpent) { //Consumes fuel if it has not been consumed earlier on this frame.
                     fuel -= 0.028 * speedFactor;
                 }
             } else {
                 accY = 0;
             }
         }
-        else{
+        else{ //Reset the player's acceleration if they run out of fuel.
             accX = 0;
             accY = 0;
         }
 
         super.updatePos(speedFactor);
 
-        if(posY > furthestDist){
+        if(posY > furthestDist){ //Adds to the player score as they move further upwards.
             double vel = Math.sqrt(velX*velX + velY*velY);
 
-            if(vel < 10){
+            if(vel < 10){ //Adds a multiplier based on the player's speed.
                 score += 1*speedFactor;
             }else if(vel < 20){
                 score += 2*speedFactor;
