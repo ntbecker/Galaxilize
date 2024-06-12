@@ -54,7 +54,7 @@ public class MainMenuScreen implements Screen {
         background = new Texture(Gdx.files.internal("Background_Elements/BackgroundMenu.png"));
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         scroll = 0;
-        title = new Texture(Gdx.files.internal("logo.png"));
+        title = new Texture(Gdx.files.internal("UI/logo.png"));
 
     }
 
@@ -92,8 +92,11 @@ public class MainMenuScreen implements Screen {
         scroll++;
         game.batch.draw(background,0,0,scroll,scroll,1600,1600);
         //s.draw(playerTexture,(float)(posX-10),(float)(posY-10),10,10,20,20,2,2,(float)(180*Math.atan2(velY,velX)/Math.PI-90),0,0,20,20,false,false);
+         // Adjust the logo position and scaling
+        float logoX = (Gdx.graphics.getWidth() - title.getWidth() * 0.5f) / 2;
+        float logoY = Gdx.graphics.getHeight() - title.getHeight() * 0.5f - 50; // Adjust this value as needed
+        game.batch.draw(title, logoX, logoY, title.getWidth() * 0.5f, title.getHeight() * 0.5f);
 
-        game.batch.draw(title, 103,600,0,0,1982,520,0.3f,0.3f,0,0,0,1982,520,false,false);
 
         game.batch.end();
 
@@ -167,6 +170,8 @@ public class MainMenuScreen implements Screen {
             }
         });
 // add the play button to the table
+        table.top().padTop(450);
+        // Adjust this value as needed to move the buttons lower
         table.add(playButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0); // add a row
         table.add(tutorialButton).fillX().uniformX(); // add a tutorial button
