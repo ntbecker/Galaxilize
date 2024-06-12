@@ -1,3 +1,8 @@
+/*
+ Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ June 11th 2024
+ A class for item objects that the player can interact with.
+ */
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
