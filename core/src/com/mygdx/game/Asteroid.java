@@ -10,7 +10,6 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Asteroid extends PhysicsObject{
     private static Texture asteroidTexture = new Texture("Object_Textures/Circle_Radius_10.png");
-    boolean containsUpgrade;
 
     /**
      * Primary constructor
@@ -23,7 +22,6 @@ public class Asteroid extends PhysicsObject{
      */
     Asteroid(double posX, double posY, double velX, double velY, double mass, double radius){
         super(posX,posY,velX,velY,mass,radius);
-        containsUpgrade = false;
     }
     /**
      * Secondary constructor, for an asteroid with an item
@@ -37,7 +35,6 @@ public class Asteroid extends PhysicsObject{
      */
     Asteroid(double posX, double posY, double velX, double velY, double mass, double radius, boolean containsUpgrade){
         this(posX,posY,velX,velY,mass,radius);
-        this.containsUpgrade = containsUpgrade;
     }
 
     /**
@@ -45,19 +42,23 @@ public class Asteroid extends PhysicsObject{
      * @param s The spritebatch defined in Galaxilize class
      */
     public void draw(SpriteBatch s, ShapeDrawer shape){
-        //s.draw(asteroidTexture, (float) (posX-radius), (float) (posY-radius));
         shape.circle((float)posX,(float)posY,(float)radius, 3);
     }
 
     /**
-     * Returns if the asteroid contains an upgrade.
-     * @return if the asteroid contains an upgrade.
+     * Checks if two asteroid objects are equal to each other.
+     * @param asteroid the asteroid being checked for equality.
+     * @return
      */
-    public boolean getContainsUpgrade(){ return(containsUpgrade); }
+    public boolean equals(Asteroid asteroid){
+        return(super.equals(asteroid));
+    }
 
     /**
-     * Sets the asteroid to contain or not contain an upgrade based on input.
-     * @param containsUpgrade if the asteroid contains an upgrade.
+     * Returns a string containing all the data of the asteroid.
+     * @return a string containing all the data of the asteroid.
      */
-    public void setContainsUpgrade(boolean containsUpgrade){ this.containsUpgrade = containsUpgrade; }
+    public String toString(){
+        return(super.toString());
+    }
 }
