@@ -310,8 +310,20 @@ public class GameScreen implements Screen {
         game.batch.draw(dashboard,camera.position.x-400,camera.position.y-386);
         game.shapeDrawer.setColor(0.8f,0.8f,0.9f,1);
         game.shapeDrawer.line(camera.position.x - 325, camera.position.y - 275, camera.position.x - 325 + (float)(50*player.getVelX()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.y - 275 +(float)(50*player.getVelY()/Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())),8 );
+
+        // Velocity bar
+        float velDisplay = (float)Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY());
+        game.shapeDrawer.setColor(0.35f,0.71f,0.93f,1);
+        game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y -377,Math.min(velDisplay*5, 50),30);
+        game.shapeDrawer.setColor(0.96f,0.89f,0.41f,1);
+        game.shapeDrawer.filledRectangle(camera.position.x-350,camera.position.y -377,Math.max((velDisplay-10)*5, 0),30);
+        game.shapeDrawer.setColor(0.93f,0.43f,0.35f,1);
+        game.shapeDrawer.filledRectangle(camera.position.x-300,camera.position.y -377,Math.max((velDisplay-20)*5, 0),30);
         game.shapeDrawer.setColor(1,1,1,1);
-        font.draw(game.batch,"Velocity: " + velForm.format(Math.sqrt(player.getVelX()*player.getVelX() + player.getVelY()*player.getVelY())), camera.position.x - 380, camera.position.y - 350);
+
+        font.setColor(0,0,0,1);
+        font.draw(game.batch,"Velocity: " + (int)velDisplay, camera.position.x - 380, camera.position.y - 350);
+        font.setColor(1,1,1,1);
 
         // Draws Healthbar
         game.batch.draw(healthBar,camera.position.x-400,camera.position.y+291);
