@@ -309,4 +309,19 @@ abstract public class PhysicsObject {
     public boolean equals(PhysicsObject object){
         return(posX == object.getPosX() && posY == object.getPosY() && velX == object.getVelX() && velY == object.getVelY() && accX == object.getAccX() && accY == object.getAccY() && mass == object.getMass() && radius == object.getRadius());
     }
+
+    /**
+     * Returns a string containing all the data of the physics object.
+     * @return a string containing all the data of the physics object.
+     */
+    public String toString(){
+        return("X position: " + posX + "px\n" +
+                "Y position: " + posY + "px\n" +
+                "X velocity: " + velX + "px/frame\n" +
+                "Y velocity: " + velY + "px/frame\n" +
+                "X acceleration: " + accX + "px/frame^2\n" +
+                "Y acceleration: " + accY + "px/frame^2\n" +
+                "Mass: " + mass + "kg\n" +
+                "Radius: " + radius + "px");
+    }
 }
