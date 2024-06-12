@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.w3c.dom.Text;
+
 /*
 Tutorial Class
  */
@@ -21,7 +24,8 @@ public class Tutorial implements Screen{
     private Stage stage;
     // Skin for the UI elements
     private Skin skin;
-
+    private static final Texture healthTexture = new Texture("Object_Textures/Health_Item.png");
+    private static final Texture fuelTexture = new Texture("Object_Textures/Fuel_Item.png");
     // Constructor to initialize the tutorial screen
     public Tutorial(final Galaxilize game) {
         // Set the game reference
@@ -48,11 +52,12 @@ public class Tutorial implements Screen{
         Label titleLabel = new Label("How to Play?", skin);
         // Create a label for the instructions using the skin
         Label instructionsLabel = new Label(
-                 "1. Use arrow keys to move.\n" +
+                 "1. Use WASD keys to move.\n" +
                         "2. Press 'E' for slow motion.\n" +
                         "3. Press 'Space' to release from an asteroid.\n" +
                         "4. Avoid asteroids and survive as long as possible.\n" +
-                        "5. Click anywhere on the screen to go back to Main Menu",
+                         "5. Manage your fuel and health by picking up resupply items.\n" +
+                        "5. Click anywhere on the screen to go back to Main Menu.",
                 skin
         );
 
@@ -74,6 +79,10 @@ public class Tutorial implements Screen{
     public void render(float num) {
         // Clear the screen with a black color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.batch.begin();
+        game.batch.draw(healthTexture,640,340);
+        game.batch.draw(fuelTexture,680,340);
+        game.batch.end();
         // Update the stage with the time since the last render
         stage.act(num);
         // Draw the stage
