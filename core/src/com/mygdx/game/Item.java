@@ -76,12 +76,25 @@ public class Item extends PhysicsObject{
         this.posY = posY;
     }
 
+
+
     /**
-     * If
-     * @param item
-     * @return
+     * Compare 2 items for equivalency
+     * @param item The item object to compare this to
+     * @return true if the item is the same
      */
     public boolean equals(Item item){
         return(super.equals(item) && isHealth == item.isHealth);
+    }
+
+    /**
+     * Creates a table with all the item's information
+     * @return A string containing item information
+     */
+    @Override
+    public String toString() {
+        return "Type: Item\n" +
+                super.toString() +
+                "\nIs a health pack: " + isHealth;
     }
 }

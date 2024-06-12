@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Asteroid extends PhysicsObject{
-    private static Texture asteroidTexture = new Texture("Object_Textures/Circle_Radius_10.png");
 
     /**
      * Primary constructor

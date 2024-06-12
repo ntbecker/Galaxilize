@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.Objects;
+
 public class Player extends PhysicsObject{
     private static final Texture playerTexture = new Texture("Object_Textures/Spaceship_Base.png");
     private static final Texture playerOverlay = new Texture("Object_Textures/Spaceship_Colourable.png");
@@ -153,7 +155,7 @@ public class Player extends PhysicsObject{
      * Returns if the player is hooked to an asteroid.
      * @return a boolean holding if the player is hooked to an asteroid.
      */
-    public boolean getIsHooked(){
+    public boolean isHooked(){
         return(isHooked);
     }
 
@@ -288,5 +290,31 @@ public class Player extends PhysicsObject{
                 hookedObject.setVelY(hookedObject.getVelY() + (forceCent * Math.sin(angle+Math.PI))/hookedObject.getMass()*speedFactor);
             }
         }
+    }
+
+    /**
+     * Compare 2 players for equivalency
+     * @param other The player object to compare this to
+     * @return true if the player is the same
+     */
+    public boolean equals(Player other){
+        return(super.equals(other) && name == other.getName() && score == other.getScore() && health == other.getHealth() && fuel == other.getFuel() && isHooked == other.isHooked() && hookedObject.equals(other.getHookedObject()));
+    }
+
+    /**
+     * Creates a table with all the player's information
+     * @return A string containing player information
+     */
+    @Override
+    public String toString() {
+        return "Type: Player\n" +
+                super.toString() +
+                "\nName: " + name + "\n"
+                + "Score: " + score + " points\n"
+                + "Furthest Distance: " + furthestDist + " px\n"
+                + "Health: " + health + " / 100\n"
+                + "Fuel: " + fuel + " / 100\n"
+                + "Grapple Active?: " + isHooked + "\n"
+                + "Hooked Object: " + hookedObject;
     }
 }
