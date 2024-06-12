@@ -58,7 +58,8 @@ public class Tutorial implements Screen{
                         "3. Press 'Space' to release from an asteroid.\n" +
                         "4. Avoid asteroids and survive as long as possible.\n" +
                          "5. Manage your fuel and health by picking up resupply items.\n" +
-                        "6. Press escape to go back to Main Menu (Works in game too).",
+                         "6. Click to grapple to asteroids and items\n" +
+                        "7. Press escape to go back to Main Menu (Works in game too).",
                 skin
         );
 

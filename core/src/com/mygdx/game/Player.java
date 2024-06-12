@@ -212,11 +212,11 @@ public class Player extends PhysicsObject{
         if(fuel > 0 && !moveLock) {
             if (Gdx.input.isKeyPressed(Input.Keys.A)) { //Moves the player left if they press A.
                 accX = -0.1;
-                fuel -= 0.028 * speedFactor;
+                fuel -= 0.05 * speedFactor;
                 fuelSpent = true;
             } else if (Gdx.input.isKeyPressed(Input.Keys.D)) { //Moves the player right if they press D.
                 accX = 0.1;
-                fuel -= 0.028 * speedFactor;
+                fuel -= 0.05 * speedFactor;
                 fuelSpent = true;
             } else {
                 accX = 0;
@@ -225,12 +225,12 @@ public class Player extends PhysicsObject{
             if (Gdx.input.isKeyPressed(Input.Keys.S)) { //Moves the player down if they press S
                 accY = -0.1;
                 if (!fuelSpent) { //Consumes fuel if it has not been consumed earlier on this frame.
-                    fuel -= 0.028 * speedFactor;
+                    fuel -= 0.05 * speedFactor;
                 }
             } else if (Gdx.input.isKeyPressed(Input.Keys.W)) { //Moves the player up if they press W.
                 accY = 0.1;
                 if (!fuelSpent) { //Consumes fuel if it has not been consumed earlier on this frame.
-                    fuel -= 0.028 * speedFactor;
+                    fuel -= 0.05 * speedFactor;
                 }
             } else {
                 accY = 0;
