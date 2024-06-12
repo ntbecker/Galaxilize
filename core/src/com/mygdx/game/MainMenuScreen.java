@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen {
     private static Music menuMusic;
     private int scroll;
     private Player player;
-    private static final Sound selectSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_select.wav"));
+    private static final Sound selectSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Menu_select.mp3"));
 
     public static float colourR = 1f;
     public static float colourG = 0f;

@@ -27,7 +27,8 @@ abstract public class PhysicsObject {
     protected double nextVelY;
     protected boolean hasCollided;
 
-    private final Sound collideSound;
+    //Create sound effect for collision
+    private final static Sound collideSound = Gdx.audio.newSound(Gdx.files.internal("Sound/collide.mp3"));
 
     /**
      * Primary constructor, sets all position related values to 0, mass and radius to 1
@@ -42,8 +43,7 @@ abstract public class PhysicsObject {
         mass = 1;
         radius = 1;
 
-        //Create sound effect for collision
-        collideSound = Gdx.audio.newSound(Gdx.files.internal("Sound/collide.wav"));
+
         // Assume no collisions are happening when the object is created
         hasCollided = false;
         nextVelX = 0;

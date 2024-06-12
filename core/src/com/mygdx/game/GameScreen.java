@@ -44,8 +44,8 @@ public class GameScreen implements Screen {
     private Texture healthBar;
     private Texture fuelBar;
     private Texture scoreDisplay;
-    private static final Sound grappleSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shoot_Grapple2.wav"));
-    private static final Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Player_Death2.wav"));
+    private static final Sound grappleSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shoot_Grapple.mp3"));
+    private static final Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Player_Death.mp3"));
 
 
     private ArrayList<PhysicsObject> physicsObjectsList;
