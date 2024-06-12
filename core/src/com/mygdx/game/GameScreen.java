@@ -140,12 +140,12 @@ public class GameScreen implements Screen {
             musicTracks.get(trackNum).play(); //Start a new song.
         }
         // Slows the game's physics down to 1/5th speed
-        if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) {
+        if (Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor > 0.2) { //Slows down time to 1/5x speed if the player is holding E down.
             speedFactor -= 0.08;
         } else if (speedFactor < 0.2) {
             speedFactor = 0.2;
         }
-        if (!Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor < 1) {
+        if (!Gdx.input.isKeyPressed(Input.Keys.E) && speedFactor < 1) { //Speeds up to normal time if the player releases the E key.
             speedFactor += 0.08;
         } else if (speedFactor > 1) {
             speedFactor = 1;
@@ -166,6 +166,7 @@ public class GameScreen implements Screen {
             double bestDist = 400;
             int finalIndex = 0;
 
+            //Loops through all physics objects checking which ones are closest to where the player clicks.
             for(int i = 1; i < physicsObjectsList.size(); i++){
                 double checkDist = ((physicsObjectsList.get(i)).mouseDist(input.x,input.y));
                 if(checkDist < bestDist){
@@ -173,14 +174,9 @@ public class GameScreen implements Screen {
                     finalIndex = i;
                 }
             }
-
+            //If an object was found that the player can grapple to grapple to it and play a sound effect.
             if(finalIndex != 0){
-                if(player.getHookedObject() != null && !player.getHookedObject().equals(physicsObjectsList.get(finalIndex))){
-                    grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
-                }
-                else if(player.getHookedObject() == null){
-                    grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
-                }
+                grappleSound.play(0.5f,((float)Math.random()*0.5f + 0.75f),0);
                 player.setIsHooked(true);
                 player.setHookedObject(physicsObjectsList.get(finalIndex));
             }

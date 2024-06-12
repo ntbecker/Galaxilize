@@ -1,3 +1,9 @@
+/*
+ Nathan becker, Muhammad Umar, Matthew Witherspoon
+ June 11th 2024
+ Displays the main menu theme with all the options to proceed.
+ */
+
 package com.mygdx.game;
 // imports
 import com.badlogic.gdx.Gdx;
@@ -118,6 +124,7 @@ public class MainMenuScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
+        //Creates the buttons.
         TextButton playButton = new TextButton("Play!", skin);
         TextButton tutorialButton = new TextButton("Tutorial", skin);
         TextButton quitButton = new TextButton("Quit", skin);
@@ -142,13 +149,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        tutorialButton.addListener(new ClickListener() {
-            /**
-             * Method used when the tutorial button and to show its features
-             * @param event - the input event when clicked by the button
-             * @param x - the x-coordinate of the click
-             * @param y - the y-coordinate of the click
-             */
+        tutorialButton.addListener(new ClickListener() { //Checks if the tutorial button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 selectSound.play(0.5f);
@@ -159,7 +160,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        quitButton.addListener(new ClickListener() {
+        quitButton.addListener(new ClickListener() { //Checks if the quit button is pressed.
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
@@ -168,7 +169,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        scoresButton.addListener(new ClickListener(){
+        scoresButton.addListener(new ClickListener(){ //Checks if the score button is pressed.
             public void clicked(InputEvent event, float x, float y){
                 selectSound.play(0.5f);
                 // Navigates to the leaderboards
@@ -176,7 +177,7 @@ public class MainMenuScreen implements Screen {
             }
         });
         // Add listener for the credits button
-        creditsButton.addListener(new ClickListener() {
+        creditsButton.addListener(new ClickListener() { //Checks if the credits button is pressed.
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 selectSound.play(0.5f);

@@ -1,5 +1,9 @@
+/*
+ Nathan Becker, Muhammad Umar, Matthew Witherspoon
+ June 11th 2024
+ Displays text to teach the user the basics of the game.
+ */
 package com.mygdx.game;
-// the imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -12,10 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.w3c.dom.Text;
-
-/*
-Tutorial Class
- */
 public class Tutorial implements Screen{
     // Reference to the main game class
     final Galaxilize game;

@@ -18,7 +18,6 @@ public class Player extends PhysicsObject{
     private String name;
     private double score;
     private double furthestDist;
-    private Scoring scoring;
     double health;
     double fuel;
     boolean isHooked;
@@ -41,9 +40,7 @@ public class Player extends PhysicsObject{
         score = 0;
         furthestDist = posY;
         isHooked = false;
-        //hookedObject = null;
         name = "";
-        scoring = new Scoring (); // initialize scoring
         moveLock = false;
     }
 
