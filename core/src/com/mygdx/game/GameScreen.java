@@ -306,9 +306,9 @@ public class GameScreen implements Screen {
         game.shapeDrawer.setColor(0.35f,0.71f,0.93f,1);
         game.shapeDrawer.filledRectangle(camera.position.x-400,camera.position.y -377,Math.min(velDisplay*5, 50),30);
         game.shapeDrawer.setColor(0.96f,0.89f,0.41f,1);
-        game.shapeDrawer.filledRectangle(camera.position.x-350,camera.position.y -377,Math.max((velDisplay-10)*5, 0),30);
+        game.shapeDrawer.filledRectangle(camera.position.x-350,camera.position.y -377,Math.min(Math.max((velDisplay-10)*5, 0),50),30);
         game.shapeDrawer.setColor(0.93f,0.43f,0.35f,1);
-        game.shapeDrawer.filledRectangle(camera.position.x-300,camera.position.y -377,Math.max((velDisplay-20)*5, 0),30);
+        game.shapeDrawer.filledRectangle(camera.position.x-300,camera.position.y -377,Math.min(Math.max((velDisplay-20)*5, 0),50),30);
         game.shapeDrawer.setColor(1,1,1,1);
 
         font.setColor(0,0,0,1);
