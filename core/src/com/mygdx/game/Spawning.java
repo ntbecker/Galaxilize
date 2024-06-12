@@ -1,7 +1,7 @@
 /*
 Matthew Witherspoon, Nathan Becker, Muhammad Umar
 June 11th 2024
-A class that spawns and deletes asteroids around the player randomly to generate the game area
+A class that spawns and deletes asteroids and items around the player randomly to generate the game area
  */
 package com.mygdx.game;
 import java.util.ArrayList;
@@ -18,17 +18,17 @@ public class Spawning {
     }
 
     /**
-     * Updates the spawning algorithm by activating the methods that spawn and delete asteroids. Also seperates asteroids and players into different variables for later manipulation.
+     * Updates the spawning algorithm by activating the methods that spawn and delete asteroids. Also seperates objects and players into different variables for later manipulation.
      * @param objects all of the physics objects in the game world.
      */
     public static void update(ArrayList<PhysicsObject> objects) {
-        ArrayList<PhysicsObject> tempObjects = new ArrayList<PhysicsObject>(); //An array list that will hold all of the asteroids.
+        ArrayList<PhysicsObject> tempObjects = new ArrayList<PhysicsObject>(); //An array list that will hold all of the objects.
         Player player = (Player) objects.get(0); //Pulls the player from the first index of the physics objects array list.
-        for (int i = 1; i < objects.size(); i++) { //Loops through the rest of the physics object array list and puts all of the asteroids into a separate array list.
+        for (int i = 1; i < objects.size(); i++) { //Loops through the rest of the physics object array list and puts all of the objects into a separate array list.
             tempObjects.add(objects.get(i));
         }
-        spawnAsteroids(player, tempObjects); //Spawns new asteroids.
-        deleteAsteroids(player, tempObjects); //Deletes distant asteroids.
+        spawnObjects(player, tempObjects); //Spawns new objects.
+        deleteObjects(player, tempObjects); //Deletes distant objects.
         objects.clear(); //Empty the objects array so no asteroids deleted or added aren't deleted or added to the world.
         objects.add(player); //Add the player at the first index of the array list.
         for (int i = 0; i < tempObjects.size(); i++) {
@@ -37,11 +37,11 @@ public class Spawning {
     }
 
     /**
-     * spawns asteroids around the player's position.
+     * spawns objects around the player's position.
      * @param player the player.
-     * @param objects an arraylist of all asteroids currently in the world.
+     * @param objects an arraylist of all objects currently in the world.
      */
-    private static void spawnAsteroids(Player player, ArrayList<PhysicsObject> objects) {
+    private static void spawnObjects(Player player, ArrayList<PhysicsObject> objects) {
         //Create variables for storing basic data about the player.
         double posX = player.getPosX();
         double posY = player.getPosY();
@@ -64,9 +64,9 @@ public class Spawning {
     /**
      * Spawns a randomly generated asteroid at a position.
      * @param objects the array list of all currently existing objects.
-     * @param posX the x position to base the asteroid generation around.
-     * @param posY the y position to base the asteroid generation around.
-     * @param spread the maximum distance that asteroids can be spawned from the point.
+     * @param posX the x position to base the objects generation around.
+     * @param posY the y position to base the objects generation around.
+     * @param spread the maximum distance that objects can be spawned from the point.
      * @param maxVel the maximum velocity an asteroid can be spawned with.
      * @param minSize the minimum size an asteroid can be spawned with.
      * @param maxSize the maximum size an asteroid can be spawned with.
@@ -83,12 +83,12 @@ public class Spawning {
                 spawn = false;
             }
         }
-        if(spawn) { //Spawns an asteroid if proximity does not impede it.
+        if(spawn) { //Spawns an objects if proximity does not impede it.
             //Add the position that is spawning the object to the array list.
             positions.add(posX);
             positions.add(posY);
 
-            //Add a random exclusion zone around the object for less uniform spacing between asteroids.
+            //Add a random exclusion zone around the object for less uniform spacing between objects.
             exclusionRadius.add((int)(Math.random()*200) + 200);
 
             if((int)(Math.random()*20) == 0){ //Roll a chance to spawn an item
@@ -112,11 +112,11 @@ public class Spawning {
     }
 
     /**
-     * Save system resources by deleting asteroids that are too far from the player.
+     * Save system resources by deleting objects that are too far from the player.
      * @param player the player.
      * @param objects the array lists of current existing objects.
      */
-    private static void deleteAsteroids(Player player, ArrayList<PhysicsObject> objects){
+    private static void deleteObjects(Player player, ArrayList<PhysicsObject> objects){
         double dist;
         PhysicsObject currentObject;
         for(int i = 0; i < objects.size(); i++){ //Loop through all objects and if they are more than 2000 units from the player delete them.
